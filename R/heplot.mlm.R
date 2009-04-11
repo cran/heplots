@@ -6,6 +6,9 @@
 # last modified 22 Oct 2007 by M. Friendly
 # -- moved lambda.crit to utility.R
 # -- added he.rep to handle common task of repeating HE argument values
+# last modified 13 Apr 2009 by M. Friendly -- fix label.ellipse
+# last modified 15 Apr 2009 by M. Friendly -- added axes= to fix warnings from pairs.mlm
+
 
 `heplot.mlm` <-
 		function ( 
@@ -34,6 +37,7 @@
 				main="",
 				xlim,           # min/max for X (override internal min/max calc) 
 				ylim,
+				axes=TRUE,      # whether to draw the axes
 				offset.axes,    # if specified, the proportion by which to expand the axes on each end (e.g., .05)
 				add=FALSE,      # add to existing plot?
 				verbose=FALSE,
@@ -53,13 +57,13 @@
 	label.ellipse <- function(ellipse, label, col){
 		if (cor(ellipse)[1,2] > 0){
 			index <- which.max(ellipse[,2])
-			x <- ellipse[index, 1] + 0.5 * strwidth("A")
+			x <- ellipse[index, 1] + 0.5 * strwidth(label)  # was: "A"
 			y <- ellipse[index, 2] + 0.5 *strheight("A")
 			adj <- c(1, 0) 
 		}
 		else {
 			index <- which.min(ellipse[,2])
-			x <- ellipse[index, 1] - 0.5 * strwidth("A")
+			x <- ellipse[index, 1] - 0.5 * strwidth(label)  # was: "A"
 			y <- ellipse[index, 2] - 0.5 * strheight("A")
 			adj <- c(0, 1) 
 		}
@@ -85,7 +89,10 @@
 					length(response.names), " response variables.")
 		vars <- response.names[variables]
 	}
-	if (length(variables) != 2) stop("You may only plot 2 response variables")
+	if (length(variables) != 2) {
+		extra <- if (length(variables) == 3) 'heplot3d()' else 'pairs()'
+		stop(paste("You may only plot 2 response variables. Use", extra))
+	}
 	if (missing(terms) || (is.logical(terms) && terms)) {
 		terms <- manova$terms
 		if (remove.intercept) terms <- terms[terms != "(Intercept)"]
@@ -104,15 +111,7 @@
 	scale <- 1/dfe
 	radius <- sqrt(2 * qf(level, 2, dfe))
 	
-#    E.col <- col[1]
-#    if (length(col) >= 2) col <- col[-1]
-#    col <- rep(col, n.ell)[1:n.ell]
-	
-#    if (length(lty) < 2) lty <- rep(lty, 2)
-#    if (length(lwd) < 2) lwd <- rep(lwd, 2)
-#    lty <- c(rep(lty[-1], n.ell)[1:n.ell], lty[1])
-#    lwd <- c(rep(lwd[-1], n.ell)[1:n.ell], lwd[1])
-	
+	# assign colors and line styles
 	col <- he.rep(col, n.ell); E.col<- col[length(col)]
 	lty <- he.rep(lty, n.ell)
 	lwd <- he.rep(lwd, n.ell)
@@ -176,7 +175,7 @@
 		}
 		xlim <- if(missing(xlim)) c(min[1], max[1]) else xlim
 		ylim <- if(missing(ylim)) c(min[2], max[2]) else ylim
-		plot(xlim, ylim,  type = "n", xlab=xlab, ylab=ylab, main=main, ...)
+		plot(xlim, ylim,  type = "n", xlab=xlab, ylab=ylab, main=main, axes=axes, ...)
 	}
 	H.ellipse$E <- NULL
 	if (grand.mean) 
