@@ -1,25 +1,33 @@
-\name{heplot}
-\alias{heplot}
-\alias{heplot.mlm}
-
-\title{Two-Dimensional HE Plots}
+\name{heplot1d}
+\alias{heplot1d}
+\alias{heplot1d.mlm}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{One-Dimensional HE Plots}
 
 \description{
-This function plots ellipses representing the hypothesis and error
+This function plots a 1-dimensional representation of the hypothesis (H) and error (E)
 sums-of-squares-and-products matrices for terms and linear hypotheses in a 
-multivariate linear model.
+multivariate linear model.  
+
+In particular, for a given response, the 1-D representations of H and E matrices
+correspond to line segments.  The E ``ellipse'' is shown as a filled rectangle
+whose width equals the mean squared error for that response.  The H ``ellipse''
+for each model term is shown as a line segment whose length represents either
+the size of the effect or the evidence for that effect.
+
+\bold{This version is an initial sketch.  Details of the implementation are subject
+to change.}
 }
 
 \usage{
-heplot(mod, ...)
+heplot1d(mod, ...)
 
-\method{heplot}{mlm}(mod, terms, hypotheses, term.labels = TRUE,
-    hyp.labels = TRUE, variables = 1:2, error.ellipse = !add, 
-    factor.means = !add, grand.mean = !add, remove.intercept = TRUE,
-    type = c("II", "III", "2", "3"), manova, size = c("evidence", "effect.size"),
-    level = 0.68, alpha = 0.05, segments = 40, center.pch = "+", col = palette()[-1], 
-    lty = 2:1, lwd = 1:2, xlab, ylab, main = "", xlim, ylim, axes=TRUE, offset.axes, 
-    add = FALSE, verbose = FALSE, warn.rank = FALSE, ...)
+\method{heplot1d}{mlm}(mod, terms, hypotheses, term.labels = TRUE, hyp.labels = TRUE, 
+	variables = 1, error.ellipse = !add, factor.means = !add, grand.mean = !add, 
+	remove.intercept = TRUE, type = c("II", "III", "2", "3"), manova, 
+	size = c("evidence", "effect.size"), level = 0.68, alpha = 0.05, segments = 40, 
+	center.pch = "|", col = palette()[-1], lty = 2:1, lwd = 1:2, xlab, main = "", 
+	xlim, axes = TRUE, offset.axes, add = FALSE, verbose = FALSE, ...)
 }
 
 \arguments{
@@ -72,7 +80,7 @@ heplot(mod, ...)
   \item{segments}{number of line segments composing each ellipse; defaults to
     \code{40}.}
   \item{center.pch}{character to use in plotting the centroid of the data;
-    defaults to \code{"+"}.}
+    defaults to \code{"|"}.}
   \item{col}{a colour or vector of colours to use in plotting ellipses; the first
     colour is used for the error ellipse; the remaining colours --- recycled
     as necessary --- are used for the hypothesis ellipses; 
@@ -87,10 +95,8 @@ heplot(mod, ...)
     the hypothesis ellipses; a single line width can be given. Defaults to
     \code{1:2}.}
   \item{xlab}{x-axis label; defaults to name of the x variable.}
-  \item{ylab}{y-axis label; defaults to name of the y variable.}
   \item{main}{main plot label; defaults to \code{""}.}
   \item{xlim}{x-axis limits; if absent, will be computed from the data.}
-  \item{ylim}{y-axis limits; if absent, will be computed from the data.}
   \item{axes}{Whether to draw the x, y axes; defaults to \code{TRUE}}
   \item{offset.axes}{proportion to extend the axes in each direction if computed 
     from the data; optional.}
@@ -98,113 +104,49 @@ heplot(mod, ...)
     If \code{TRUE}, the error ellipse is not plotted.}
   \item{verbose}{if \code{TRUE}, print the MANOVA table and details of hypothesis
     tests; the default is \code{FALSE}.}
-  \item{warn.rank}{if \code{TRUE}, do not suppress warnings about the rank of the
-    hypothesis matrix when the ellipse collapses to a line; the default is
-    \code{FALSE}.}
   \item{\dots}{arguments to pass down to \code{plot}, \code{text}, 
     and \code{points}.}
 }
-
 \details{
-   The \code{heplot} function plots a representation of the covariance ellipses
-   for hypothesized model terms and linear hypotheses (H) and the corresponding
-   error (E) matrices for two response variables in a multivariate linear model (mlm).
-     
-   The plot helps to visualize the nature and dimensionality
-   response variation on the two variables jointly
-   in relation to error variation that is summarized in the various multivariate
-   test statistics (Wilks' Lambda, Pillai trace, Hotelling-Lawley trace, Roy maximum
-   root). Roy's maximum root test has a particularly simple visual interpretation,
-   exploited in the \code{size="evidence"} version of the plot. See the description of
-   argument \code{alpha}.
-   
-   For a 1 df hypothesis term (a quantitative regressor, a single contrast or 
-   parameter test), the H matrix has rank 1 (one non-zero latent root of
-   \eqn{H E^{-1}}) and the H ellipse collapses to a line. 
-   
-   Typically, you fit a mlm with \code{mymlm <- lm(cbind(y1, y2, y3, ...) ~ modelterms)},
-   and plot some or all of the \code{modelterms} with \code{heplot(mymlm, ...)}.
-   Arbitrary linear hypotheses related to the terms in the model (e.g., contrasts of
-   an effect) can be included in the plot using the \code{hypotheses} argument. 
-   See \code{\link[car]{linear.hypothesis}} for details.
-   
+  ~~ If necessary, more details than the description above ~~
 }
-
 \value{
-  The function invisibly returns an object of class \code{"heplot"}, with
+  The function invisibly returns an object of class \code{"heplot1d"}, with
   coordinates for the various hypothesis ellipses and the error ellipse, and
-  the limits of the horizontal and vertical axes.  These may be useful for
-  adding additional annotations to the plot, using standard plotting functions.
+  the limits of the horizontal and vertical axes.
   (No methods for manipulating these objects are currently available.)
-
+  
   The components are:
-  \item{H}{a list containing the coordinates of each ellipse for the hypothesis terms}
-  \item{E}{a matrix containing the coordinates for the error ellipse}
-  \item{center}{x,y coordinates of the centroid}
+  \item{H}{ranges for the hypothesis terms}
+  \item{E}{range for E}
   \item{xlim}{x-axis limits}
-  \item{ylim}{y-axis limits}
 
 }
-
-\references{
-Friendly, M. (2006).
-  Data Ellipses, HE Plots and Reduced-Rank Displays for Multivariate Linear 
-  Models: SAS Software and Examples 
-  \emph{Journal of Statistical Software}, \bold{17}(6), 1--42.
-  \url{http://www.jstatsoft.org/v17/i06/}
-
-Friendly, M. (2007).
-  HE plots for Multivariate General Linear Models.
-  \emph{Journal of Computational and Graphical Statistics}, \bold{16}(2) 421--444.
-  \url{http://www.math.yorku.ca/SCS/Papers/jcgs-heplots.pdf} 
-}
-
+%\references{ ~put references to the literature/web site here ~ }
+\author{Michael Friendly}
+%\note{ ~~further notes~~ 
+% ~Make other sections like Warning with \section{Warning }{....} ~
+%}
 \seealso{
-    \code{\link[car]{Anova}}, \code{\link[car]{linear.hypothesis}},
-    \code{\link{heplot3d}}, \code{\link{pairs.mlm}}.
+    \code{\link[car]{Anova}}, \code{\link[car]{linear.hypothesis}} for hypothesis tests in \code{mlm}s
+    
+    \code{\link{heplot}}, \code{\link{heplot3d}}, \code{\link{pairs.mlm}} for other HE plot methods
 }
+ \examples{
+## Plastics data
+plastic.mod <- lm(cbind(tear, gloss, opacity) ~ rate*additive, data=Plastic)
+heplot1d(plastic.mod, col=c("pink","blue"))
+heplot1d(plastic.mod, col=c("pink","blue"),variables=2)
+heplot1d(plastic.mod, col=c("pink","blue"),variables=3)
 
-\examples{
-## iris data
-contrasts(iris$Species)<-matrix(c(0,-1,1, 2, -1, -1), 3,2)
-contrasts(iris$Species)
+## Bees data
+bees.mod <- lm(cbind(Iz,Iy) ~ caste*treat*time, data=Bees)
+heplot1d(bees.mod)
+heplot1d(bees.mod, variables=2)
 
-iris.mod <- lm(cbind(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width) ~
-Species, data=iris)
-
-hyp <- list("V:V"="Species1","S:VV"="Species2")
-heplot(iris.mod, hypotheses=hyp)
-# compare with effect-size scaling
-heplot(iris.mod, hypotheses=hyp, size="effect", add=TRUE)
-
-hep <-heplot(iris.mod, variables=c(1,3),  hypotheses=hyp)
-str(hep)
-
-# all pairs
-pairs(iris.mod, hypotheses=hyp, hyp.labels=FALSE)
-
-
-## Pottery data, from cars package
-data(Pottery)
-pottery.mod <- lm(cbind(Al, Fe, Mg, Ca, Na) ~ Site, data=Pottery)
-heplot(pottery.mod)
-heplot(pottery.mod, terms=FALSE, add=TRUE, col="blue", 
-  hypotheses=list(c("SiteCaldicot = 0", "SiteIsleThorns=0")),
-  hyp.labels="Sites Caldicot and Isle Thorns")
-
-## Rohwer data, multivariate multiple regression/ANCOVA
-#-- ANCOVA, assuming equal slopes
-rohwer.mod <- lm(cbind(SAT, PPVT, Raven) ~ SES + n + s + ns + na + ss, data=Rohwer)
-Anova(rohwer.mod)
-heplot(rohwer.mod)
-# Add ellipse to test all 5 regressors
-heplot(rohwer.mod, hypotheses=list("Regr" = c("n", "s", "ns", "na", "ss")))
-# View all pairs
-pairs(rohwer.mod, hypotheses=list("Regr" = c("n", "s", "ns", "na", "ss")))
-# or 3D plot
- heplot3d(rohwer.mod, hypotheses=list("Regr" = c("n", "s", "ns", "na", "ss")))
 }
-
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.
 \keyword{hplot}
 \keyword{aplot}
 \keyword{multivariate}

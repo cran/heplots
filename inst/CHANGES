@@ -46,4 +46,19 @@ Version 0.8-6 (2009-04-11)
  o Added demo(OBK)
  o Added axes= to heplot.mlm to fix warnings arising from axes=FALSE in pairs.mlm 
  
+ Version 0.8-7 (2009-04-17)
+ o Initial version of heplot1d
+ o Added data(Bees), demo(bees.contrasts)
+ o Now suggest: effects package
+
+Version 0.8-8 (2009-06-04)
+ o Added data(FootHead)
+ o Extended example(FootHead)
+
+Version 0.8-9 (2009-06-19)
+ o Added data(RootStock)
+ o heplot.mlm, heplot3d.mlm now include center in the returned object
+ 
+ 
+ 
  
