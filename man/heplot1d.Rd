@@ -24,8 +24,9 @@ heplot1d(mod, ...)
 
 \method{heplot1d}{mlm}(mod, terms, hypotheses, term.labels = TRUE, hyp.labels = TRUE, 
 	variables = 1, error.ellipse = !add, factor.means = !add, grand.mean = !add, 
-	remove.intercept = TRUE, type = c("II", "III", "2", "3"), manova, 
-	size = c("evidence", "effect.size"), level = 0.68, alpha = 0.05, segments = 40, 
+	remove.intercept = TRUE, type = c("II", "III", "2", "3"),
+	idata=NULL, idesign=NULL, icontrasts=c("contr.sum", "contr.poly"), imatrix=NULL, iterm=NULL, manova, 
+	size = c("evidence", "effect.size"), level = 0.68, alpha = 0.05,  
 	center.pch = "|", col = palette()[-1], lty = 2:1, lwd = 1:2, xlab, main = "", 
 	xlim, axes = TRUE, offset.axes, add = FALSE, verbose = FALSE, ...)
 }
@@ -38,7 +39,7 @@ heplot1d(mod, ...)
     if \code{FALSE}, no terms are plotted.}
   \item{hypotheses}{optional list of linear hypotheses for which to plot hypothesis
     matrices; hypotheses are specified as for the
-    \code{\link[car]{linear.hypothesis}} function in the \code{car} package;
+    \code{\link[car]{linearHypothesis}} function in the \code{car} package;
     the list elements can be named, in which case the names are used.}
   \item{term.labels}{logical value or character vector of names for the terms to be
     plotted. If \code{TRUE} (the default) the names of the terms are used;
@@ -62,6 +63,28 @@ heplot1d(mod, ...)
   \item{type}{``type'' of sum-of-squares-and-products matrices to compute; one of
     \code{"II"}, \code{"III"}, \code{"2"}, or \code{"3"}, where \code{"II"} is
     the default (and \code{"2"} is a synomym).}
+  \item{idata}{an optional data frame giving a factor or factors defining the 
+    intra-subject model for multivariate repeated-measures data. 
+    See Details of \code{\link[car]{Anova}} for an explanation of the intra-subject design and for further explanation 
+    of the other arguments relating to intra-subject factors.} 
+  \item{idesign}{a one-sided model formula using the ``data'' in idata and specifying 
+    the intra-subject design for repeated measure models.} 
+  \item{icontrasts}{names of contrast-generating functions to be applied by default 
+    to factors and ordered factors, respectively, in the within-subject ``data''; 
+    the contrasts must produce an intra-subject model matrix in which different 
+    terms are orthogonal. The default is c("contr.sum", "contr.poly").}
+  \item{imatrix}{In lieu of \code{idata} and \code{idesign}, you can specify the
+    intra-subject design matrix directly via \code{imatrix}, in the form of list of named elements.
+    Each element gives
+  	the columns of the within-subject model matrix for an intra-subject term to be tested, and must
+  	have as many rows as there are responses; the columns of the within-subject model
+  	matrix for \emph{different} terms must be mutually orthogonal. 
+    \emph{This functionality
+    requires \code{car} version 2.0 or later.}}
+  \item{iterm}{For repeated measures designs, you must specify one intra-subject term
+  	(a character string) to select the SSPE (E) matrix used in the HE plot. 
+  	Hypothesis terms plotted include the \code{iterm} effect as well as all interactions
+  	of \code{iterm} with \code{terms}.}
   \item{manova}{optional \code{Anova.mlm} object for the model; if absent a
     MANOVA is computed. Specifying the argument can therefore save 
     computation in repeated calls.}
@@ -77,8 +100,6 @@ heplot1d(mod, ...)
     hypothesis ellipse is scaled so that it just touches the error ellipse at the
     specified alpha level; a larger hypothesis elllipse therefore indicates
     statistical significance; defaults to \code{0.05}.}
-  \item{segments}{number of line segments composing each ellipse; defaults to
-    \code{40}.}
   \item{center.pch}{character to use in plotting the centroid of the data;
     defaults to \code{"|"}.}
   \item{col}{a colour or vector of colours to use in plotting ellipses; the first
@@ -126,7 +147,7 @@ heplot1d(mod, ...)
 % ~Make other sections like Warning with \section{Warning }{....} ~
 %}
 \seealso{
-    \code{\link[car]{Anova}}, \code{\link[car]{linear.hypothesis}} for hypothesis tests in \code{mlm}s
+    \code{\link[car]{Anova}}, \code{\link[car]{linearHypothesis}} for hypothesis tests in \code{mlm}s
     
     \code{\link{heplot}}, \code{\link{heplot3d}}, \code{\link{pairs.mlm}} for other HE plot methods
 }
