@@ -1,13 +1,17 @@
 \name{etasq}
 \Rdversion{1.1}
 \alias{etasq}
+\alias{etasq.lm}
 \alias{etasq.mlm}
 \alias{etasq.Anova.mlm}
+\concept{effect size}
+\concept{strength of association}
 \title{
-Multivariate Measures of Partial Association (Eta-squared)
+Measures of Partial Association (Eta-squared) for Linear Models
 }
 \description{
-Calculates multivariate analogs of eta-squared (or R^2), indicating
+Calculates partial eta-squared for linear models or
+multivariate analogs of eta-squared (or R^2), indicating
 the partial association for each term in a multivariate linear model.
 There is a different analog for each of the four standard multivariate
 test statistics: Pillai's trace, Hotelling-Lawley trace, Wilks' Lambda
@@ -17,6 +21,8 @@ and Roy's maximum root test.
 
 etasq(x, ...)
 
+\method{etasq}{lm}(x, anova = FALSE, partial = TRUE,  ...)
+
 \method{etasq}{mlm}(x, ...)
 
 \method{etasq}{Anova.mlm}(x, anova = FALSE, ...)
@@ -25,20 +31,32 @@ etasq(x, ...)
 \arguments{
 
   \item{x}{
-A \code{mlm} or \code{Anova.mlm} object
+A \code{lm}, \code{mlm} or \code{Anova.mlm} object
 }
   \item{anova}{
 A logical, indicating whether the result should also contain the
-test statistics produced by \code{print.Anova.mlm()}.
+test statistics produced by \code{Anova()}.
+}
+  \item{partial}{
+A logical, indicating whether to calculate partial or classical eta^2.
 }
   \item{\dots}{
-Other arguments passed down 
+Other arguments passed down to \code{\link[car]{Anova}}.
 }
 
 }
 \details{
+For univariate linear models, classical \eqn{\eta^2} = SSH / SST and partial
+\eqn{\eta^2} = SSH / (SSH + SSE).  These are identical in one-way designs.
+
+Partial eta-squared describes the proportion of total variation attributable to a given factor, 
+partialling out (excluding) other factors from the total nonerror variation.
+These are commonly used as measures of effect size or measures
+of (non-linear) strength of association in ANOVA models.
+
 All multivariate tests are based on the \eqn{s=min(p, df_h)}
-latent roots of \eqn{H E^{-1}}. The \eqn{\eta^2} measures are
+latent roots of \eqn{H E^{-1}}. The analogous multivariate
+partial \eqn{\eta^2} measures are
 calculated as:
 
 \describe{
@@ -46,7 +64,6 @@ calculated as:
 	\item{Hotelling-Lawley trace (T)}{\eqn{\eta^2 = T/(T+s)}}
 	\item{Wilks' Lambda (L)}{\eqn{\eta^2 = L^{1/s}}}
 	\item{Roy's maximum root (R)}{\eqn{\eta^2 = R/(R+1)}}
-
 }
 
 }
@@ -54,8 +71,8 @@ calculated as:
 When \code{anova=FALSE}, a one-column data frame containing the
 eta-squared values for each term in the model.
 
-When \code{anova=TRUE}, a 7-column data frame containing the
-eta-squared values and the test statistics produced by \code{print.Anova.mlm()}
+When \code{anova=TRUE}, a 5-column (lm) or 7-column (mlm)  data frame containing the
+eta-squared values and the test statistics produced by \code{print.Anova()}
 for each term in the model.
 
 }
