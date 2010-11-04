@@ -17,14 +17,17 @@ designs treated from a multivariate perspective.
 heplot(mod, ...)
 
 \method{heplot}{mlm}(mod, terms, hypotheses, term.labels = TRUE,
-    hyp.labels = TRUE, variables = 1:2, error.ellipse = !add, 
+    hyp.labels = TRUE, err.label="Error", variables = 1:2, error.ellipse = !add, 
     factor.means = !add, grand.mean = !add, remove.intercept = TRUE,
     type = c("II", "III", "2", "3"), idata=NULL, idesign=NULL,
 	icontrasts=c("contr.sum", "contr.poly"), imatrix=NULL, iterm=NULL, markH0=!is.null(iterm),
     manova, size = c("evidence", "effect.size"),
-    level = 0.68, alpha = 0.05, segments = 40, center.pch = "+", center.cex=2,
+    level = 0.68, alpha = 0.05, segments = 40, 
+    center.pch = "+", center.cex=2,
     col = palette()[-1], 
-    lty = 2:1, lwd = 1:2, xlab, ylab, main = "", xlim, ylim, axes=TRUE, offset.axes, 
+    lty = 2:1, lwd = 1:2, 
+    fill=FALSE, fill.alpha=0.3,   
+    xlab, ylab, main = "", xlim, ylim, axes=TRUE, offset.axes, 
     add = FALSE, verbose = FALSE, warn.rank = FALSE, ...)
 }
 
@@ -44,6 +47,7 @@ heplot(mod, ...)
   \item{hyp.labels}{logical value or character vector of names for the hypotheses to
     be plotted. If \code{TRUE} (the default) the names of components of the list of
     hypotheses are used; if \code{FALSE}, hypothesis labels are not plotted.}
+  \item{err.label}{Label for the error ellipse}
   \item{variables}{indices or names of the two response variables to be plotted;
     defaults to \code{1:2}.}
   \item{error.ellipse}{if \code{TRUE}, plot the error ellipse; defaults to \code{TRUE},
@@ -119,6 +123,12 @@ heplot(mod, ...)
     used for the error ellipse, the rest --- possibly recycled --- for
     the hypothesis ellipses; a single line width can be given. Defaults to
     \code{1:2}.}
+  \item{fill}{A logical vector indicating whether each ellipse should be filled or not.
+    The first value is used for the error ellipse, the rest --- possibly recycled --- for
+    the hypothesis ellipses; a single fill value can be given.  
+    Defaults to FALSE for backward compatibility. See Details below.}
+  \item{fill.alpha}{Alpha transparency for filled ellipses, a numeric scalar or vector of values
+  within \code{[0,1]}, where 0 means fully transparent and 1 means fully opaque. Defaults to 0.3.}
   \item{xlab}{x-axis label; defaults to name of the x variable.}
   \item{ylab}{y-axis label; defaults to name of the y variable.}
   \item{main}{main plot label; defaults to \code{""}.}
@@ -153,7 +163,7 @@ heplot(mod, ...)
    
    For a 1 df hypothesis term (a quantitative regressor, a single contrast or 
    parameter test), the H matrix has rank 1 (one non-zero latent root of
-   \eqn{H E^{-1}}) and the H ellipse collapses to a line. 
+   \eqn{H E^{-1}}) and the H "ellipse" collapses to a degenerate line. 
    
    Typically, you fit a mlm with \code{mymlm <- lm(cbind(y1, y2, y3, ...) ~ modelterms)},
    and plot some or all of the \code{modelterms} with \code{heplot(mymlm, ...)}.
@@ -167,13 +177,20 @@ heplot(mod, ...)
    (E matrices) differ.  When you specify an intra-subject term (\code{iterm}),
    the analysis and HE plots
    amount to analysis of the matrix \bold{Y} of responses post-multiplied by a matrix 
-   \bold{M} determined by the intra-subject design for that term.
+   \bold{M} determined by the intra-subject design for that term.  See Friendly (2010)
+   or the \code{vignette("repeated")} in this package for an extended discussion and
+   examples.
    
     The related \code{\link[candisc]{candisc}} package provides functions for 
     visualizing a multivariate linear model in a low-dimensional view via a
     generalized canonical discriminant analyses.  \code{\link[candisc]{heplot.candisc}}
     and \code{\link[candisc]{heplot3d.candisc}} provide a low-rank 2D (or 3D) view of the effects for  
     a given term in the space of maximum discrimination.
+    
+    When an element of \code{fill} is \code{TRUE}, the ellipse outline is drawn using the corresponding
+    color in \code{col}, and the interior is filled with a transparent version of this color specified
+    in \code{fill.alpha}.  To produce filled (non-degenerate) ellipses without the bounding outline, use
+    a value of \code{lty=0} in the corresponding position.
 }
 
 \value{
@@ -203,7 +220,11 @@ Friendly, M. (2006).
 Friendly, M. (2007).
   HE plots for Multivariate General Linear Models.
   \emph{Journal of Computational and Graphical Statistics}, \bold{16}(2) 421--444.
-  \url{http://www.math.yorku.ca/SCS/Papers/jcgs-heplots.pdf} 
+  \url{http://datavis.ca/papers/jcgs-heplots.pdf} 
+
+Friendly, Michael (2010). HE Plots for Repeated Measures Designs. \emph{Journal of Statistical Software},
+  37(4), 1-40. URL \url{http://www.jstatsoft.org/v37/i04/}.
+
 }
 
 \seealso{
@@ -211,9 +232,9 @@ Friendly, M. (2007).
     testing \code{mlm}s.
     
     \code{\link{heplot1d}}, \code{\link{heplot3d}}, \code{\link{pairs.mlm}}, \code{\link{mark.H0}} for other
-    HE plot functions.
+    HE plot functions. \code{\link{trans.colors}} for calculation of transparent colors.
         
-  	\code{\link[candisc]{candisc}},   \code{\link[candisc]{heplot.candisc}} for views
+  	\code{\link[candisc]{candisc}},   \code{\link[candisc]{heplot.candisc}} for reduced-rank views of \code{mlm}s
   	in canonical space.
 }
 
@@ -229,6 +250,10 @@ hyp <- list("V:V"="Species1","S:VV"="Species2")
 heplot(iris.mod, hypotheses=hyp)
 # compare with effect-size scaling
 heplot(iris.mod, hypotheses=hyp, size="effect", add=TRUE)
+
+# try filled ellipses
+heplot(iris.mod, hypotheses=hyp, fill=TRUE, col=c("red", "blue"))
+heplot(iris.mod, hypotheses=hyp, fill=TRUE, col=c("red", "blue"), lty=c(0,0,1,1))
 
 hep <-heplot(iris.mod, variables=c(1,3),  hypotheses=hyp)
 str(hep)
@@ -249,9 +274,10 @@ heplot(pottery.mod, terms=FALSE, add=TRUE, col="blue",
 #-- ANCOVA, assuming equal slopes
 rohwer.mod <- lm(cbind(SAT, PPVT, Raven) ~ SES + n + s + ns + na + ss, data=Rohwer)
 Anova(rohwer.mod)
-heplot(rohwer.mod)
+col <- c("red", "black", "blue", "cyan", "magenta", "brown", "gray")
+heplot(rohwer.mod, col=col)
 # Add ellipse to test all 5 regressors
-heplot(rohwer.mod, hypotheses=list("Regr" = c("n", "s", "ns", "na", "ss")))
+heplot(rohwer.mod, hypotheses=list("Regr" = c("n", "s", "ns", "na", "ss")), col=col, fill=TRUE)
 # View all pairs
 pairs(rohwer.mod, hypotheses=list("Regr" = c("n", "s", "ns", "na", "ss")))
 # or 3D plot

@@ -14,7 +14,7 @@ multivariate linear model.
 heplot3d(mod, ...)
 
 \method{heplot3d}{mlm}(mod, terms, hypotheses, term.labels = TRUE, 
-    hyp.labels = TRUE, variables = 1:3, error.ellipsoid = !add,
+    hyp.labels = TRUE, err.label="Error", variables = 1:3, error.ellipsoid = !add,
     factor.means = !add, grand.mean = !add, remove.intercept = TRUE, 
     type = c("II", "III", "2", "3"), idata=NULL, idesign=NULL,
 	icontrasts=c("contr.sum", "contr.poly"), imatrix=NULL, iterm=NULL,
@@ -42,6 +42,7 @@ heplot3d(mod, ...)
   \item{hyp.labels}{logical value or character vector of names for the hypotheses to
     be plotted. If \code{TRUE} (the default) the names of components of the list of
     hypotheses are used; if \code{FALSE}, hypothesis labels are not plotted.}
+  \item{err.label}{Label for the error ellipse}
   \item{variables}{indices or names of the three response variables to be plotted;
     defaults to \code{1:3}.}
   \item{error.ellipsoid}{if \code{TRUE}, plot the error ellipsoid; defaults to \code{TRUE},
@@ -172,7 +173,7 @@ Friendly, M. (2006).
 Friendly, M. (2007).
   HE plots for Multivariate General Linear Models.
   \emph{Journal of Computational and Graphical Statistics}, 16(2) 421-444.
-  \url{http://www.math.yorku.ca/SCS/Papers/jcgs-heplots.pdf} 
+  \url{http://datavis.ca/papers/jcgs-heplots.pdf} 
 }
 
 \seealso{
@@ -194,12 +195,11 @@ Anova(soils.mod)
 heplot(soils.mod, variables=c("Ca", "Mg"))
 pairs(soils.mod, terms="Depth", variables=c("pH", "N", "P", "Ca", "Mg"))
 
-heplot3d(soils.mod, variables=c("Mg", "Ca", "Na"))
+heplot3d(soils.mod, variables=c("Mg", "Ca", "Na"), wire=FALSE)
 
 # Plastic data
 plastic.mod <- lm(cbind(tear, gloss, opacity) ~ rate*additive, data=Plastic)
-heplot3d(plastic.mod, col=c("pink", "blue", "brown", "green3"))
-} 
+heplot3d(plastic.mod, col=c("red", "blue", "brown", "green3"), wire=FALSE)} 
 
 \keyword{hplot}
 \keyword{aplot}
