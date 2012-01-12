@@ -1,8 +1,8 @@
 Package: heplots
 Type: Package
 Title: Visualizing Tests in Multivariate Linear Models
-Version: 0.9-10
-Date: 2011-09-12
+Version: 0.9-11
+Date: 2012-01-12
 Authors@R: c(person(given = "John", family = "Fox", role="aut"),
         person(given = "Michael", family = "Friendly", role=c("aut",
         "cre"), email="friendly@yorku.ca"), person(given = "Georges",
@@ -19,8 +19,6 @@ Description: Provides HE plot functions for visualizing hypothesis
         for error using ellipses (in two dimensions) and ellipsoids (in
         three dimensions).
 License: GPL (>= 2)
+Packaged: 2012-02-10 16:49:35 UTC; friendly
 Repository: CRAN
-Repository/R-Forge/Project: heplots
-Repository/R-Forge/Revision: 114
-Date/Publication: 2011-10-17 05:54:56
-Packaged: 2011-10-15 21:06:54 UTC; rforge
+Date/Publication: 2012-02-12 08:05:37
