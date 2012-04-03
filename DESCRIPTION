@@ -1,8 +1,8 @@
 Package: heplots
 Type: Package
-Title: Visualizing Tests in Multivariate Linear Models
-Version: 0.9-11
-Date: 2012-01-12
+Title: Visualizing Hypothesis Tests in Multivariate Linear Models
+Version: 0.9-12
+Date: 2012-04-03
 Authors@R: c(person(given = "John", family = "Fox", role="aut"),
         person(given = "Michael", family = "Friendly", role=c("aut",
         "cre"), email="friendly@yorku.ca"), person(given = "Georges",
@@ -10,7 +10,8 @@ Authors@R: c(person(given = "John", family = "Fox", role="aut"),
 Author: John Fox, Michael Friendly, and Georges Monette
 Maintainer: Michael Friendly <friendly@yorku.ca>
 Depends: R (>= 2.10), car, graphics, stats
-Suggests: rgl, candisc, effects, reshape, gplots, nlme, lattice
+Suggests: rgl, candisc, effects, reshape, gplots, nlme, lattice,
+        reshape2
 LazyLoad: yes
 LazyData: yes
 Description: Provides HE plot functions for visualizing hypothesis
@@ -19,6 +20,6 @@ Description: Provides HE plot functions for visualizing hypothesis
         for error using ellipses (in two dimensions) and ellipsoids (in
         three dimensions).
 License: GPL (>= 2)
-Packaged: 2012-02-10 16:49:35 UTC; friendly
+Packaged: 2012-05-16 16:22:46 UTC; friendly
 Repository: CRAN
-Date/Publication: 2012-02-12 08:05:37
+Date/Publication: 2012-05-17 06:17:44

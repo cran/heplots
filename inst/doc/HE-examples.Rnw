@@ -619,7 +619,7 @@ heplot3d(rohwer.mod, col=colors,
 @
 \begin{figure}[htb]
 \begin{center}
-	\includegraphics[width=.6\textwidth]{fig/rohwer-HE3D}
+	\includegraphics[width=.6\textwidth]{rohwer-HE3D}
 \caption{3D HE plot for the MANCOVA model fit to the Rohwer data}
 \label{fig:rohwer-HE3D}
 \end{center}
