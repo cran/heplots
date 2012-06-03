@@ -26,8 +26,8 @@ Several tutorial vignettes are also included.
 \tabular{ll}{
 Package: \tab heplots\cr
 Type: \tab Package\cr
-Version: \tab 0.9-12\cr
-Date: \tab 2012-04-03\cr
+Version: \tab 1.0-0\cr
+Date: \tab 2012-06-03\cr
 License: \tab GPL (>= 2), GPL version 2 or newer\cr
 }
 

@@ -21,7 +21,7 @@ session <- ordered(c("pretest", "posttest", "followup"),
     levels=c("pretest", "posttest", "followup"))
 # for profile contrasts
 contrasts(session) <- matrix(c(-1,  1, 0,
-		                      0, -1, 1), ncol=2}
+		                      0, -1, 1), ncol=2)
 #colnames(contrasts(session)) <- c("Post-Pre", "Fol-Post")
 
 idata <- data.frame(session)
@@ -44,7 +44,7 @@ pairs(mod.OBK, col=c("red", "black", "blue", "brown"))
 
 heplot3d(mod.OBK, hypotheses=c("treatment1", "treatment2"),
   col=c("pink", "black", "blue", "green3", "gray40", "gray40"),
-  hyp.labels=c("(A,B)-Control", "A-B")
+  hyp.labels=c("(A,B)-Control", "A-B"))
 
 	
 # HE plots for Within-S effects
