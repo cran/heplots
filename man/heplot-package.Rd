@@ -13,21 +13,23 @@ in multivariate linear models (MANOVA, multivariate multiple regression, MANCOVA
 They represent sums-of-squares-and-products matrices for linear hypotheses and for 
 error using ellipses (in two dimensions), ellipsoids (in three dimensions),
 or by line segments in one dimension.
-See Fox, Friendly and Monette (2007) for a brief introduction.
+See Fox, Friendly and Monette (2007) for a brief introduction
+and Friendly, Monette and Fox (2013) for a general discussion of the role of
+elliptical geometry in statistical understanding.
 
 The package also provides a collection of  data sets illustrating
 a variety of multivariate linear models of the types listed above,
 together with graphical displays.
 
-Several tutorial vignettes are also included.
+Several tutorial vignettes are also included.  See \code{vignette(package="heplots")}.
 }
 
 \details{
 \tabular{ll}{
 Package: \tab heplots\cr
 Type: \tab Package\cr
-Version: \tab 1.0-4\cr
-Date: \tab 2013-01-12\cr
+Version: \tab 1.0-7\cr
+Date: \tab 2013-02-07\cr
 License: \tab GPL (>= 2), GPL version 2 or newer\cr
 }
 
@@ -96,8 +98,18 @@ Fox, J., Friendly, M. & Monette, G. (2007).
   \emph{DSC 2007: Directions in Statistical Computing}.
   \url{http://socserv.socsci.mcmaster.ca/jfox/heplots-dsc-paper.pdf}
 
-Friendly, Michael (2010). HE Plots for Repeated Measures Designs. \emph{Journal of Statistical Software},
+Friendly, M. (2010). HE Plots for Repeated Measures Designs. \emph{Journal of Statistical Software},
   37(4), 1-40. URL \url{http://www.jstatsoft.org/v37/i04/}.
+
+Fox, J., Friendly, M. & Weisberg, S. (2013).
+	Hypothesis Tests for Multivariate Linear Models Using the car Package.
+	\emph{The R Journal}, in press,
+	\url{http://journal.r-project.org/accepted/2012-02/Fox+Friendly+Weisberg.pdf}.
+
+Friendly, M.,  Monette, G. & Fox, J. (2013).
+	Elliptical Insights: Understanding Statistical Methods Through Elliptical Geometry.
+	\emph{Statistical Science}, 2013, 28 (1), in press,
+	\url{http://datavis.ca/papers/ellipses.pdf}.
 
 }
 

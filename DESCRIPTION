@@ -1,8 +1,8 @@
 Package: heplots
 Type: Package
 Title: Visualizing Hypothesis Tests in Multivariate Linear Models
-Version: 1.0-5
-Date: 2013-01-12
+Version: 1.0-7
+Date: 2013-02-07
 Authors@R: c(person(given = "John", family = "Fox", role="aut"),
         person(given = "Michael", family = "Friendly", role=c("aut",
         "cre"), email="friendly@yorku.ca"), person(given = "Georges",
@@ -23,7 +23,7 @@ License: GPL (>= 2)
 URL: http://datavis.ca/R/index.php#heplots
 Repository: CRAN
 Repository/R-Forge/Project: heplots
-Repository/R-Forge/Revision: 155
-Repository/R-Forge/DateTimeStamp: 2013-01-12 16:28:38
-Date/Publication: 2013-01-13 19:40:20
-Packaged: 2013-01-12 19:15:38 UTC; rforge
+Repository/R-Forge/Revision: 162
+Repository/R-Forge/DateTimeStamp: 2013-02-07 22:46:54
+Date/Publication: 2013-02-08 20:18:15
+Packaged: 2013-02-07 23:23:48 UTC; rforge
