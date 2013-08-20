@@ -1,3 +1,18 @@
+Version 1.0-11 (2013-08-20)
+o Cosmetic changes to pass CRAN checks
+o For R 3.1.0, revised vcov.mlm() to avoid calling summary.mlm() directly
+o fixed long lines in .Rd files for R 3.0.1 checks
+o removed require() calls for MASS & car (Depends:)
+o removed ::: calls to car and stats
+
+Version 1.0-10 (2013-06-03)
+o Added demo/HE-other.R, exploring other representations of HE plots
+
+Version 1.0-9 (2013-04-19)
+o Added Pottery2 data, extending car::Pottery
+o Fixed heplot3d to minimize striated rendering of ellipsoids, and also modified default
+  colors and fill.alpha
+
 Version 1.0-8 (2013-02-22)
 o In heplot.mlm(), added ... to label.ellipse to be able to pass cex=
 o Added NLSY data with examples of testing linearHypotheses
