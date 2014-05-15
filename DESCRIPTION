@@ -1,14 +1,15 @@
 Package: heplots
 Type: Package
 Title: Visualizing Hypothesis Tests in Multivariate Linear Models
-Version: 1.0-11
-Date: 2013-08-20
+Version: 1.0-12
+Date: 2014-05-15
 Authors@R: c(person(given = "John", family = "Fox", role="aut"),
             person(given = "Michael", family = "Friendly", role=c("aut", "cre"), email="friendly@yorku.ca"),
             person(given = "Georges", family = "Monette", role="ctb"))
-Author: John Fox, Michael Friendly, and Georges Monette
+Author: John Fox [aut], Michael Friendly [aut, cre], Georges Monette [ctb]
 Maintainer: Michael Friendly <friendly@yorku.ca>
-Depends: R (>= 2.10), car, graphics, stats, MASS
+Depends: R (>= 2.10), graphics, stats, car
+Imports: MASS
 Suggests: rgl, candisc, effects, reshape, gplots, nlme, lattice,
         reshape2, corrgram, FRB, animation
 LazyLoad: yes
@@ -18,8 +19,8 @@ License: GPL (>= 2)
 URL: http://datavis.ca/R/index.php#heplots
 Repository: CRAN
 Repository/R-Forge/Project: heplots
-Repository/R-Forge/Revision: 173
-Repository/R-Forge/DateTimeStamp: 2013-08-21 13:59:11
-Date/Publication: 2013-08-21 20:37:59
-Packaged: 2013-08-21 14:20:07 UTC; rforge
+Repository/R-Forge/Revision: 177
+Repository/R-Forge/DateTimeStamp: 2014-06-29 21:12:08
+Date/Publication: 2014-07-02 09:33:13
+Packaged: 2014-06-29 22:15:46 UTC; rforge
 NeedsCompilation: no
