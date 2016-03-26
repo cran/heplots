@@ -1,3 +1,18 @@
+Version 1.1-0 (2016-03-03)
+
+o Added boXM from biotools
+o Fleshed out boxM() with formula, lm, plot and summary methods
+o added plot.boxM() method
+o Added covEllipses() methods for plotting (possibly robust) covariance ellipses
+o Added colDevs() as a utility and for use in other multivariate tests.
+o Added data(AddHealth), a simple example of a one-way MANOVA with nice views [thx: Russell Warne]
+o summary.boxM() now returns the calculated statistics and can be used to construct other kinds of plots.
+o plot.boxM() gets a gplabel argument to provide a label for the group factor
+o pairs.mlm() gets a var.cex argument to control size of variable labels
+o Added logdetCI() for confidence intervals on log determinants of covariance matrices (experimental)
+o Now use logdetCI() in plot.boxM()
+
+
 Version 1.0-16 (2015-07-11)
 o use importsFrom for base packages
 

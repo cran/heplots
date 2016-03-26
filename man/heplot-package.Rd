@@ -10,12 +10,15 @@ Visualizing Hypothesis Tests in Multivariate Linear Models
 \description{
 The \code{heplots} package provides functions for visualizing hypothesis tests
 in multivariate linear models (MANOVA, multivariate multiple regression, MANCOVA,  and repeated measures designs). 
-They represent sums-of-squares-and-products matrices for linear hypotheses and for 
+HE plots represent sums-of-squares-and-products matrices for linear hypotheses and for 
 error using ellipses (in two dimensions), ellipsoids (in three dimensions),
 or by line segments in one dimension.
 See Fox, Friendly and Monette (2007) for a brief introduction
 and Friendly, Monette and Fox (2013) for a general discussion of the role of
 elliptical geometry in statistical understanding.
+
+Other topics now addressed here include robust MLMs and tests for equality of
+covariance matrices in MLMs.
 
 The package also provides a collection of  data sets illustrating
 a variety of multivariate linear models of the types listed above,
@@ -28,8 +31,8 @@ Several tutorial vignettes are also included.  See \code{vignette(package="heplo
 \tabular{ll}{
 Package: \tab heplots\cr
 Type: \tab Package\cr
-Version: \tab 1.0-16\cr
-Date: \tab 2015-07-11\cr
+Version: \tab 1.1-0\cr
+Date: \tab 2016-03-03\cr
 License: \tab GPL (>= 2), GPL version 2 or newer\cr
 }
 
