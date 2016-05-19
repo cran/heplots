@@ -17,8 +17,8 @@ See Fox, Friendly and Monette (2007) for a brief introduction
 and Friendly, Monette and Fox (2013) for a general discussion of the role of
 elliptical geometry in statistical understanding.
 
-Other topics now addressed here include robust MLMs and tests for equality of
-covariance matrices in MLMs.
+Other topics now addressed here include robust MLMs, tests for equality of
+covariance matrices in MLMs, and chi sqare Q-Q plots for MLMs.
 
 The package also provides a collection of  data sets illustrating
 a variety of multivariate linear models of the types listed above,
@@ -31,8 +31,8 @@ Several tutorial vignettes are also included.  See \code{vignette(package="heplo
 \tabular{ll}{
 Package: \tab heplots\cr
 Type: \tab Package\cr
-Version: \tab 1.1-0\cr
-Date: \tab 2016-03-03\cr
+Version: \tab 1.2-0\cr
+Date: \tab 2016-04-27\cr
 License: \tab GPL (>= 2), GPL version 2 or newer\cr
 }
 
@@ -113,9 +113,13 @@ Fox, J., Friendly, M. & Weisberg, S. (2013).
 
 Friendly, M.,  Monette, G. & Fox, J. (2013).
 	Elliptical Insights: Understanding Statistical Methods Through Elliptical Geometry.
-	\emph{Statistical Science}, 2013, 28 (1), 1-39,
+	\emph{Statistical Science}, 2013, \bold{28} (1), 1-39,
 	\url{http://datavis.ca/papers/ellipses.pdf}.
 
+Friendly, M. & Sigal, M. (2014)
+Recent Advances in Visualizing Multivariate Linear Models.
+\emph{Revista Colombiana de Estadistica}, \bold{37}, 261-283, 
+\url{http://ref.scielo.org/6gq33g}.
 }
 
 \keyword{package}

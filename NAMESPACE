@@ -18,9 +18,7 @@ import(car)
 import(stats)
 import(graphics)
 importFrom(MASS, psi.bisquare, cov.trob, cov.rob)
-#importFrom("graphics", "abline", "box", "lines", "par", "plot", "points", "polygon", "rect", "strheight", "strwidth", "text")
-#importFrom("graphics", "arrows", "dotchart")
-importFrom("grDevices", "col2rgb", "palette", "rgb")
+importFrom("grDevices", "col2rgb", "palette", "rgb", "gray")
 #importFrom("stats", ".getXlevels", "SSD", "aggregate", "alias", "cor", "cov", "df.residual", "estVar", "lm.wfit", "lsfit", "mahalanobis", "model.frame", "model.matrix", "model.response", "model.weights", "na.omit", "pf", "pnorm", "qchisq", "qf", "residuals", "runif", "var", "vcov")
 #importFrom("stats", "complete.cases", "formula", "getCall", "pchisq", "qnorm", "update")
 importFrom("utils", "packageDescription")
@@ -36,7 +34,10 @@ export(heplot, heplot3d, heplot1d, ellipse3d.axes, mark.H0, cross3d,
       boxM,
       covEllipses,
       colDevs,
-      logdetCI
+      logdetCI,
+    	bartlettTests, leveneTests,
+    	Mahalanobis,
+    	cqplot
   	)
 
 S3method(heplot, mlm)
@@ -64,3 +65,8 @@ S3method(covEllipses, default)
 S3method(covEllipses, data.frame)
 S3method(covEllipses, matrix)
 S3method(covEllipses, boxM)
+
+S3method(cqplot, default)
+S3method(cqplot, mlm)
+
+

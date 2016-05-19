@@ -1,3 +1,18 @@
+Version 1.2-0 (2016-04-27)
+
+o covEllipses() extended to more than two variables, giving a scatterplot matrix plot
+o plot.boxM() now can plot other measures of the eigenvalues of the covariance matrices,
+  useful for understanding the properties of the test.
+o added bartlettTests() for a collection of univariate Bartlett tests 
+o added leveneTests() for a collection of univariate Levene tests 
+o added NeuroCog data, a simple one-way MANOVA [Thx: Leah Hartman]
+o label.ellipse() now uses a much more flexible `label.pos` argument for positioning the
+  text labels used in heplot() and friends.
+o in coefplot.mlm(), now pass `label.pos` to label.ellipse()
+o added Mahalanobis() for classical and robust squared distances; handles missing data gracefully.
+o added SocialCog data [Thx: Leah Hartman]
+o added cqplot() as a plot method for an mlm and for multivariate data
+
 Version 1.1-0 (2016-03-03)
 
 o Added boXM from biotools
