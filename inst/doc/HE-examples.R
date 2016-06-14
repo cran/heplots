@@ -72,9 +72,11 @@ plastic.mod
 ###################################################
 ### code chunk number 8: plastic-tests
 ###################################################
-print(linearHypothesis(plastic.mod, c("rateHigh", "additiveHigh"), title="Main effects"), SSP=FALSE)
+print(linearHypothesis(plastic.mod, c("rateHigh", "additiveHigh"), title="Main effects"), 
+      SSP=FALSE)
 
-print(linearHypothesis(plastic.mod, c("rateHigh", "additiveHigh", "rateHigh:additiveHigh"), title="Groups"), SSP=FALSE)
+print(linearHypothesis(plastic.mod, c("rateHigh", "additiveHigh", "rateHigh:additiveHigh"), 
+                       title="Groups"), SSP=FALSE)
 
 
 ###################################################
