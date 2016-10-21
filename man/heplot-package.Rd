@@ -31,8 +31,8 @@ Several tutorial vignettes are also included.  See \code{vignette(package="heplo
 \tabular{ll}{
 Package: \tab heplots\cr
 Type: \tab Package\cr
-Version: \tab 1.3-1\cr
-Date: \tab 2016-06-06\cr
+Version: \tab 1.3-3\cr
+Date: \tab 2016-10-21\cr
 License: \tab GPL (>= 2), GPL version 2 or newer\cr
 }
 
@@ -116,10 +116,14 @@ Friendly, M.,  Monette, G. & Fox, J. (2013).
 	\emph{Statistical Science}, 2013, \bold{28} (1), 1-39,
 	\url{http://datavis.ca/papers/ellipses.pdf}.
 
-Friendly, M. & Sigal, M. (2014)
+Friendly, M. & Sigal, M. (2014).
 Recent Advances in Visualizing Multivariate Linear Models.
 \emph{Revista Colombiana de Estadistica}, \bold{37}, 261-283, 
 \url{http://ref.scielo.org/6gq33g}.
+
+Friendly, M. & Sigal, M. (2016).
+Graphical Methods for Multivariate Linear Models in Psychological Research: An R Tutorial.
+Submitted for publication.
 }
 
 \keyword{package}
