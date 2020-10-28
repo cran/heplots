@@ -24,6 +24,8 @@
 # last modified 26 Apr 2013 by M. Friendly 
 # -- modified ellipsoid to reduce striation (Thx: Duncan Murdoch)
 # -- changed default colors and default fill.alpha
+# 10/20/2020 Fixed moire problem in heplot3d when dfh <3 (Thx: Duncan Murdoch)
+# -- uses back="culled" & depth_mask=FALSE properties
 
 savedvars <- new.env(parent=emptyenv())
 
@@ -79,7 +81,8 @@ function(mod, ...) UseMethod("heplot3d")
 				warn.rank=FALSE,  
 				...) {              
 	
-	ellipsoid <- function(center, shape, radius=1, label="", col, df=Inf, shade=TRUE, alpha=0.1, wire=TRUE){
+	ellipsoid <- function(center, shape, radius=1, label="", col, 
+	                      df=Inf, shade=TRUE, alpha=0.1, wire=TRUE){
 		# adapted from the shapes3d demo in the rgl package and from the Rcmdr package
 		# modified to return the bbox of the ellipsoid
 		degvec <- seq(0, 2*pi, length=segments)
@@ -108,9 +111,13 @@ function(mod, ...) UseMethod("heplot3d")
 			wire <- TRUE
 			shade <- FALSE
 		}
-		if (verbose) print(paste("col:", col, " shade:", shade, " alpha:", alpha, " wire:", wire, sep=" "))
-		if(shade) rgl::shade3d(ellips, col=col, alpha=alpha, lit=TRUE)
-		if(wire) rgl::wire3d(ellips, col=col, size=lwd, lit=FALSE)
+		back <- if (df < 3) "culled" else "filled"
+		depth_mask <- if (alpha <.8) FALSE else TRUE
+		if (verbose) cat(paste("df=", df, "col:", col, " shade:", shade, " alpha:", alpha, 
+		                         " wire:", wire, "back:", back, "depth_mask:", depth_mask,
+		                       sep=" "), "\n")
+		if(shade) rgl::shade3d(ellips, col=col, alpha=alpha, lit=TRUE, back=back, depth_mask=depth_mask)
+		if(wire) rgl::wire3d(ellips, col=col, size=lwd, lit=FALSE, back=back, depth_mask=depth_mask)
 		bbox <- matrix(rgl::par3d("bbox"), nrow=2)
 		ranges <- apply(bbox, 2, diff)
 		if (!is.null(label) && label !="")
@@ -141,7 +148,7 @@ function(mod, ...) UseMethod("heplot3d")
 			else stop("imatrix argument requires car 2.0-0 or later")
 		} 
 	}   
-	if (verbose) print(manova)    
+#	if (verbose) print(manova)    
 #	response.names <- rownames(manova$SSPE)
 	if (is.null(idata) && is.null(imatrix)) {
 		Y <- model.response(data) 
@@ -216,8 +223,10 @@ if (!add){
 	
 	if (error.ellipsoid) {
 		E.ellipsoid <- ellipsoid(gmean, E, radius, col=E.col, label=err.label, 
-				shade=shade[[length(shade)]], alpha=shade.alpha[[length(shade.alpha)]],
-				wire=wire[[length(wire)]])
+		                         df=dfe,
+				                    shade=shade[[length(shade)]], 
+				                    alpha=shade.alpha[[length(shade.alpha)]],
+				                    wire=wire[[length(wire)]])
 		colnames(E.ellipsoid) <- vars
 	}       
 	term.labels <- if (n.terms == 0) NULL
@@ -240,7 +249,8 @@ if (!add){
 			if((!shade[term]) & !wire[term]) 
 				warning(paste("shate and wire are both FALSE for ", term), call.=FALSE)
 			H.ellipsoid[[term]] <- ellipsoid(gmean, H, radius, col=col[term], label=term.labels[term], 
-					df=dfh, shade=shade[term], alpha=shade.alpha[term], wire=wire[term])  
+					                      df=dfh, shade=shade[term], alpha=shade.alpha[term], 
+					                      wire=wire[term])  
 			colnames(H.ellipsoid[[term]]) <- vars
 		}
 	hyp.labels <- if (n.hyp == 0) NULL
@@ -287,7 +297,8 @@ if (!add){
 				loc <- match(factor.names[j], terms, nomatch=0)
 				pcol <- if (loc>0) col[loc] else "black"
 				for (m in 1:nrow(means)) {
-					ellipsoid(unlist(means[m, 2:4]), diag((ranges/100))^2, col=pcol, wire=FALSE, alpha=0.8)
+					ellipsoid(unlist(means[m, 2:4]), diag((ranges/100))^2, col=pcol, 
+					          wire=FALSE, alpha=0.8)
 #            		points3d(unlist(means[m, 2:4]), size=3, color=pcol)
 #					spheres3d(unlist(means[m, 2:4]), radius=diag((ranges/30))^2, color=pcol)
 				}

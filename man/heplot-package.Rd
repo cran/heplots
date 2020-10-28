@@ -18,7 +18,7 @@ and Friendly, Monette and Fox (2013) for a general discussion of the role of
 elliptical geometry in statistical understanding.
 
 Other topics now addressed here include robust MLMs, tests for equality of
-covariance matrices in MLMs, and chi sqare Q-Q plots for MLMs.
+covariance matrices in MLMs, and chi square Q-Q plots for MLMs.
 
 The package also provides a collection of  data sets illustrating
 a variety of multivariate linear models of the types listed above,
@@ -31,8 +31,8 @@ Several tutorial vignettes are also included.  See \code{vignette(package="heplo
 \tabular{ll}{
 Package: \tab heplots\cr
 Type: \tab Package\cr
-Version: \tab 1.3-3\cr
-Date: \tab 2016-10-21\cr
+Version: \tab 1.3-7\cr
+Date: \tab 2020-04-26\cr
 License: \tab GPL (>= 2), GPL version 2 or newer\cr
 }
 
@@ -83,7 +83,7 @@ the current list.
 \author{
 John Fox, Michael Friendly, and Georges Monette
 
-Maintainer: Michael Friendly, <friendly@yorku.ca>, \url{http://datavis.ca}
+Maintainer: Michael Friendly, \email{friendly@yorku.ca}, \url{http://datavis.ca}
 }
 
 \references{
@@ -91,7 +91,7 @@ Friendly, M. (2006).
   Data Ellipses, HE Plots and Reduced-Rank Displays for Multivariate Linear 
   Models: SAS Software and Examples. 
   \emph{Journal of Statistical Software}, 17(6), 1-42.
-  \url{http://www.jstatsoft.org/v17/i06/}
+  \url{https://www.jstatsoft.org/v17/i06/}
 
 Friendly, M. (2007).
   HE plots for Multivariate General Linear Models.
@@ -101,10 +101,10 @@ Friendly, M. (2007).
 Fox, J., Friendly, M. & Monette, G. (2007).
   Visual hypothesis tests in multivariate linear models: The heplots package for R. 
   \emph{DSC 2007: Directions in Statistical Computing}.
-  \url{http://socserv.socsci.mcmaster.ca/jfox/heplots-dsc-paper.pdf}
+  \url{https://socialsciences.mcmaster.ca/jfox/heplots-dsc-paper.pdf}
 
 Friendly, M. (2010). HE Plots for Repeated Measures Designs. \emph{Journal of Statistical Software},
-  37(4), 1-40. URL \url{http://www.jstatsoft.org/v37/i04/}.
+  37(4), 1-40. URL \url{https://www.jstatsoft.org/v37/i04/}.
 
 Fox, J., Friendly, M. & Weisberg, S. (2013).
 	Hypothesis Tests for Multivariate Linear Models Using the car Package.
@@ -118,8 +118,8 @@ Friendly, M.,  Monette, G. & Fox, J. (2013).
 
 Friendly, M. & Sigal, M. (2014).
 Recent Advances in Visualizing Multivariate Linear Models.
-\emph{Revista Colombiana de Estadistica}, \bold{37}, 261-283, 
-\url{http://ref.scielo.org/6gq33g}.
+\emph{Revista Colombiana de Estadistica}, \bold{37}, 261-283 
+% \url{http://ref.scielo.org/6gq33g}.
 
 Friendly, M. & Sigal, M. (2016).
 Graphical Methods for Multivariate Linear Models in Psychological Research: An R Tutorial.

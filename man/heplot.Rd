@@ -81,7 +81,7 @@ heplot(mod, ...)
     ellipse for the intercept even if it is in the MANOVA table.}
   \item{type}{``type'' of sum-of-squares-and-products matrices to compute; one of
     \code{"II"}, \code{"III"}, \code{"2"}, or \code{"3"}, where \code{"II"} is
-    the default (and \code{"2"} is a synomym).}
+    the default (and \code{"2"} is a synonym).}
   \item{idata}{an optional data frame giving a factor or factors defining the 
     intra-subject model for multivariate repeated-measures data. 
     See Friendly (2010) and Details of \code{\link[car]{Anova}} for an explanation of the intra-subject design
@@ -118,7 +118,7 @@ heplot(mod, ...)
     scale as the error ellipse.}  
   \item{level}{equivalent coverage of ellipse for normally-distributed
     errors, defaults to \code{0.68}, giving a standard 1 SD bivariate ellipse.}
-  \item{alpha}{signficance level for Roy's greatest-root test statistic; if
+  \item{alpha}{significance level for Roy's greatest-root test statistic; if
     \code{size="evidence"}, then the
     hypothesis ellipse is scaled so that it just touches the error ellipse at the
     specified alpha level; a larger hypothesis ellipse \emph{somewhere} in the space of
@@ -238,7 +238,7 @@ Friendly, M. (2006).
   Data Ellipses, HE Plots and Reduced-Rank Displays for Multivariate Linear 
   Models: SAS Software and Examples 
   \emph{Journal of Statistical Software}, \bold{17}(6), 1--42.
-  \url{http://www.jstatsoft.org/v17/i06/}
+  \url{https://www.jstatsoft.org/v17/i06/}
 
 Friendly, M. (2007).
   HE plots for Multivariate General Linear Models.
@@ -246,7 +246,7 @@ Friendly, M. (2007).
   \url{http://datavis.ca/papers/jcgs-heplots.pdf} 
 
 Friendly, Michael (2010). HE Plots for Repeated Measures Designs. \emph{Journal of Statistical Software},
-  37(4), 1-40. URL \url{http://www.jstatsoft.org/v37/i04/}.
+  37(4), 1-40. URL \url{https://www.jstatsoft.org/v37/i04/}.
 
 Fox, J., Friendly, M. & Weisberg, S. (2013).
 Hypothesis Tests for Multivariate Linear Models Using the car Package.
@@ -255,8 +255,8 @@ Hypothesis Tests for Multivariate Linear Models Using the car Package.
 
 Friendly, M. & Sigal, M. (2014)
 Recent Advances in Visualizing Multivariate Linear Models.
-\emph{Revista Colombiana de Estadistica}, \bold{37}, 261-283, 
-\url{http://ref.scielo.org/6gq33g}.
+\emph{Revista Colombiana de Estadistica}, \bold{37}, 261-283. 
+%\url{http://ref.scielo.org/6gq33g}.
 
 }
 

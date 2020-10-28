@@ -19,12 +19,12 @@
   \item{x}{an object of class \code{mlm}.}
   \item{variables}{indices or names of the three of more response variables 
     to be plotted; defaults to all of the responses.}
-  \item{var.labels}{labels for the variables plotted in the diagnonal panels;
+  \item{var.labels}{labels for the variables plotted in the diagonal panels;
     defaults to names of the response variables.}
   \item{var.cex}{character expansion for the variable labels.}
   \item{type}{``type'' of sum-of-squares-and-products matrices to compute; one of
     \code{"II"}, \code{"III"}, \code{"2"}, or \code{"3"}, where \code{"II"} is
-    the default (and \code{"2"} is a synomym).}
+    the default (and \code{"2"} is a synonym).}
   \item{idata}{an optional data frame giving a factor or factors defining the 
     intra-subject model for multivariate repeated-measures data. 
     See Details of \code{\link[car]{Anova}} for an explanation of the intra-subject design and for further explanation 
@@ -70,7 +70,7 @@ Friendly, M. (2006).
   Data Ellipses, HE Plots and Reduced-Rank Displays for Multivariate Linear 
   Models: SAS Software and Examples 
   \emph{Journal of Statistical Software}, 17(6), 1-42.
-  \url{http://www.jstatsoft.org/v17/i06/}
+  \url{https://www.jstatsoft.org/v17/i06/}
 
 Friendly, M. (2007).
   HE plots for Multivariate General Linear Models.

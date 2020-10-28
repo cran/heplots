@@ -65,7 +65,7 @@ heplot3d(mod, ...)
     ellipsoid for the intercept even if it is in the MANOVA table.}
   \item{type}{``type'' of sum-of-squares-and-products matrices to compute; one of
     \code{"II"}, \code{"III"}, \code{"2"}, or \code{"3"}, where \code{"II"} is
-    the default (and \code{"2"} is a synomym).}
+    the default (and \code{"2"} is a synonym).}
   \item{idata}{an optional data frame giving a factor or factors defining the 
     intra-subject model for multivariate repeated-measures data. 
     See Details of \code{\link[car]{Anova}} for an explanation of the intra-subject design and for further explanation 
@@ -93,17 +93,17 @@ heplot3d(mod, ...)
     computation in repeated calls.}
   \item{size}{how to scale the hypothesis ellipsoid relative to the error
     ellipsoid; if \code{"evidence"}, the default, the scaling is done so that
-    a ``significant'' hypothesis elliposid extends outside of the error
+    a ``significant'' hypothesis ellipsoid extends outside of the error
     ellipsoid; if \code{"effect.size"}, the hypothesis ellipsoid is on the same
     scale as the error ellipsoid.}  
   \item{level}{equivalent coverage of ellipsoid for normally-distributed
     errors, defaults to \code{0.68}.}
-  \item{alpha}{signficance level for Roy's greatest-root test statistic; if
+  \item{alpha}{significance level for Roy's greatest-root test statistic; if
     \code{size="evidence"}, then the
     hypothesis ellipsoid is scaled so that it just touches the error ellipsoid at the
-    specified alpha level; a larger hypothesis elllipsoid therefore indicates
+    specified alpha level; a larger hypothesis ellipsoid therefore indicates
     statistical significance; defaults to \code{0.05}.}
-  \item{segments}{number of segments composing each elliposid; defaults to
+  \item{segments}{number of segments composing each ellipsoid; defaults to
     \code{40}.}
   \item{col}{a color or vector of colors to use in plotting ellipsoids; the first
     color is used for the error ellipsoid; the remaining colors --- recycled
@@ -178,7 +178,7 @@ Friendly, M. (2006).
   Data Ellipses, HE Plots and Reduced-Rank Displays for Multivariate Linear 
   Models: SAS Software and Examples 
   \emph{Journal of Statistical Software}, 17(6), 1-42.
-  \url{http://www.jstatsoft.org/v17/i06/}
+  \url{https://www.jstatsoft.org/v17/i06/}
 
 Friendly, M. (2007).
   HE plots for Multivariate General Linear Models.

@@ -2,11 +2,11 @@
 \alias{Parenting}
 \docType{data}
 \title{
-Father Parenting Competance
+Father Parenting Competence
 }
 \description{
 The data, from an exercise given by Meyers et al. (2006)
-relates to 60 fathers assessed on three subscales of a Perceived Parenting Competance Scale.
+relates to 60 fathers assessed on three subscales of a Perceived Parenting Competence Scale.
 The fathers were selected from three groups:
 (a) fathers of a child with no disabilities;
 (b) fathers with a physically disabled child;
@@ -29,7 +29,7 @@ The scores on the response variables are discrete.
 Meyers, L. S., Gamst, G, & Guarino, A. J. (2006).
 \emph{Applied Multivariate Research: Design and Interpretation},
 Thousand Oaks, CA: Sage Publications,
-\url{www.sagepub.com/amrStudy}, Exercises 10B.
+\url{https://studysites.sagepub.com/amrStudy/}, Exercises 10B.
 }
 %\references{
 %%%  ~~ possibly secondary sources and usages ~~

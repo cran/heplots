@@ -50,7 +50,7 @@ For univariate linear models, classical \eqn{\eta^2} = SSH / SST and partial
 \eqn{\eta^2} = SSH / (SSH + SSE).  These are identical in one-way designs.
 
 Partial eta-squared describes the proportion of total variation attributable to a given factor, 
-partialling out (excluding) other factors from the total nonerror variation.
+partialing out (excluding) other factors from the total nonerror variation.
 These are commonly used as measures of effect size or measures
 of (non-linear) strength of association in ANOVA models.
 
@@ -82,7 +82,7 @@ Practical methods for computing power in testing the Multivariate General Linear
 \emph{Computational Statistics and Data Analysis}, 2, 143-158.
 
 Muller, K. E. and LaVange, L. M. and Ramey, S. L. and Ramey, C. T. (1992).
-Power Claculations for General Linear Multivariate Models Including Repeated Measures Applications.
+Power Calculations for General Linear Multivariate Models Including Repeated Measures Applications.
 \emph{Journal of the American Statistical Association}, 87, 1209-1226.
 
 }

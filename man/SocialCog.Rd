@@ -5,10 +5,10 @@
 Social Cognitive Measures in Psychiatric Groups
 }
 \description{
-The general purpose of the study (Hartman, 2016, Heinrichs etal. (2015)) was to evaluate patterns and levels 
+The general purpose of the study (Hartman, 2016, Heinrichs et al. (2015)) was to evaluate patterns and levels 
 of performance on neurocognitive measures among individuals with schizophrenia and schizoaffective disorder 
 using a well-validated, comprehensive neurocognitive battery specifically designed for individuals with psychosis 
-(Heinrichs etal. (2008)) 
+(Heinrichs et al. (2008)) 
 
 The data here are for a subset of the observations in \code{\link{NeuroCog}} for which
 measures on various scales of social cognition were also available.
@@ -40,7 +40,7 @@ or situational causal attributions to positive and negative social events.
 See \code{\link{NeuroCog}} for a description of the sample.
 Only those with complete data on all the social cognitive measures are included in this data set.
 
-There is one extreme outier in the schizophrenia group and other possible
+There is one extreme outlier in the schizophrenia group and other possible
 outliers in the control group, left in here for tutorial purposes.
 }
 \source{
