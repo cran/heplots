@@ -364,8 +364,10 @@ heplot(rohwer.mod, col=colors,  variables=c(1,3),
 ### code chunk number 44: rohwer-HE3D (eval = FALSE)
 ###################################################
 ## colors <- c("pink", "blue", rep("black",5), "#969696")
+## if(requireNamespace("rgl")){
 ## heplot3d(rohwer.mod, col=colors,
 ## 	hypotheses=list("Regr" = c("n", "s", "ns", "na", "ss")))
+## }
 
 
 ###################################################
