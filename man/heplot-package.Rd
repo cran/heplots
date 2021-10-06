@@ -9,7 +9,7 @@ Visualizing Hypothesis Tests in Multivariate Linear Models
 
 \description{
 The \code{heplots} package provides functions for visualizing hypothesis tests
-in multivariate linear models (MANOVA, multivariate multiple regression, MANCOVA,  and repeated measures designs). 
+in multivariate linear models (MANOVA, multivariate multiple regression, MANCOVA, and repeated measures designs). 
 HE plots represent sums-of-squares-and-products matrices for linear hypotheses and for 
 error using ellipses (in two dimensions), ellipsoids (in three dimensions),
 or by line segments in one dimension.
@@ -31,8 +31,8 @@ Several tutorial vignettes are also included.  See \code{vignette(package="heplo
 \tabular{ll}{
 Package: \tab heplots\cr
 Type: \tab Package\cr
-Version: \tab 1.3-8\cr
-Date: \tab 2021-01-20\cr
+Version: \tab 1.3-9\cr
+Date: \tab 2021-10-06\cr
 License: \tab GPL (>= 2), GPL version 2 or newer\cr
 }
 
@@ -91,7 +91,8 @@ Friendly, M. (2006).
   Data Ellipses, HE Plots and Reduced-Rank Displays for Multivariate Linear 
   Models: SAS Software and Examples. 
   \emph{Journal of Statistical Software}, 17(6), 1-42.
-  \url{https://www.jstatsoft.org/v17/i06/}
+%  \url{https://www.jstatsoft.org/v17/i06/}
+  \doi{10.18637/jss.v017.i06}
 
 Friendly, M. (2007).
   HE plots for Multivariate General Linear Models.
@@ -104,7 +105,9 @@ Fox, J., Friendly, M. & Monette, G. (2007).
   \url{https://socialsciences.mcmaster.ca/jfox/heplots-dsc-paper.pdf}
 
 Friendly, M. (2010). HE Plots for Repeated Measures Designs. \emph{Journal of Statistical Software},
-  37(4), 1-40. URL \url{https://www.jstatsoft.org/v37/i04/}.
+  37(4), 1-40. 
+%  URL \url{https://www.jstatsoft.org/v37/i04/}.
+  \doi{10.18637/jss.v037.i04}
 
 Fox, J., Friendly, M. & Weisberg, S. (2013).
 	Hypothesis Tests for Multivariate Linear Models Using the car Package.
