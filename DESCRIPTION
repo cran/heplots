@@ -1,8 +1,8 @@
 Package: heplots
 Type: Package
 Title: Visualizing Hypothesis Tests in Multivariate Linear Models
-Version: 1.4-1
-Date: 2022-10-01
+Version: 1.4-2
+Date: 2022-10-09
 Authors@R: c(
             person(given = "Michael", 
                    family = "Friendly", 
@@ -36,10 +36,10 @@ URL: http://friendly.github.io/heplots/
 RoxygenNote: 5.0.1
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2022-10-01 20:45:21 UTC; friendly
+Packaged: 2022-10-19 22:49:03 UTC; friendly
 Author: Michael Friendly [aut, cre] (<https://orcid.org/0000-0002-3237-0941>),
   John Fox [aut] (<https://orcid.org/0000-0002-1196-8012>),
   Georges Monette [aut],
   Phil Chalmers [ctb]
 Repository: CRAN
-Date/Publication: 2022-10-01 22:00:02 UTC
+Date/Publication: 2022-10-19 23:35:06 UTC
