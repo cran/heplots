@@ -1,7 +1,20 @@
+## Version 1.6.2 (2024-02-14)
+
+* Add `peng` dataset, a version of `palmerpenguins::penguins`
+* Correct documentation problems from Roxygen 7.3.1 (@docType)
+
+## Version 1.6.1 (2023-12-05)
+
+* add warning to label.ellipse() if length(label.pos) > 1
+* fixed label.pos in `coefplot.mlm()`
+* add `ellipse.axes()` to draw axes of a covariance ellipse
+* add `ellipse.box()` to draw conjugate axes of a covariance ellipse
+
 ## Version 1.6.0 (2023-08-30)
 
 * converted pkg to roxygen documentation
 * now Suggests: car rather than Depends:
+* fix CITATION authors
 
 ## Version 1.5.0 (2023-05-30)
 

@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   message = FALSE,
   warning = FALSE,
@@ -24,18 +24,18 @@ library(car)
 data(Plastic, package="heplots")
 str(Plastic)
 
-## ---- plastic-mod-------------------------------------------------------------
+## ----plastic-mod--------------------------------------------------------------
 plastic.mod <- lm(cbind(tear, gloss, opacity) ~ rate*additive, data=Plastic)
 Anova(plastic.mod, test.statistic="Roy")
 
-## ---- plastic-univar----------------------------------------------------------
+## ----plastic-univar-----------------------------------------------------------
 Anova(update(plastic.mod, tear ~ .))
 
 Anova(update(plastic.mod, gloss ~ .))
 
 Anova(update(plastic.mod, opacity ~ .))
 
-## ---- plastic1a, echo=-1------------------------------------------------------
+## ----plastic1a, echo=-1-------------------------------------------------------
 par(mar = c(4,4,1,1)+.1)
 ## Compare evidence and effect scaling 
 colors = c("red", "darkblue", "darkgreen", "brown")
@@ -45,7 +45,7 @@ heplot(plastic.mod, size="evidence",
 heplot(plastic.mod, size="effect", 
        add=TRUE, lwd=5, term.labels=FALSE, col=colors)
 
-## ---- plastic1----------------------------------------------------------------
+## ----plastic1-----------------------------------------------------------------
 par(mar = c(4,4,1,1)+.1)
 # Compare evidence and effect scaling 
 colors = c("red", "darkblue", "darkgreen", "brown")
@@ -63,17 +63,17 @@ text(intMeans[,1], intMeans[,2], rownames(intMeans),
 lines(intMeans[c(1,3),1], intMeans[c(1,3),2], col="brown")
 lines(intMeans[c(2,4),1], intMeans[c(2,4),2], col="brown")
 
-## ---- plastic-mod1------------------------------------------------------------
+## ----plastic-mod1-------------------------------------------------------------
 plastic.mod
 
-## ---- plastic-tests-----------------------------------------------------------
+## ----plastic-tests------------------------------------------------------------
 print(linearHypothesis(plastic.mod, c("rateHigh", "additiveHigh"), title="Main effects"), 
       SSP=FALSE)
 
 print(linearHypothesis(plastic.mod, c("rateHigh", "additiveHigh", "rateHigh:additiveHigh"), 
                        title="Groups"), SSP=FALSE)
 
-## ---- plastic2----------------------------------------------------------------
+## ----plastic2-----------------------------------------------------------------
 par(mar = c(4,4,1,1)+.1)
 heplot(plastic.mod, 
        hypotheses=list("Group" =  c("rateHigh", "additiveHigh", "rateHigh:additiveHigh ")),
@@ -85,38 +85,38 @@ heplot(plastic.mod,
        add=TRUE,
        col=c(colors, "darkgreen"), cex=1.25)
 
-## ---- plastic1-HE3D-code, eval=FALSE------------------------------------------
+## ----plastic1-HE3D-code, eval=FALSE-------------------------------------------
 #  colors = c("pink", "darkblue", "darkgreen", "brown")
 #  heplot3d(plastic.mod, col=colors)
 
-## ---- plastic1-HE3D-----------------------------------------------------------
+## ----plastic1-HE3D------------------------------------------------------------
 knitr::include_graphics("fig/plastic-HE3D.png")
 
-## ---- MJdata------------------------------------------------------------------
+## ----MJdata-------------------------------------------------------------------
 data(MockJury, package = "heplots")
 str(MockJury)
 
-## ---- MJdata1-----------------------------------------------------------------
+## ----MJdata1------------------------------------------------------------------
 table(MockJury$Attr)
 table(MockJury$Attr, MockJury$Crime)
 
-## ---- jury.mod1---------------------------------------------------------------
+## ----jury.mod1----------------------------------------------------------------
 (jury.mod1 <- lm( cbind(phyattr, happy, independent, sophisticated) ~ Attr, data=MockJury))
 Anova(jury.mod1, test="Roy")
 
-## ---- jury-mod1-HE------------------------------------------------------------
+## ----jury-mod1-HE-------------------------------------------------------------
 par(mar = c(4,4,1,1)+.1)
 heplot(jury.mod1, main="HE plot for manipulation check",
        fill = TRUE, fill.alpha = 0.1)
 
-## ---- jury-mod1-pairs---------------------------------------------------------
+## ----jury-mod1-pairs----------------------------------------------------------
 pairs(jury.mod1)
 
-## ---- jury-can1a--------------------------------------------------------------
+## ----jury-can1a---------------------------------------------------------------
 jury.can <- candisc(jury.mod1)
 jury.can
 
-## ---- jury-can1---------------------------------------------------------------
+## ----jury-can1----------------------------------------------------------------
 par(xpd=TRUE, mar=c(4,4,3,1)+.1)
 heplot(jury.can, 
        rev.axes = TRUE,
@@ -124,22 +124,22 @@ heplot(jury.can,
        prefix="Canonical dimension", 
        main="Canonical HE plot")
 
-## ---- jury-mod2---------------------------------------------------------------
+## ----jury-mod2----------------------------------------------------------------
 # influence of Attr of photo and nature of crime on Serious and Years
 jury.mod2 <- lm( cbind(Serious, Years) ~ Attr * Crime, data=MockJury)
 Anova(jury.mod2, test="Roy")
 
-## ---- jury-mod2-HE------------------------------------------------------------
+## ----jury-mod2-HE-------------------------------------------------------------
 par(mar=c(4,4,3,1)+.1)
 heplot(jury.mod2)
 
-## ---- jury-mod3-HE------------------------------------------------------------
+## ----jury-mod3-HE-------------------------------------------------------------
 # stepdown test (ANCOVA), controlling for Serious
 jury.mod3 <- lm( Years ~ Serious + Attr * Crime, data=MockJury)
 t(coef(jury.mod3))
 Anova(jury.mod3)
 
-## ---- jury-mod3-eff-----------------------------------------------------------
+## ----jury-mod3-eff------------------------------------------------------------
 library(effects)
 jury.eff <- allEffects(jury.mod3)
 plot(jury.eff, ask=FALSE)
@@ -147,30 +147,30 @@ plot(jury.eff, ask=FALSE)
 ## ----skulls-------------------------------------------------------------------
 knitr::include_graphics("fig/skulls.jpg")
 
-## ---- skulls1-----------------------------------------------------------------
+## ----skulls1------------------------------------------------------------------
 data(Skulls)
 str(Skulls)
 table(Skulls$epoch)
 
-## ---- skulls2-----------------------------------------------------------------
+## ----skulls2------------------------------------------------------------------
 # make shorter labels for epochs
 Skulls$epoch <- factor(Skulls$epoch, labels=sub("c","",levels(Skulls$epoch)))
 # assign better variable labels
 vlab <- c("maxBreadth", "basibHeight", "basialLength", "nasalHeight")
 
-## ---- skulls3-----------------------------------------------------------------
+## ----skulls3------------------------------------------------------------------
 means <- aggregate(cbind(mb, bh, bl, nh) ~ epoch, data=Skulls, FUN=mean)[,-1]
 rownames(means) <- levels(Skulls$epoch)
 means
 
-## ---- skulls4-----------------------------------------------------------------
+## ----skulls4------------------------------------------------------------------
 pairs(means, vlab,
       panel = function(x, y) {
           text(x, y, levels(Skulls$epoch))
           lines(x,y)
       })
 
-## ---- skulls-bwplot-----------------------------------------------------------
+## ----skulls-bwplot------------------------------------------------------------
 library(lattice)
 library(reshape2)
 sklong <- melt(Skulls, id="epoch")
@@ -185,22 +185,22 @@ bwplot(value ~ epoch | variable, data=sklong, scales="free",
 		panel.linejoin(x,y, col="red", ...)
 	}) 
 
-## ---- skulls5-----------------------------------------------------------------
+## ----skulls5------------------------------------------------------------------
 # fit manova model
 sk.mod <- lm(cbind(mb, bh, bl, nh) ~ epoch, data=Skulls)
 Anova(sk.mod)
 
-## ---- skulls5a----------------------------------------------------------------
+## ----skulls5a-----------------------------------------------------------------
 coef(sk.mod)
 
-## ---- skulls6-----------------------------------------------------------------
+## ----skulls6------------------------------------------------------------------
 coef(sk.mod)["epoch.L",]
 print(linearHypothesis(sk.mod, "epoch.L"), SSP=FALSE) # linear component
 
-## ---- skulls6a----------------------------------------------------------------
+## ----skulls6a-----------------------------------------------------------------
 print(linearHypothesis(sk.mod, c("epoch.Q", "epoch.C", "epoch^4")), SSP=FALSE)
 
-## ---- skulls-HE-pairs---------------------------------------------------------
+## ----skulls-HE-pairs----------------------------------------------------------
 pairs(sk.mod, variables=c(1,4,2,3),
 	hypotheses=list(Lin="epoch.L", 
 	                NonLin=c("epoch.Q", "epoch.C", "epoch^4")), 
