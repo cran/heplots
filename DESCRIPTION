@@ -1,8 +1,8 @@
 Package: heplots
 Type: Package
 Title: Visualizing Hypothesis Tests in Multivariate Linear Models
-Version: 1.6.2
-Date: 2024-02-14
+Version: 1.7.0
+Date: 2024-05-01
 Authors@R: c(
             person(given = "Michael", 
                    family = "Friendly", 
@@ -28,7 +28,8 @@ Imports: car, MASS, graphics, grDevices, stats, magrittr, purrr, rgl,
         tibble
 Suggests: candisc, carData, effects, reshape, gplots, nlme, lattice,
         reshape2, corrgram, animation, mvinfluence, knitr, rmarkdown,
-        dplyr, tidyr, ggplot2, bookdown
+        dplyr, tidyr, ggplot2, bookdown, patchwork, tinytable, glue,
+        here, Sleuth2, rrcov, archdata, qqtest
 LazyLoad: yes
 LazyData: yes
 BugReports: https://github.com/friendly/heplots/issues
@@ -38,11 +39,11 @@ RoxygenNote: 7.3.1
 Encoding: UTF-8
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2024-02-15 15:59:57 UTC; friendly
+Packaged: 2024-05-02 21:01:07 UTC; friendly
 Author: Michael Friendly [aut, cre] (<https://orcid.org/0000-0002-3237-0941>),
   John Fox [aut] (<https://orcid.org/0000-0002-1196-8012>),
   Georges Monette [aut] (<https://orcid.org/0000-0003-0076-5532>),
   Phil Chalmers [ctb] (<https://orcid.org/0000-0001-5332-2810>),
   Duncan Murdoch [ctb]
 Repository: CRAN
-Date/Publication: 2024-02-15 17:10:03 UTC
+Date/Publication: 2024-05-02 21:50:02 UTC

@@ -27,8 +27,8 @@ A data frame with 114 observations on the following 17 variables.
 }
 }
 \source{
-From Dr. Wuensch's StatData Page,
-\url{http://core.ecu.edu/psyc/wuenschk/StatData/PLASTER.dat}
+Originally obtained from Dr. Wuensch's StatData page,
+\url{https://core.ecu.edu/wuenschk/StatData/PLASTER.dat}
 }
 \description{
 Male participants were shown a picture of one of three young women.  Pilot
@@ -81,4 +81,6 @@ Data from the thesis by Plaster, M. E. (1989). \emph{Inmates as
 mock jurors: The effects of physical attractiveness upon juridic decisions.}
 M.A. thesis, Greenville, NC: East Carolina University.
 }
+\concept{MANOVA}
+\concept{candisc}
 \keyword{datasets}

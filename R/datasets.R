@@ -1,6 +1,6 @@
 
 
-#' Adolescent Health Data
+#' Adolescent Mental Health Data
 #' 
 #' This data was taken from the National Longitudinal Study of Adolescent
 #' Health.  It is a cross-sectional sample of participants from grades 7--12,
@@ -31,16 +31,49 @@
 #' \emph{Practical Assessment, Research & Evaluation}, 19 (1).
 #' \url{https://scholarworks.umass.edu/pare/vol19/iss1/17/}
 #' @keywords datasets
+#' @concept MANOVA
+#' @concept ordered
 #' @examples
 #' 
 #' data(AddHealth)
+#' 
+#' if(require(dplyr) & require(ggplot2)) {
+#' # find means & std.errors by grade
+#' means <- AddHealth |>
+#' group_by(grade) |>
+#'   summarise(
+#'     n = n(),
+#'     dep_se = sd(depression, na.rm = TRUE) / sqrt(n),
+#'     anx_se = sd(anxiety, na.rm = TRUE) / sqrt(n),
+#'     depression = mean(depression),
+#'     anxiety = mean(anxiety) ) |> 
+#'   relocate(depression, anxiety, .after = grade) |>
+#'   print()
+#'   
+#' # plot means with std.error bars
+#' ggplot(data = means, aes(x = anxiety, y = depression, 
+#' color = grade)) +
+#'   geom_point(size = 3) +
+#'   geom_errorbarh(aes(xmin = anxiety - anx_se, 
+#'                      xmax = anxiety + anx_se)) +
+#'   geom_errorbar(aes(ymin = depression - dep_se, 
+#'                     ymax = depression + dep_se)) +
+#'   geom_line(aes(group = 1), linewidth = 1.5) +
+#'   geom_label(aes(label = grade), 
+#'              nudge_x = -0.015, nudge_y = 0.02) +
+#'   scale_color_discrete(guide = "none") +
+#'   theme_bw(base_size = 15)
+#' }
+#' 
 #' # fit mlm
-#' AH.mod <- lm(cbind(depression, anxiety) ~ grade, data=AddHealth)
+#' AH.mod <- lm(cbind(anxiety, depression) ~ grade, data=AddHealth)
 #' 
 #' car::Anova(AH.mod)
 #' summary(car::Anova(AH.mod))
 #' 
-#' heplot(AH.mod, hypotheses="grade.L", fill=c(TRUE, FALSE))
+#' heplot(AH.mod, hypotheses="grade.L", 
+#'        fill=c(TRUE, FALSE),
+#'        level = 0.4)
 #' 
 NULL
 
@@ -86,6 +119,8 @@ NULL
 #' This data set is identical to \code{\link[Sleuth2]{ex1605}} in the
 #' \code{Sleuth2} package.
 #' @keywords datasets
+#' @concept MMRA
+#' @concept repeated
 #' @examples
 #' 
 #' # Treat as multivariate regression problem
@@ -197,6 +232,7 @@ NULL
 #' Other Halictine Species \emph{Journal of Insect Behavior}, \bold{13},
 #' 627-650.
 #' @keywords datasets
+#' @concept MANOVA
 #' @examples
 #' 
 #' data(Bees)
@@ -309,6 +345,7 @@ NULL
 #' Friendly, M. (1991). \emph{SAS System for Statistical Graphics}, Cary, NC:
 #' SAS Institute.
 #' @keywords datasets
+#' @concept MANOVA
 #' @examples
 #' 
 #' data(Diabetes)
@@ -375,6 +412,8 @@ NULL
 #' Rencher, A. C. (1995), \emph{Methods of Multivariate Analysis}, New
 #' York: Wiley, Table 8.3.
 #' @keywords datasets
+#' @concept MMRA
+#' @concept contrasts
 #' @examples
 #' 
 #' data(FootHead)
@@ -465,6 +504,8 @@ NULL
 #' scientists} London: Chapman and Hall. ISBN: 0412258005. Table E.1.
 #' 
 #' @keywords datasets
+#' @concept MANOVA
+#' @concept repeated
 #' @examples
 #' 
 #' library(car)
@@ -561,6 +602,8 @@ NULL
 #' source: A study by B. McPeek and J. P. Gilbert of the Harvard Anesthesia
 #' Center.
 #' @keywords datasets
+#' @concept MMRA
+#' @concept candisc
 #' @examples
 #' 
 #' library(car)
@@ -645,33 +688,51 @@ NULL
 #' MANOVA.  \emph{Applied Multivariate Research}, \bold{12}, 199-226.
 #' https://doi.org/10.22329/amr.v12i3.660.
 #' @keywords datasets
+#' @concept MANOVA
 #' @examples
 #' 
 #' data(Iwasaki_Big_Five)
+#' # use Helmert contrasts for groups
+#' contrasts(Iwasaki_Big_Five$Group) <- 
+#'    matrix(c(2, -1, -1,
+#'             0, -1,  1), ncol=2)
+#'
 #' str(Iwasaki_Big_Five)
 #' 
-#' mod <- lm(cbind(N, E, O, A, C) ~ Group, data=Iwasaki_Big_Five)
+#' Big5.mod <- lm(cbind(N, E, O, A, C) ~ Group, data=Iwasaki_Big_Five)
+#' coef(Big5.mod)
 #' 
-#' car::Anova(mod)
+#' car::Anova(Big5.mod)
+#' 
+#' # test contrasts
+#' car::linearHypothesis(Big5.mod, "Group1", title = "Eur vs Asian")
+#' car::linearHypothesis(Big5.mod, "Group2", title = "Asian: Amer vs Inter")
 #' 
 #' # heplots
-#' labs <- c("Neuroticism", "Extraversion", "Openness", "Agreeableness", "Consientiousness" )
+#' labs <- c("Neuroticism", "Extraversion", "Openness", "Agreeableness", "Conscientiousness" )
 #' 
-#' heplot(mod,
+#' heplot(Big5.mod,
 #'        fill = TRUE, fill.alpha = 0.2, 
 #'        cex.lab = 1.5,
 #'        xlab = labs[1], ylab = labs[2])
 #' 
-#' heplot(mod, variables = c(2,5),
+#' heplot(Big5.mod, variables = c(2,5),
 #'        fill = TRUE, fill.alpha = 0.2,
 #'        cex.lab = 1.5,
 #'        xlab = labs[2], ylab = labs[5])
 #' 
-#' pairs(mod, 
+#' pairs(Big5.mod, 
 #'       fill = TRUE, fill.alpha = 0.2, var.labels = labs)
 #' 
-#' 
-#' 
+#'
+#' # canonical discriminant analysis
+#' if (require(candisc)) { 
+#' library(candisc)
+#' Big5.can <- candisc(Big5.mod)
+#' Big5.can
+#' heplot(Big5.can, fill = TRUE, fill.alpha = 0.1)
+#' }
+
 NULL
 
 
@@ -695,6 +756,7 @@ NULL
 #'   }
 #' @source Fictitious data
 #' @keywords datasets
+#' @concept MANOVA
 #' @examples
 #' 
 #' data(mathscore)
@@ -767,9 +829,11 @@ NULL
 #' 
 #' 
 #' @source 
-#' From Dr. Wuensch's StatData Page,
-#' \url{http://core.ecu.edu/psyc/wuenschk/StatData/PLASTER.dat}
+#' Originally obtained from Dr. Wuensch's StatData page,
+#' \url{https://core.ecu.edu/wuenschk/StatData/PLASTER.dat}
 #' @keywords datasets
+#' @concept MANOVA
+#' @concept candisc
 #' @examples
 #' 
 #' # manipulation check:  test ratings of the photos classified by Attractiveness
@@ -876,6 +940,9 @@ NULL
 #' \emph{Schizophrenia Research: Cognition}, \bold{2} (4), 227-232.
 #' \code{doi: 10.1016/j.scog.2015.09.001}
 #' @keywords datasets
+#' @concept MANOVA
+#' @concept contrast
+#' @concept candisc
 #' @examples
 #' 
 #' library(car)
@@ -938,6 +1005,7 @@ NULL
 #' More details are available at
 #' \url{http://web.archive.org/web/20060830061414/http://www.unc.edu/~curran/srcd-docs/srcdmeth.pdf}.
 #' @keywords datasets
+#' @concept MMRA
 #' @examples
 #' 
 #' library(car)
@@ -1030,6 +1098,8 @@ NULL
 #' geogenic concentration gradients, \emph{The Science of the Total
 #' Environment}, 377, 416-433.
 #' @keywords datasets
+#' @concept MANOVA
+#' @concept candisc
 #' @examples
 #' 
 #' data(Oslo)
@@ -1056,6 +1126,77 @@ NULL
 NULL
 
 
+#' @name Overdose
+#' @aliases Overdose
+#' @docType data
+#' @title
+#' Overdose of Amitriptyline
+#'
+#' @description
+#' Data on overdoses of the drug amitriptyline.
+#' Amitriptyline is a drug prescribed by physicians as an antidepressant. However, there are also 
+#' conjectured side effects that seem to be related to the use of the drug: irregular heart beat,
+#' abnormal blood pressure and irregular waves on the electrocardiogram (ECG).
+#' This dataset (originally from Rudorfer, 1982) gives data on 17 patients admitted to hospital after an overdose 
+#' of amitriptyline.
+#' The two response variables are: \code{TCAD} and \code{AMI}. The other variables are predictors.
+#'
+#' @usage data("Overdose")
+#' @format
+#'  A data frame with 17 observations on the following 7 variables.
+#'  \describe{
+#'    \item{\code{TCAD}}{total TCAD plasma level, a numeric vector}
+#'    \item{\code{AMI}}{amount of amitriptyline present in the TCAD plasma level, a numeric vector}
+#'    \item{\code{Gender}}{a factor with levels \code{Male} \code{Female}}
+#'    \item{\code{amount}}{amount of drug taken at time of overdose, a numeric vector}
+#'    \item{\code{BP}}{diastolic blood pressure, a numeric vector}
+#'    \item{\code{ECG_PR}}{ECG PR wave measurement, a numeric vector}
+#'    \item{\code{ECG_QRS}}{ECG QRS wave measurement, a numeric vector}
+#'  }
+#'
+#' %% @details 
+#' %%  ~~ If necessary, more details than the __description__ above ~~
+#' @source 
+#' Johnson & Wichern (2005), \emph{Applied Multivariate Statistical Analysis},
+#' Exercise 7.25, p. 426.
+#' @references
+#' Rudorfer,  M. V. Cardiovascular changes and plasma drug levels after amitriptyline overdose. (1982).
+#' \emph{J. Toxicology - Clinical Toxicology}. \bold{19}(1),67-78. 
+#' \doi{10.3109/15563658208990367}, PMID: 7154142.
+#' 
+#' Clay Ford, "Getting started with Multivariate Multiple Regression",
+#' \url{https://library.virginia.edu/data/articles/getting-started-with-multivariate-multiple-regression}.
+#' 
+#' ECG measurements:
+#' \describe{
+#'    \item{PR}{\url{https://en.wikipedia.org/wiki/PR_interval}}
+#'    \item{QRS}{\url{https://en.wikipedia.org/wiki/QRS_complex}}
+#' }
+#' @concept MMRA
+#' @concept cancor
+#' 
+#'
+#' @examples
+#' data(Overdose)
+#' str(Overdose)
+#' pairs(Overdose) 
+#' 
+#' over.mlm <- lm(cbind(TCAD, AMI) ~ Gender + amount + BP + ECG_PR + ECG_QRS, data = Overdose)
+#' coef(over.mlm)
+#' 
+#' # check for outliers
+#' cqplot(over.mlm)
+#' 
+#' # HE plot shows that relations of responses to predictors are essentially one-dimensional
+#' heplot(over.mlm)
+#'
+#' # canonical correlation analysis 
+#' if(require(candisc)) {
+#' cancor(cbind(TCAD, AMI) ~ as.numeric(Gender) + amount + BP + ECG_PR + ECG_QRS, data = Overdose)
+#' }
+#'
+#' @keywords datasets
+NULL
 
 
 
@@ -1084,6 +1225,7 @@ NULL
 #' Multivariate Research: Design and Interpretation}, Thousand Oaks, CA: Sage
 #' Publications, \url{https://studysites.sagepub.com/amrStudy/}, Exercises 10B.
 #' @keywords datasets
+#' @concept MANOVA
 #' @examples
 #' 
 #' data(Parenting)
@@ -1155,6 +1297,7 @@ NULL
 #' Johnson, R.A. & Wichern, D.W. (1992). \emph{Applied Multivariate
 #' Statistical Analysis}, 3rd ed., Prentice-Hall. Example 6.12 (p. 266).
 #' @keywords datasets
+#' @concept MANOVA
 #' @examples
 #' 
 #' str(Plastic)
@@ -1221,6 +1364,8 @@ NULL
 #' \code{\link[archdata]{RBPottery}}. %
 #' % \url{http://people.tamu.edu/~dcarlson/quant/data/RBPottery.html}
 #' @keywords datasets
+#' @concept MANOVA
+#' @concept candisc
 #' @examples
 #' 
 #' library(car)
@@ -1315,6 +1460,9 @@ NULL
 #' @source Timm, N. (1975) \emph{Multivariate analysis, with applications in
 #' education and psychology} Brooks/Cole.
 #' @keywords datasets
+#' @concept MANOVA
+#' @concept repeated
+#' @concept contrasts
 #' @examples
 #' 
 #' data(Probe1)
@@ -1401,6 +1549,8 @@ NULL
 #' Longitudinal Analysis}, New York, NY: Wiley-Interscience.
 #' \url{https://rdrr.io/rforge/ALA/}.
 #' @keywords datasets
+#' @concept MANOVA
+#' @concept repeated
 #' @examples
 #' 
 #' data(RatWeight)
@@ -1466,6 +1616,7 @@ NULL
 #' psychology experiments and questionnaires},
 #' \url{https://cran.r-project.org/doc/contrib/Baron-rpsych.pdf}
 #' @keywords datasets
+#' @concept repeated
 #' @examples
 #' 
 #' data(ReactTime)
@@ -1538,6 +1689,8 @@ NULL
 #' Education and Psychology}.  Wadsworth (Brooks/Cole), Examples 4.3 (p. 281),
 #' 4.7 (p. 313), 4.13 (p. 344).
 #' @keywords datasets
+#' @concept MMRA
+#' @concept MANCOVA
 #' @examples
 #' 
 #' str(Rohwer)
@@ -1577,6 +1730,7 @@ NULL
 #' 
 #' In a classic experiment carried out from 1918 to 1934, growth of apple trees
 #' of six different rootstocks were compared on four measures of size.
+#' How do the measures of size vary with the type of rootstock?
 #' 
 #' This is a balanced, one-way MANOVA design, with n=8 trees for each
 #' rootstock.
@@ -1599,18 +1753,22 @@ NULL
 #' Problems from Many Fields for the Student and Research Worker}
 #' Springer-Verlag, pp. 357--360.
 #' @keywords datasets
+#' @concept MANOVA
+#' @concept contrasts
 #' @examples
 #' 
 #' library(car)
 #' data(RootStock)
-#' ## maybe str(RootStock) ; plot(RootStock) ...
+#' str(RootStock)
+#' 
 #' root.mod <- lm(cbind(girth4, ext4, girth15, weight15) ~ rootstock, data=RootStock)
 #' car::Anova(root.mod)
 #' 
 #' pairs(root.mod)
 #' 
 #' # test two orthogonal contrasts among the rootstocks
-#' hyp <- matrix(c(2,-1,-1,-1,-1,2,  1, 0,0,0,0,-1), 2, 6, byrow=TRUE)
+#' hyp <- matrix(c(2,-1,-1,-1,-1,2,  
+#'                 1, 0,0,0,0,-1), 2, 6, byrow=TRUE)
 #' car::linearHypothesis(root.mod, hyp)
 #' heplot(root.mod, hypotheses=list(Contrasts=hyp, C1=hyp[1,], C2=hyp[2,]))
 #' 
@@ -1662,6 +1820,7 @@ NULL
 #' Multivariate Statistical Analysis: A Graduate Course and Handbook}. American
 #' Sciences Press, p. 217.
 #' @keywords datasets
+#' @concept MMRA
 #' @examples
 #' 
 #' data(Sake)
@@ -1720,6 +1879,8 @@ NULL
 #' Managerial Efficiency: An Application of Data Envelopment Analysis to
 #' Program Follow Through. \emph{Management Science}, \bold{27}, 668-697.
 #' @keywords datasets
+#' @concept MMRA
+#' @concept robust
 #' @examples
 #' 
 #' data(schooldata)
@@ -1825,6 +1986,8 @@ NULL
 #' D. J. Hand, F. Daly, A. D. Lunn, K. J. McConway and E. Ostrowski (1994).
 #' \emph{A Handbook of Small Datasets}, Chapman and Hall/CRC, London.
 #' @keywords datasets
+#' @concept MANOVA
+#' @concept contrasts
 #' @examples
 #' 
 #' data(Skulls)
@@ -1922,6 +2085,8 @@ NULL
 #' Statistics in the Social Sciences} Monterey, CA: Brooks/Cole, Table 5-1, p.
 #' 192.
 #' @keywords datasets
+#' @concept MANOVA
+#' @concept candisc
 #' @examples
 #' 
 #' data(SocGrades)
@@ -2010,6 +2175,8 @@ NULL
 #' revisited.  \emph{Schizophrenia Research: Cognition}, \bold{2} (4), 227-232.
 #' doi: 10.1016/j.scog.2015.09.001
 #' @keywords datasets
+#' @concept MANOVA
+#' @concept candisc
 #' @examples
 #' 
 #' library(car)
@@ -2096,6 +2263,8 @@ NULL
 #' \emph{Psychometrika}, \bold{85}, 926?945.
 #' https://doi.org/10.1007/s11336-020-09731-4
 #' @keywords datasets
+#' @concept MANOVA
+#' @concept candisc
 #' @examples
 #' 
 #' data(TIPI)
@@ -2154,6 +2323,8 @@ NULL
 #' @source R.D.  
 #' Bock, \emph{Multivariate statistical methods in behavioral research}, McGraw-Hill, New York, 1975, pp453.
 #' @keywords datasets
+#' @concept repeated
+#' @concept contrasts
 #' @examples
 #' 
 #' library(car)
@@ -2296,7 +2467,7 @@ NULL
 #' 
 NULL
 
-#' Size measurements for adult foraging penguins near Palmer Station, Antarctica
+#' Size measurements for penguins near Palmer Station, Antarctica
 #'
 #' Data originally from \href{https://allisonhorst.github.io/palmerpenguins/}{\code{palmerpenguins}}. Includes
 #' measurements for penguin species, island in Palmer Archipelago,
@@ -2331,7 +2502,7 @@ NULL
 #'   among adult male and female Chinstrap penguin (Pygoscelis antarcticus) 
 #'   nesting along the Palmer Archipelago near Palmer Station, 2007-2009 ver 6. 
 #'   Environmental Data Initiative} \doi{10.6073/pasta/c14dfcfada8ea13a17536e73eb6fbe9e}
-#' @source {Originally published in: Gorman KB, Williams TD, Fraser WR (2014) 
+#' @source {Originally published in: Gorman K.B., Williams T.D., Fraser W.R. (2014) 
 #'   Ecological Sexual Dimorphism and Environmental Variability within a 
 #'   Community of Antarctic Penguins (Genus Pygoscelis). PLoS ONE 9(3): e90081.} 
 #'   \doi{10.1371/journal.pone.0090081}

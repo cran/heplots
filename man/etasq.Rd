@@ -47,7 +47,7 @@ For univariate linear models, classical
 \eqn{\eta^2} = SSH / (SSH + SSE).  These are identical in one-way designs.
 
 Partial eta-squared describes the proportion of total variation attributable
-to a given factor, partialing out (excluding) other factors from the total
+to a given factor, partialling out (excluding) other factors from the total
 nonerror variation. These are commonly used as measures of effect size or
 measures of (non-linear) strength of association in ANOVA models.
 
@@ -79,12 +79,12 @@ etasq(soils.mod, test="Hotelling")
 \references{
 Muller, K. E. and Peterson, B. L. (1984). Practical methods for
 computing power in testing the Multivariate General Linear Hypothesis
-\emph{Computational Statistics and Data Analysis}, 2, 143-158.
+\emph{Computational Statistics and Data Analysis}, \bold{2}, 143-158.
 
 Muller, K. E. and LaVange, L. M. and Ramey, S. L. and Ramey, C. T. (1992).
 Power Calculations for General Linear Multivariate Models Including Repeated
 Measures Applications. \emph{Journal of the American Statistical
-Association}, 87, 1209-1226.
+Association}, \bold{87}, 1209-1226.
 }
 \seealso{
 \code{\link[car]{Anova}}
@@ -92,4 +92,6 @@ Association}, 87, 1209-1226.
 \author{
 Michael Friendly
 }
+\concept{effect size}
+\concept{strength of association}
 \keyword{multivariate}
