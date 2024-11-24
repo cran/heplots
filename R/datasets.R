@@ -29,7 +29,6 @@
 #' Warne, R. T. (2014). A primer on Multivariate Analysis of Variance
 #' (MANOVA) for Behavioral Scientists.  
 #' \emph{Practical Assessment, Research & Evaluation}, 19 (1).
-#' \url{https://scholarworks.umass.edu/pare/vol19/iss1/17/}
 #' @keywords datasets
 #' @concept MANOVA
 #' @concept ordered
@@ -829,8 +828,8 @@ NULL
 #' 
 #' 
 #' @source 
-#' Originally obtained from Dr. Wuensch's StatData page,
-#' \url{https://core.ecu.edu/wuenschk/StatData/PLASTER.dat}
+#' Originally obtained from Dr. Wuensch's StatData page at East Carolina University. No longer exists.
+#' % was: https://core.ecu.edu/wuenschk/StatData/PLASTER.dat
 #' @keywords datasets
 #' @concept MANOVA
 #' @concept candisc
@@ -1223,7 +1222,7 @@ NULL
 #' @source 
 #' Meyers, L. S., Gamst, G, & Guarino, A. J. (2006). \emph{Applied
 #' Multivariate Research: Design and Interpretation}, Thousand Oaks, CA: Sage
-#' Publications, \url{https://studysites.sagepub.com/amrStudy/}, Exercises 10B.
+#' Publications, \url{https://study.sagepub.com/meyers3e}, Exercises 10B.
 #' @keywords datasets
 #' @concept MANOVA
 #' @examples
@@ -2537,3 +2536,163 @@ NULL
 #'        xlim=c(35,52), ylim=c(14,20))
 #' 
 "peng"
+
+#' @name dogfood
+#' @aliases dogfood
+#' @docType data
+#' @title
+#' Dogfood Preferences
+#'
+#' @description
+#' A tiny hypothetical dataset to illustrate one-way MANOVA.
+#' 
+#' A dogfood manufacturer wanted to study preference for different dogfood formulas, two of their own
+#' ("Old", "New") and two from other manufacturers ("Major", "Alps"). In a between-dog design, 4 dogs
+#' were presented with a bowl of one \code{formula} and the time to \code{start} eating and \code{amount} eaten were recorded.
+#'
+#' @details
+#' In addition to testing the overall effects of \code{formula},
+#' three useful (and orthogonal) contrasts can specified for this 3-df factor:
+#' \itemize{
+#'   \item \code{Ours} vs. \code{Theirs}, with weights \code{c(1, 1, -1, -1)}
+#'   \item \code{Major} vs. \code{Alps}, with weights \code{c(0, 0,  1, -1)}
+#'   \item \code{Old} vs. \code{New}, with weights \code{c(1, -1, 0, 0)}
+#'   }
+#' Because these are orthogonal contrasts, they fully decompose the main effect of \code{formula},
+#' in that their sum of squares add to the overall sum of squares.
+#'
+#' @usage data("dogfood")
+#' @format
+#'  A data frame with 16 observations on the following 3 variables.
+#'  \describe{
+#'    \item{\code{formula}}{factor, a factor with levels \code{Old}, \code{New}, \code{Major}, \code{Alps}}
+#'    \item{\code{start}}{numeric, time to start eating}
+#'    \item{\code{amount}}{numeric, amount eaten}
+#'  }
+#'
+#' @source 
+#' Used in my Psych 6140 lecture notes, \url{http://friendly.apps01.yorku.ca/psy6140/}
+#'
+#' @concept MANOVA
+#' @concept contrasts
+#' @concept candisc
+#' @keywords datasets
+#' @examples
+#' data(dogfood)
+#' library(car)
+#' library(candisc)
+#' 
+#' # make some boxplots
+#' op <- par(mfrow = c(1,2))
+#' boxplot(start ~ formula, data = dogfood)
+#' points(start ~ formula, data = dogfood, pch=16, cex = 1.2)
+#' 
+#' boxplot(amount ~ formula, data = dogfood)
+#' points(amount ~ formula, data = dogfood, pch=16, cex = 1.2)
+#' par(op)
+#' 
+#' # setup contrasts to test interesting comparisons
+#' C <- matrix(
+#'        c( 1,  1, -1, -1,         #Ours vs. Theirs
+#'           0,  0,  1, -1,           #Major vs. Alps
+#'           1, -1,  0,  0),             #New vs. Old
+#'        nrow=4, ncol=3)
+#' # assign these to the formula factor
+#' contrasts(dogfood$formula) <- C
+#' 
+#' dogfood.mod <- lm(cbind(start, amount) ~ formula, data=dogfood)
+#' Anova(dogfood.mod)
+#'
+#' # data ellipses
+#' covEllipses(cbind(start, amount) ~ formula, data=dogfood,
+#'   fill = TRUE, fill.alpha = 0.1)
+#' 
+#' # test these contrasts with multivariate tests 
+#' linearHypothesis(dogfood.mod, "formula1", title="Ours vs. Theirs")
+#' linearHypothesis(dogfood.mod, "formula2", title="Old vs. New")
+#' linearHypothesis(dogfood.mod, "formula3", title="Alps vs. Major")
+#' 
+#' heplot(dogfood.mod, fill = TRUE, fill.alpha = 0.1)
+#'
+#' # display contrasts in the heplot 
+#' hyp <- list("Ours/Theirs" = "formula1",
+#'             "Old/New" = "formula2")
+#' heplot(dogfood.mod, hypotheses = hyp,
+#'        fill = TRUE, fill.alpha = 0.1)
+#' 
+#' dogfood.can <- candisc(dogfood.mod, data=dogfood)
+#' heplot(dogfood.can, 
+#'        fill = TRUE, fill.alpha = 0.1, 
+#'        lwd = 2, var.lwd = 2, var.cex = 2)
+
+NULL
+
+#' @name oral
+#' @aliases oral
+#' @docType data
+#' @title
+#' Effect of Delay in Oral Practice in Second Language Learning
+#'
+#' @description
+#' Postovsky (1970) investigated the effect of delay in oral practice at the beginning of second language learning.
+#' A control condition began oral practice with no delay, while an experimental group had a four-week delay before
+#' starting oral practice. The data consists of scores on language skills at the end of six weeks of study.
+#' 
+#' Students in this study were matched on age, education, former language training, intelligence and language aptitude.
+#'
+#' @usage data("oral")
+#' @format
+#'  A data frame with 56 observations on the following 5 variables.
+#'  \describe{
+#'    \item{\code{group}}{Group, a factor with levels \code{Control} \code{Exptl}}
+#'    \item{\code{listen}}{Listening test, a numeric vector}
+#'    \item{\code{speak}}{Speaking test, a numeric vector}
+#'    \item{\code{read}}{Reading test, a numeric vector}
+#'    \item{\code{write}}{Writing test, a numeric vector}
+#'  }
+#'
+#' @source 
+#' Timm, N. H. (1975). \emph{Multivariate Analysis with Applications in Education and Psychology}. Wadsworth (Brooks/Cole),
+#'     Exercise 3.12, p. 279.
+#' @references
+#' Postovsky, V. A. (1970). Effects of delay in oral practice at the start of second language training. Unpublished doctoral dissertation, 
+#' University of California, Berkeley.
+#'
+#' @concept MANOVA
+#' @examples
+#' library(car)
+#' library(candisc)
+#' data(oral)
+#' 
+#' # make some boxplots
+#' op <- par(mfrow=c(1,4), cex.lab=1.5)
+#' clr <- c("pink", "lightblue")
+#' Boxplot(listen ~ group, data=oral, col = clr, cex.lab = 1.5)
+#' Boxplot(speak ~  group, data=oral, col = clr, cex.lab = 1.5)
+#' Boxplot(read ~   group, data=oral, col = clr, cex.lab = 1.5)
+#' Boxplot(write ~  group, data=oral, col = clr, cex.lab = 1.5)
+#' par(op)
+#'
+#' # view the data ellipses
+#' covEllipses(cbind(listen, speak, read, write) ~ group, data=oral,
+#'     variables = 1:4,
+#'     level = 0.40,
+#'     pooled = FALSE,
+#'     fill = TRUE, fill.alpha = 0.05)
+#' 
+#' oral.mod <- lm(cbind(listen, speak, read, write) ~ group, data=oral)
+#' Anova(oral.mod)
+#' 
+#' # canonical view
+#' oral.can <- candisc(oral.mod) |> print()
+#' summary(oral.can)
+#' 
+#' # reflect the structure & scores to make them positive
+#' oral.can$structure[, "Can1"] <- -1 * oral.can$structure[, "Can1"]
+#' oral.can$scores[, "Can1"]    <- -1 * oral.can$scores[, "Can1"]
+#' 
+#' plot(oral.can, var.lwd=2)
+#'
+#'
+#' @keywords datasets
+NULL

@@ -20,13 +20,30 @@ library(candisc)
 library(ggplot2)
 library(dplyr)
 
+## ----eval=FALSE---------------------------------------------------------------
+# data(dataset)
+# # str(dataset); plot(dataset)
+
+## -----------------------------------------------------------------------------
+vcdExtra::datasets("heplots") |> head(4)
+
+## ----eval=FALSE---------------------------------------------------------------
+# #' @name AddHealth
+# #' @docType data
+#  ...
+# #' @keywords datasets
+# #' @concept MANOVA
+# #' @concept ordered
+
 ## ----datasets-----------------------------------------------------------------
 library(here)
 library(dplyr)
 library(tinytable)
 #dsets <- read.csv(here::here("extra", "datasets.csv"))  # doesn't work in a vignette
 dsets <- read.csv("https://raw.githubusercontent.com/friendly/heplots/master/extra/datasets.csv")
-dsets <- dsets |> dplyr::select(-X) |> arrange(tolower(dataset))
+dsets <- dsets |> 
+  dplyr::select(-X) |> 
+  arrange(tolower(dataset))
 
 # link dataset to pkgdown doc
 refurl <- "http://friendly.github.io/heplots/reference/"
@@ -34,9 +51,8 @@ refurl <- "http://friendly.github.io/heplots/reference/"
 dsets <- dsets |>
   mutate(dataset = glue::glue("[{dataset}]({refurl}{dataset}.html)")) 
 
-#tinytable::tt(dsets)
-knitr::kable(dsets)
-
+#knitr::kable(dsets)
+tinytable::tt(dsets)  |> format_tt(markdown = TRUE)
 
 ## ----concepts-----------------------------------------------------------------
 concepts <- dsets |>
@@ -46,6 +62,6 @@ concepts <- dsets |>
   summarize(datasets = toString(dataset), .by = tags) |>
   rename(concept = tags)
 
-#tinytable::tt(concepts)
-knitr::kable(concepts)
+#knitr::kable(concepts)
+tinytable::tt(concepts) |> format_tt(markdown = TRUE)
 

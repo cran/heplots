@@ -136,9 +136,9 @@ pairs(rohwer.mod, col=colors,
       cex=1.3, lwd=c(2, rep(3,5), 4))
 
 ## ----rohwer-HE3D-code, eval=FALSE---------------------------------------------
-#  colors <- c("pink", "blue", rep("black",5), "#969696")
-#  heplot3d(rohwer.mod, col=colors,
-#  	hypotheses=list("Regr" = c("n", "s", "ns", "na", "ss")))
+# colors <- c("pink", "blue", rep("black",5), "#969696")
+# heplot3d(rohwer.mod, col=colors,
+# 	hypotheses=list("Regr" = c("n", "s", "ns", "na", "ss")))
 
 ## ----rohwer-HE3D--------------------------------------------------------------
 knitr::include_graphics("fig/mmra-rohwer-HE3D.png")
@@ -199,7 +199,7 @@ pairs(Hern.mod,
 Hern.canL <- candiscList(Hern.mod)
 
 ## ----hern.canL2, eval=FALSE---------------------------------------------------
-#  plot(Hern.canL)
+# plot(Hern.canL)
 
 ## ----hern-can1----------------------------------------------------------------
 plot(Hern.canL, term="pstat")
@@ -231,7 +231,7 @@ Anova(grades.mod3, test="Roy")
 pairs(grades.mod3)
 
 ## ----grades-HE3D-code, eval=FALSE---------------------------------------------
-#  heplot3d(grades.mod3, wire=FALSE)
+# heplot3d(grades.mod3, wire=FALSE)
 
 ## ----grades-HE3D--------------------------------------------------------------
 knitr::include_graphics("fig/grades-HE3D.png")

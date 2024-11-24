@@ -187,8 +187,8 @@ heplot(plastic.mod,
        col=c(colors, "darkgreen"), cex=1.25)
 
 ## ----plastic1-HE3D-code, eval=FALSE-------------------------------------------
-#  colors = c("pink", "darkblue", "darkgreen", "brown")
-#  heplot3d(plastic.mod, col=colors)
+# colors = c("pink", "darkblue", "darkgreen", "brown")
+# heplot3d(plastic.mod, col=colors)
 
 ## ----plastic1-HE3D------------------------------------------------------------
 knitr::include_graphics("fig/plastic-HE3D.png")

@@ -1,8 +1,8 @@
 Package: heplots
 Type: Package
 Title: Visualizing Hypothesis Tests in Multivariate Linear Models
-Version: 1.7.0
-Date: 2024-05-01
+Version: 1.7.1
+Date: 2024-11-14
 Authors@R: c(
             person(given = "Michael", 
                    family = "Friendly", 
@@ -28,22 +28,24 @@ Imports: car, MASS, graphics, grDevices, stats, magrittr, purrr, rgl,
         tibble
 Suggests: candisc, carData, effects, reshape, gplots, nlme, lattice,
         reshape2, corrgram, animation, mvinfluence, knitr, rmarkdown,
-        dplyr, tidyr, ggplot2, bookdown, patchwork, tinytable, glue,
-        here, Sleuth2, rrcov, archdata, qqtest
+        markdown, dplyr, tidyr, ggplot2, bookdown, patchwork,
+        tinytable, glue, here, Sleuth2, rrcov, archdata, qqtest,
+        vcdExtra, R.rsp
 LazyLoad: yes
 LazyData: yes
 BugReports: https://github.com/friendly/heplots/issues
 License: GPL (>= 2)
-URL: http://friendly.github.io/heplots/
-RoxygenNote: 7.3.1
+URL: http://friendly.github.io/heplots/,
+        http://friendly.github.io/heplots/
+RoxygenNote: 7.3.2
 Encoding: UTF-8
-VignetteBuilder: knitr
+VignetteBuilder: knitr, R.rsp
 NeedsCompilation: no
-Packaged: 2024-05-02 21:01:07 UTC; friendly
+Packaged: 2024-11-24 16:38:52 UTC; friendly
 Author: Michael Friendly [aut, cre] (<https://orcid.org/0000-0002-3237-0941>),
   John Fox [aut] (<https://orcid.org/0000-0002-1196-8012>),
   Georges Monette [aut] (<https://orcid.org/0000-0003-0076-5532>),
   Phil Chalmers [ctb] (<https://orcid.org/0000-0001-5332-2810>),
   Duncan Murdoch [ctb]
 Repository: CRAN
-Date/Publication: 2024-05-02 21:50:02 UTC
+Date/Publication: 2024-11-24 17:30:02 UTC
