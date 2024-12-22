@@ -5,7 +5,7 @@
 # last modified 20 May 2007 by M. Friendly -- pass ... to text
 # last modified 23 May 2007 by J. Fox -- add ... to call to points()
 # last modified 22 Oct 2007 by M. Friendly
-# -- moved lambda.crit to utility.R
+# -- moved lambda.crit to heplots-internal.R
 # -- added he.rep to handle common task of repeating HE argument values
 #  13 Apr 2009 by M. Friendly -- fix label.ellipse
 #  15 Apr 2009 by M. Friendly -- added axes= to fix warnings from pairs.mlm
@@ -158,13 +158,14 @@
 #' @param size how to scale the hypothesis ellipse relative to the error
 #'              ellipse; if \code{"evidence"}, the default, the scaling is done so that a
 #'              ``significant'' hypothesis ellipse at level \code{alpha} extends outside of
-#'              the error ellipse; if \code{"effect.size"}, the hypothesis ellipse is on the
+#'              the error ellipse. \code{size = "significance"} is a synonym and does the same thing.
+#'              If \code{"effect.size"}, the hypothesis ellipse is on the
 #'              same scale as the error ellipse.
-#' @param level equivalent coverage of ellipse for normally-distributed errors,
-#'              defaults to \code{0.68}, giving a standard 1 SD bivariate ellipse.
+#' @param level equivalent coverage of ellipse  (assuming normally-distributed errors).
+#'              This defaults to \code{0.68}, giving a standard 1 SD bivariate ellipse.
 #' @param alpha significance level for Roy's greatest-root test statistic; if
-#'              \code{size="evidence"}, then the hypothesis ellipse is scaled so that it
-#'              just touches the error ellipse at the specified alpha level; a larger
+#'              \code{size="evidence"} or \code{size="significance"}, then the hypothesis ellipse is scaled so that it
+#'              just touches the error ellipse at the specified alpha level. A larger
 #'              hypothesis ellipse \emph{somewhere} in the space of the response variables
 #'              therefore indicates statistical significance; defaults to \code{0.05}.
 #' @param segments number of line segments composing each ellipse; defaults to \code{60}.
@@ -351,7 +352,7 @@ heplot.mlm <-
 				iterm=NULL,
 				markH0=!is.null(iterm),
 				manova,        # an optional Anova.mlm object
-				size=c("evidence", "effect.size"),
+				size=c("evidence", "effect.size", "significance"),
 				level=0.68,
 				alpha=0.05,
 				segments=60,   # line segments in each ellipse
@@ -505,7 +506,7 @@ heplot.mlm <-
 			}
 			H <- H[variables, variables]
 			dfh <- manova$df[term.name]
-			factor <- if (size == "evidence") lambda.crit(alpha, p, dfh, dfe) else 1
+			factor <- if (size %in% c("evidence", "significance")) lambda.crit(alpha, p, dfh, dfe) else 1
 			H <- H * scale/factor
 			if (verbose){
 				cat(term.name, " H matrix (", dfh, " df):\n")
@@ -518,7 +519,7 @@ heplot.mlm <-
 			lh <- car::linearHypothesis(mod, hypotheses[[hyp]])
 			H <- lh$SSPH[variables, variables]
 			dfh <- lh$df
-			factor <- if (size == "evidence") lambda.crit(alpha, p, dfh, dfe) else 1
+			factor <- if (size %in% c("evidence", "significance")) lambda.crit(alpha, p, dfh, dfe) else 1
 			H <- H * scale/factor
 			if (verbose){
 				cat("\n\n Linear hypothesis: ", names(hypotheses)[[hyp]], "\n") 

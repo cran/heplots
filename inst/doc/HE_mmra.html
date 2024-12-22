@@ -12,7 +12,7 @@
 
 <meta name="author" content="Michael Friendly" />
 
-<meta name="date" content="2024-11-24" />
+<meta name="date" content="2024-12-22" />
 
 <title>HE plot MMRA Examples</title>
 
@@ -350,7 +350,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">HE plot MMRA Examples</h1>
 <h4 class="author">Michael Friendly</h4>
-<h4 class="date">2024-11-24</h4>
+<h4 class="date">2024-12-22</h4>
 
 
 <div id="TOC">
@@ -386,7 +386,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
     toc_depth: 1
 bibliography: lib.bib
 -->
-<p>Vignette built using <code>heplots</code>, version 1.7.1
+<p>Vignette built using <code>heplots</code>, version 1.7.3
 and <code>candisc</code>, version 0.9.0.</p>
 <div id="multivariate-multiple-regression-designs" class="section level1 unnumbered">
 <h1>Multivariate Multiple Regression Designs</h1>
@@ -832,12 +832,12 @@ The <span class="math inline">\(R^2\)</span> and <span class="math inline">\(F\)
 of all predictors.</p>
 <!-- TODO: use glance.mlm() here -->
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">glance.mlm</span>(Hern.mod)</span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 9</span></span>
-<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="co">#&gt;   response r.squared adj.r.squared sigma fstatistic numdf dendf  p.value  nobs</span></span>
-<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;        &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;</span></span>
-<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="co">#&gt; 1 leave        0.592        0.494  0.388       6.04     6    25 0.000519    32</span></span>
-<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="co">#&gt; 2 nurse        0.247        0.0668 0.841       1.37     6    25 0.265       32</span></span>
-<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="co">#&gt; 3 los          0.365        0.213  5.62        2.40     6    25 0.0573      32</span></span></code></pre></div>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 8</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="co">#&gt;   response r.squared sigma fstatistic numdf dendf  p.value  nobs</span></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;</span></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="co">#&gt; 1 leave        0.592 0.388       6.04     6    25 0.000519    32</span></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="co">#&gt; 2 nurse        0.247 0.841       1.37     6    25 0.265       32</span></span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="co">#&gt; 3 los          0.365 5.62        2.40     6    25 0.0573      32</span></span></code></pre></div>
 <p>Univariate tests for predictors in each of these models (not shown here)
 are hard to interpret, and largely show only significant effects for
 the <code>leave</code> variable. Yet, the <span class="math inline">\(R^2\)</span> values for the other responses

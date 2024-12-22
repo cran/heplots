@@ -114,31 +114,26 @@ centroid.}
 \item{center.pch}{character to use in plotting the centroid of the data;
 defaults to \code{"+"}.}
 
-\item{center.cex}{size of character to use in plotting the centroid of the
+\item{center.cex}{size of character to use in plotting the centroid (means) of the
 data; defaults to \code{2}.}
 
-\item{col}{a color or vector of colors to use in plotting ellipses ---
-recycled as necessary A single color can be given, in which case it is used
+\item{col}{a color or vector of colors to use in plotting ellipses---
+recycled as necessary--- see Details. A single color can be given, in which case it is used
 for all ellipses.  For convenience, the default colors for all plots
 produced in a given session can be changed by assigning a color vector via
 \code{options(heplot.colors =c(...)}.  Otherwise, the default colors are
 \code{c("red", "blue", "black", "darkgreen", "darkcyan", "magenta", "brown",
 "darkgray")}.}
 
-\item{lty}{vector of line types to use for plotting the ellipses; the first
-is used for the error ellipse, the rest --- possibly recycled --- for the
-hypothesis ellipses; a single line type can be given. Defaults to
-\code{2:1}.}
+\item{lty}{vector of line types to use for plotting the ellipses---
+recycled as necessary--- see Details.  Defaults to \code{1}.}
 
-\item{lwd}{vector of line widths to use for plotting the ellipses; the first
-is used for the error ellipse, the rest --- possibly recycled --- for the
-hypothesis ellipses; a single line width can be given. Defaults to
-\code{1:2}.}
+\item{lwd}{vector of line widths to use for plotting the ellipses---
+recycled as necessary--- see Details.  Defaults to
+\code{2}.}
 
 \item{fill}{A logical vector indicating whether each ellipse should be
-filled or not.  The first value is used for the error ellipse, the rest ---
-possibly recycled --- for the hypothesis ellipses; a single fill value can
-be given.  Defaults to FALSE for backward compatibility. See Details below.}
+filled or not--- recycled as necessary--- see Details.   Defaults to \code{FALSE}.}
 
 \item{fill.alpha}{Alpha transparency for filled ellipses, a numeric scalar
 or vector of values within \code{[0,1]}, where 0 means fully transparent and
@@ -160,7 +155,7 @@ uses the correlation of the \code{ellipse} to determine "top" (r>=0) or
 \item{vlabels}{Labels for the variables can also be supplied through this
 argument, which is more convenient when \code{length(variables) > 2}.}
 
-\item{var.cex}{character size for variable labels in the pairs plot}
+\item{var.cex}{character size for variable labels in the pairs plot, when \code{length(variables) > 2}.}
 
 \item{main}{main plot label; defaults to \code{""}, and presently has no
 effect.}
@@ -189,15 +184,21 @@ for the pooled total sample.  It uses either the classical product-moment
 covariance estimate, or a robust alternative, as provided by
 \code{\link[MASS]{cov.rob}}. Provisions are provided to do this for more
 than two variables, in a scatterplot matrix format.
-}
-\details{
+
 These plot methods provide one way to visualize possible heterogeneity of
 within-group covariance matrices in a one-way MANOVA design. When covariance
 matrices are nearly equal, their covariance ellipses should all have the
 same shape.  When centered at a common mean, they should also all overlap.
 
-The can also be used to visualize the difference between classical and
-robust covariance matrices.
+They can also be used to visualize the difference between classical and
+robust covariance matrices by overlaying the two in a single plot (via \code{add=TRUE}).
+}
+\details{
+The arguments \code{labels},
+\code{col}, \code{lty}, \code{lwd}, \code{fill}, \code{fill.alpha} and \code{label.pos} are used to
+draw the ellipses for the groups and also for the pooled, within-group covariance, which is the \bold{last} in a list
+when these are computed by the functions. 
+These arguments are each taken in the order specified, and recycled as necessary.
 }
 \examples{
 

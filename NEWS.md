@@ -1,3 +1,20 @@
+## Version 1.7.3 (2024-12-05)
+
+This is a moderate update, adding new functionality
+
+* `leveneTests()` gains formula and lm methods
+* `bartlettTests()` gains formula and lm methods
+* `colDevs()` gains a `group.var` argument; examples extended
+* Added `uniStats()` for an anova version of `glance.mlm()`
+* Corrected documentation of `covEllipses()` to more accurately describe recycling of arguments.
+* `size="significance"` now allowed as a synonym for `size="evidence"` in heplot functions.
+
+## Version 1.7.2 (2024-11-25)
+
+* Fixed bug in `ellipse.axes()` re center/centre
+* `ellipse.axes()` gains a `type` argument to draw lines or arrows
+* `ellipse.axes()` gains a `extend` argument to extend/shrink the axes
+
 ## Version 1.7.1 (2024-11-14)
 
 This is a modest update, adding two new datasets for simple examples and a PDF vignette
