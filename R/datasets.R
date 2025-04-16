@@ -1694,6 +1694,27 @@ NULL
 #' 
 #' str(Rohwer)
 #' 
+#' # Plot responses against each predictor
+#' library(tidyr)
+#' library(dplyr)
+#' library(ggplot2)
+#' 
+#' yvars <- c("SAT", "PPVT", "Raven" )
+#' xvars <- c("n", "s", "ns", "na", "ss")
+#' Rohwer_long <- Rohwer %>%
+#'   pivot_longer(cols = all_of(xvars), names_to = "xvar", values_to = "x") |>
+#'   pivot_longer(cols = all_of(yvars), names_to = "yvar", values_to = "y") |>
+#'   mutate(xvar = factor(xvar, xvars), yvar = factor(yvar, yvars))
+#' 
+#' ggplot(Rohwer_long, aes(x, y, color = SES, shape = SES, fill = SES)) +
+#'   geom_point() +
+#'   geom_smooth(method = "lm", se = FALSE, formula = y ~ x) +
+#'   stat_ellipse(geom = "polygon", level = 0.68, alpha = 0.1) +
+#'   facet_grid(yvar ~ xvar, scales = "free") +
+#'   labs(x = "predictor", y = "response") +
+#'   theme_bw(base_size = 14)
+#' 
+#' 
 #' ## ANCOVA, assuming equal slopes
 #' rohwer.mod <- lm(cbind(SAT, PPVT, Raven) ~ SES + n + s + ns + na + ss, data=Rohwer)
 #' car::Anova(rohwer.mod)
@@ -1845,39 +1866,50 @@ NULL
 
 #' School Data
 #' 
-#' School Data, from Charnes et al. (1981). The aim is to explain scores on 3
+#' School Data, from Charnes et al. (1981), a large scale social experiment in public school education.
+#' It was conceived in the late 1960's as a federally sponsored program charged with providing remedial
+#' assistance to educationally disadvantaged early primary school students.
+#' One aim is to explain scores on 3
 #' different tests, \code{reading}, \code{mathematics} and \code{selfesteem}
 #' from 70 school sites by means of 5 explanatory variables related to parents
 #' and teachers.
 #' 
-#' This dataset was shamelessly borrowed from the \code{FRB} package.
-#' 
-#' The relationships among these variables are unusual, a fact only revealed by
+#' A number of observations are unusual, a fact only revealed by
 #' plotting.
+#' 
+#' @details
+#' The study was designed to compare schools using Program Follow Through (PFT)
+#' management methods of taking actions to achieve goals with those of
+#' Non Follow Through (NFT). Observations \code{1:49} came from PFT sites
+#' and \code{50:70} from NFT sites.
+#' This and other descriptors are contained in the dataset \code{\link{schoolsites}}.
+#' 
 #' 
 #' @name schooldata
 #' @docType data
 #' @format A data frame with 70 observations on the following 8 variables.
 #' 
 #' \describe{ 
-#'   \item{\code{education}}{Education level of mother as measured in
-#'       terms of percentage of high school graduates among female parents}
-#'   \item{\code{occupation}}{ Highest occupation of a family member according
+#'   \item{\code{education}}{Education level of mother as measured by the percentage of high school graduates among female parents}
+#'   \item{\code{occupation}}{Highest occupation of a family member according
 #'       to a pre-arranged rating scale} 
-#'   \item{\code{visit}}{ Parental visits index
+#'   \item{\code{visit}}{ Parental visits index,
 #'      representing the number of visits to the school site}
-#'   \item{\code{counseling}}{ Parent counseling index calculated from data on
+#'   \item{\code{counseling}}{Parent counseling index, calculated from data on
 #'       time spent with child on school-related topics such as reading together, etc.} 
-#'   \item{\code{teacher}}{ Number of teachers at a given site}
+#'   \item{\code{teacher}}{Number of teachers at the given site}
 #'   \item{\code{reading}}{ Reading score as measured by the Metropolitan Achievement Test} 
 #'   \item{\code{mathematics}}{Mathematics score as measured by the Metropolitan Achievement Test} 
 #'   \item{\code{selfesteem}}{Coopersmith Self-Esteem Inventory, intended as a measure of self-esteem} 
 #' }
 #' @source 
+#' This dataset was came originally from the (now-defunct) \code{FRB} package.
+#' @references 
 #' A. Charnes, W.W. Cooper and E. Rhodes (1981). Evaluating Program and
 #' Managerial Efficiency: An Application of Data Envelopment Analysis to
 #' Program Follow Through. \emph{Management Science}, \bold{27}, 668-697.
 #' @keywords datasets
+#' @seealso \code{\link{schoolsites}}
 #' @concept MMRA
 #' @concept robust
 #' @examples
@@ -1891,6 +1923,10 @@ NULL
 #' corrgram(schooldata, 
 #'          lower.panel=panel.ellipse, 
 #'          upper.panel=panel.pts)
+#'
+#' # check for multivariate outliers
+#' res <- cqplot(schooldata, id.n = 5)
+#' res
 #' 
 #' #fit the MMreg model
 #' school.mod <- lm(cbind(reading, mathematics, selfesteem) ~ 
@@ -1913,7 +1949,7 @@ NULL
 #' wts <- school.rmod$weights
 #' notable <- which(wts < 0.8)
 #' plot(wts, type = "h", col="gray", ylab = "Observation weight")
-#' points(1:length(wts), wts, 
+#' points(seq_along(wts), wts, 
 #'        pch=16,
 #'        col = ifelse(wts < 0.8, "red", "black"))
 #' 
