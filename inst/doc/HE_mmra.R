@@ -60,7 +60,6 @@ ggplot(Rohwer_long, aes(x, y, color = SES, shape = SES)) +
   theme_bw(base_size = 16) +
   theme(legend.position = "bottom")
 
-
 ## ----rohwer-separate----------------------------------------------------------
 rohwer.ses1 <- lm(cbind(SAT, PPVT, Raven) ~ n + s + ns + na + ss, data=Rohwer, 
                   subset=SES=="Hi")
@@ -101,29 +100,29 @@ text(means[,2], means[,3], labels=means[,1], pos=3, cex=2, col="black")
 
 ## ----rohwer-mod---------------------------------------------------------------
 # MANCOVA, assuming equal slopes
-rohwer.mod <- lm(cbind(SAT, PPVT, Raven) ~ SES + n + s + ns + na + ss, 
+Rohwer.mod <- lm(cbind(SAT, PPVT, Raven) ~ SES + n + s + ns + na + ss, 
                  data=Rohwer)
-Anova(rohwer.mod)
+Anova(Rohwer.mod)
 
 ## ----rohwer-cov-names---------------------------------------------------------
 covariates  <- c("n", "s", "ns", "na", "ss")
-# or: covariates <- rownames(coef(rohwer.mod))[-(1:2)]
+# or: covariates <- rownames(coef(Rohwer.mod))[-(1:2)]
 
 ## ----rohwer-mod-test----------------------------------------------------------
-Regr <- linearHypothesis(rohwer.mod, covariates)
+Regr <- linearHypothesis(Rohwer.mod, covariates)
 print(Regr, digits=4, SSP=FALSE)
 
 ## ----rohwer-HE2---------------------------------------------------------------
 par(mar=c(4,4,3,1)+.1)
 colors <- c("red", "blue", rep("black",5), "#969696")
-heplot(rohwer.mod, 
+heplot(Rohwer.mod, 
        col=colors, variables=c(1,2),
        hypotheses=list("Regr" = covariates),
        fill = TRUE, fill.alpha = 0.1,
        cex=1.5, lwd=c(2, rep(3,5), 4),
        main="(SAT, PPVT) in Rohwer MANCOVA model")
 
-heplot(rohwer.mod, 
+heplot(Rohwer.mod, 
        col=colors,  variables=c(1,3),
        hypotheses=list("Regr" = covariates),
        fill = TRUE, fill.alpha = 0.1,
@@ -131,31 +130,34 @@ heplot(rohwer.mod,
        main="(SAT, Raven) in Rohwer MANCOVA model")
 
 ## ----rohwer-HE3---------------------------------------------------------------
-pairs(rohwer.mod, col=colors,
+pairs(Rohwer.mod, col=colors,
       hypotheses=list("Regr" = c("n", "s", "ns", "na", "ss")),
       cex=1.3, lwd=c(2, rep(3,5), 4))
 
 ## ----rohwer-HE3D-code, eval=FALSE---------------------------------------------
 # colors <- c("pink", "blue", rep("black",5), "#969696")
-# heplot3d(rohwer.mod, col=colors,
+# heplot3d(Rohwer.mod, col=colors,
 # 	hypotheses=list("Regr" = c("n", "s", "ns", "na", "ss")))
 
 ## ----rohwer-HE3D--------------------------------------------------------------
 knitr::include_graphics("fig/mmra-rohwer-HE3D.png")
 
 ## ----rohwer-mod2--------------------------------------------------------------
-rohwer.mod2 <- lm(cbind(SAT, PPVT, Raven) ~ SES * (n + s + ns + na + ss),
+Rohwer.mod2 <- lm(cbind(SAT, PPVT, Raven) ~ SES * (n + s + ns + na + ss),
                   data=Rohwer)
-Anova(rohwer.mod2)
+Anova(Rohwer.mod2)
 
 ## ----rohwer-mod2-test---------------------------------------------------------
-(coefs <- rownames(coef(rohwer.mod2)))
-print(linearHypothesis(rohwer.mod2, coefs[grep(":", coefs)]), SSP=FALSE)
+# test interaction terms jointly
+coefs <- rownames(coef(Rohwer.mod2)) 
+interactions <- coefs[grep(":", coefs)] |> print()
+
+print(linearHypothesis(Rohwer.mod2, interactions), SSP=FALSE)
 
 ## ----rohwer-HE4---------------------------------------------------------------
 par(mar=c(4,4,1,1)+.1)
 colors <- c("red", "blue", rep("black",5), "#969696")
-heplot(rohwer.mod2, col=c(colors, "brown"), 
+heplot(Rohwer.mod2, col=c(colors, "brown"), 
       terms=c("SES", "n", "s", "ns", "na", "ss"), 
       hypotheses=list("Regr" = c("n", "s", "ns", "na", "ss"),
                       "Slopes" = coefs[grep(":", coefs)]))

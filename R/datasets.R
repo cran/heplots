@@ -975,14 +975,25 @@ NULL
 
 #' National Longitudinal Survey of Youth Data
 #' 
-#' The dataset come from a small random sample of the U.S. National
-#' Longitudinal Survey of Youth.
+#' The dataset `NLSY` comes from a small part of the National Longitudinal Survey of
+#' Youth, which is a series of annual surveys conducted by the 
+#' U.S. Department of Labor to examine the transition of young people into the labor force.
+#' This particular subset gives measures of 243 children on mathematics and reading achievement and also
+#' measures of behavioral problems (antisocial, hyperactivity). Also available are the yearly income
+#' and education of the child's father.
 #' 
-#' In this dataset, \code{math} and \code{read} scores are taken at the outcome
+#' @details
+#' 
+#' For the examples using this dataset, \code{math} and \code{read} scores are taken at the outcome
 #' variables. Among the remaining predictors, \code{income} and \code{educ}
 #' might be considered as background variables necessary to control for.
-#' Interest might then be focused on whether the behavioural variables
+#' Interest might then be focused on whether the behavioral variables
 #' \code{antisoc} and \code{hyperact} contribute beyond that.
+#' 
+#' The distribution of father's income is very highly skewed in the positive direction.
+#' Linear model analysis should probably use \code{log(income)}, but this is omitted for simplicity.
+#' 
+#' The dataset also contains a few unusual observations for you to discover.
 #' 
 #' @name NLSY
 #' @docType data
@@ -1005,6 +1016,7 @@ NULL
 #' \url{http://web.archive.org/web/20060830061414/http://www.unc.edu/~curran/srcd-docs/srcdmeth.pdf}.
 #' @keywords datasets
 #' @concept MMRA
+#' @concept robust
 #' @examples
 #' 
 #' library(car)
@@ -1015,28 +1027,37 @@ NULL
 #' 
 #' # test control variables by themselves
 #' # -------------------------------------
-#' mod1 <- lm(cbind(read,math) ~ income+educ, data=NLSY)
-#' Anova(mod1)
-#' heplot(mod1, fill=TRUE)
+#' NLSY.mod1 <- lm(cbind(read, math) ~ income + educ, data=NLSY)
+#' Anova(NLSY.mod1)
+#' heplot(NLSY.mod1, fill=TRUE)
 #' 
 #' # test of overall regression
-#' coefs <- rownames(coef(mod1))[-1]
-#' linearHypothesis(mod1, coefs)
-#' heplot(mod1, fill=TRUE, hypotheses=list("Overall"=coefs))
+#' coefs <- rownames(coef(NLSY.mod1))[-1]
+#' linearHypothesis(NLSY.mod1, coefs)
+#' heplot(NLSY.mod1, fill=TRUE, hypotheses=list("Overall"=coefs))
+#' 
+#' # coefficient plot
+#' coefplot(NLSY.mod1, fill = TRUE,
+#'          col = c("darkgreen", "brown"),
+#'          lwd = 2,
+#'          ylim = c(-0.5, 3),
+#'          main = "Bivariate coefficient plot for reading and math\nwith 95% confidence ellipses")
 #' 
 #'  
 #' # additional contribution of antisoc + hyperact over income + educ
 #' # ----------------------------------------------------------------
-#' mod2 <- lm(cbind(read,math) ~ antisoc + hyperact + income + educ, data=NLSY)
-#' Anova(mod2)
+#' NLSY.mod2 <- lm(cbind(read,math) ~ antisoc + hyperact + income + educ, data=NLSY)
+#' Anova(NLSY.mod2)
 #' 
-#' coefs <- rownames(coef(mod2))[-1]
-#' heplot(mod2, fill=TRUE, hypotheses=list("Overall"=coefs, "mod2|mod1"=coefs[1:2]))
-#' linearHypothesis(mod2, coefs[1:2])
+#' coefs <- rownames(coef(NLSY.mod2))[-1]
+#' heplot(NLSY.mod2, fill=TRUE, hypotheses=list("Overall"=coefs, "mod2|mod1"=coefs[1:2]))
+#' linearHypothesis(NLSY.mod2, coefs[1:2])
 #' 
-#' heplot(mod2, fill=TRUE, hypotheses=list("mod2|mod1"=coefs[1:2]))
+#' heplot(NLSY.mod2, fill=TRUE, hypotheses=list("mod2|mod1"=coefs[1:2]))
 #' 
-#' 
+#' # check for outliers
+#' idx <- cqplot(NLSY.mod2, id.n = 5)
+#' idx
 NULL
 
 
@@ -1661,7 +1682,19 @@ NULL
 #' 
 #' The variables \code{SAT}, \code{PPVT} and \code{Raven} are responses to be
 #' potentially explained by performance on the paired-associate (PA) learning
-#' task\code{n}, \code{s}, \code{ns}, \code{na}, and \code{ss}.
+#' tasks, \code{n}, \code{s}, \code{ns}, \code{na}, and \code{ss},
+#' which differed in the syntactic and semantic relationship between the stimulus and response words in each pair.
+#' 
+#' @details
+#' Timm (1975) does not give a source, but the most relevant studies are Rowher & Ammons (1968) and Rohwer & Levin (1971).
+#' The paired-associate tasks are described as:
+#' \describe{
+#'    \item{\code{n}}{(named): Simple paired-associate task where participants learn pairs of nouns with no additional context}
+#'    \item{\code{s}}{(sentence): Participants learn pairs embedded within a sentence}
+#'    \item{\code{ns}}{(named sentence): A combination where participants learn noun pairs with sentence context}
+#'    \item{\code{na}}{(named action): Pairs are learned with an action relationship between them}
+#'    \item{\code{ss}}{(sentence still): Similar to the sentence condition but with static presentation}
+#' }
 #' 
 #' @name Rohwer
 #' @docType data
@@ -1682,6 +1715,13 @@ NULL
 #' Friendly, M. (2007).  HE plots for Multivariate General Linear
 #' Models.  \emph{Journal of Computational and Graphical Statistics},
 #' \bold{16}(2) 421--444.  \url{http://datavis.ca/papers/jcgs-heplots.pdf}
+#' 
+#' Rohwer, W.D., Jr., & Levin, J.R. (1968). Action, meaning and stimulus selection
+#' in paired-associate learning. \emph{Journal of Verbal Learning and Verbal Behavior}, \bold{7}: 137-141.
+#' 
+#' Rohwer, W. D., Jr., & Ammons, M. S. (1971). Elaboration training and paired-associate learning efficiency in children. 
+#' \emph{Journal of Educational Psychology}, \bold{62}(5), 376-383.
+
 #' 
 #' @source 
 #' Timm, N.H. 1975).  \emph{Multivariate Analysis with Applications in
