@@ -11,7 +11,7 @@
 
 <meta name="author" content="Michael Friendly" />
 
-<meta name="date" content="2025-05-24" />
+<meta name="date" content="2025-08-18" />
 
 <title>Data sets in the heplots package</title>
 
@@ -339,7 +339,7 @@ display: none;
 
 <h1 class="title toc-ignore">Data sets in the heplots package</h1>
 <h4 class="author">Michael Friendly</h4>
-<h4 class="date">2025-05-24</h4>
+<h4 class="date">2025-08-18</h4>
 
 </div>
 
@@ -427,7 +427,7 @@ tinytable::tt(dsets)  |&gt; format_tt(markdown = TRUE)</code></pre>
 
       function styleCell_1shdr96edz0u7yumdwm6(i, j, css_id) {
           var table = document.getElementById("tinytable_1shdr96edz0u7yumdwm6");
-          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
+          var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
               cell.classList.add(css_id);
@@ -435,48 +435,40 @@ tinytable::tt(dsets)  |&gt; format_tt(markdown = TRUE)</code></pre>
               console.warn(`Cell at (${i}, ${j}) not found.`);
           }
       }
-      function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_1shdr96edz0u7yumdwm6');
-        var newRow = table.insertRow(i);
-        var newCell = newRow.insertCell(0);
-        newCell.setAttribute("colspan", colspan);
-        // newCell.innerText = content;
-        // this may be unsafe, but innerText does not interpret <br>
-        newCell.innerHTML = content;
-      }
       function spanCell_1shdr96edz0u7yumdwm6(i, j, rowspan, colspan) {
         var table = document.getElementById("tinytable_1shdr96edz0u7yumdwm6");
-        const targetRow = table.rows[i];
-        const targetCell = targetRow.cells[j];
+        const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
+        if (!targetCell) {
+          console.warn(`Cell at (${i}, ${j}) not found.`);
+        }
+
+        // Get all cells that need to be removed
+        const cellsToRemove = [];
         for (let r = 0; r < rowspan; r++) {
-          // Only start deleting cells to the right for the first row (r == 0)
-          if (r === 0) {
-            // Delete cells to the right of the target cell in the first row
-            for (let c = colspan - 1; c > 0; c--) {
-              if (table.rows[i + r].cells[j + c]) {
-                table.rows[i + r].deleteCell(j + c);
-              }
-            }
-          }
-          // For rows below the first, delete starting from the target column
-          if (r > 0) {
-            for (let c = colspan - 1; c >= 0; c--) {
-              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
-                table.rows[i + r].deleteCell(j);
-              }
+          for (let c = 0; c < colspan; c++) {
+            if (r === 0 && c === 0) continue; // Skip the target cell
+            const cell = table.querySelector(`[data-row="${i + r}"][data-col="${j + c}"]`);
+            if (cell) {
+              cellsToRemove.push(cell);
             }
           }
         }
-        // Set rowspan and colspan of the target cell
-        targetCell.rowSpan = rowspan;
-        targetCell.colSpan = colspan;
+
+        // Remove all cells
+        cellsToRemove.forEach(cell => cell.remove());
+
+        // Set rowspan and colspan of the target cell if it exists
+        if (targetCell) {
+          targetCell.rowSpan = rowspan;
+          targetCell.colSpan = colspan;
+        }
       }
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 33, j: 0 }, { i: 33, j: 1 }, { i: 33, j: 2 }, { i: 33, j: 3 }, { i: 33, j: 4 },  ], css_id: 'tinytable_css_gzcm8nfqvz6lc99t9km7',}, 
-          { positions: [ { i: 0, j: 0 }, { i: 0, j: 1 }, { i: 0, j: 2 }, { i: 0, j: 3 }, { i: 0, j: 4 },  ], css_id: 'tinytable_css_ppz7ueq6zk2qqphxo0q2',}, 
+          { positions: [ { i: '33', j: 0 }, { i: '33', j: 1 }, { i: '33', j: 2 }, { i: '33', j: 3 }, { i: '33', j: 4 },  ], css_id: 'tinytable_css_gzcm8nfqvz6lc99t9km7',}, 
+          { positions: [ { i: '0', j: 0 }, { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 },  ], css_id: 'tinytable_css_ppz7ueq6zk2qqphxo0q2',}, 
           ];
 
           // Loop over the arrays to style the cells
@@ -498,245 +490,245 @@ tinytable::tt(dsets)  |&gt; format_tt(markdown = TRUE)</code></pre>
         <thead>
         
               <tr>
-                <th scope="col">dataset</th>
-                <th scope="col">rows</th>
-                <th scope="col">cols</th>
-                <th scope="col">title</th>
-                <th scope="col">tags</th>
+                <th scope="col" data-row="0" data-col="0">dataset</th>
+                <th scope="col" data-row="0" data-col="1">rows</th>
+                <th scope="col" data-row="0" data-col="2">cols</th>
+                <th scope="col" data-row="0" data-col="3">title</th>
+                <th scope="col" data-row="0" data-col="4">tags</th>
               </tr>
         </thead>
         
         <tbody>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/AddHealth.html">AddHealth</a></td>
-                  <td>4344</td>
-                  <td>3</td>
-                  <td>Adolescent Health Data</td>
-                  <td>MANOVA ordered</td>
+                  <td data-row="1" data-col="0"><a href="http://friendly.github.io/heplots/reference/AddHealth.html">AddHealth</a></td>
+                  <td data-row="1" data-col="1">4344</td>
+                  <td data-row="1" data-col="2">3</td>
+                  <td data-row="1" data-col="3">Adolescent Health Data</td>
+                  <td data-row="1" data-col="4">MANOVA ordered</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/Adopted.html">Adopted</a></td>
-                  <td>62</td>
-                  <td>6</td>
-                  <td>Adopted Children</td>
-                  <td>MMRA repeated</td>
+                  <td data-row="2" data-col="0"><a href="http://friendly.github.io/heplots/reference/Adopted.html">Adopted</a></td>
+                  <td data-row="2" data-col="1">62</td>
+                  <td data-row="2" data-col="2">6</td>
+                  <td data-row="2" data-col="3">Adopted Children</td>
+                  <td data-row="2" data-col="4">MMRA repeated</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/Bees.html">Bees</a></td>
-                  <td>246</td>
-                  <td>6</td>
-                  <td>Captive and maltreated bees</td>
-                  <td>MANOVA</td>
+                  <td data-row="3" data-col="0"><a href="http://friendly.github.io/heplots/reference/Bees.html">Bees</a></td>
+                  <td data-row="3" data-col="1">246</td>
+                  <td data-row="3" data-col="2">6</td>
+                  <td data-row="3" data-col="3">Captive and maltreated bees</td>
+                  <td data-row="3" data-col="4">MANOVA</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/Diabetes.html">Diabetes</a></td>
-                  <td>145</td>
-                  <td>6</td>
-                  <td>Diabetes Dataset</td>
-                  <td>MANOVA</td>
+                  <td data-row="4" data-col="0"><a href="http://friendly.github.io/heplots/reference/Diabetes.html">Diabetes</a></td>
+                  <td data-row="4" data-col="1">145</td>
+                  <td data-row="4" data-col="2">6</td>
+                  <td data-row="4" data-col="3">Diabetes Dataset</td>
+                  <td data-row="4" data-col="4">MANOVA</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/dogfood.html">dogfood</a></td>
-                  <td>16</td>
-                  <td>3</td>
-                  <td>Dogfood Preferences</td>
-                  <td>MANOVA contrasts candisc</td>
+                  <td data-row="5" data-col="0"><a href="http://friendly.github.io/heplots/reference/dogfood.html">dogfood</a></td>
+                  <td data-row="5" data-col="1">16</td>
+                  <td data-row="5" data-col="2">3</td>
+                  <td data-row="5" data-col="3">Dogfood Preferences</td>
+                  <td data-row="5" data-col="4">MANOVA contrasts candisc</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/FootHead.html">FootHead</a></td>
-                  <td>90</td>
-                  <td>7</td>
-                  <td>Head measurements of football players</td>
-                  <td>MANOVA contrasts</td>
+                  <td data-row="6" data-col="0"><a href="http://friendly.github.io/heplots/reference/FootHead.html">FootHead</a></td>
+                  <td data-row="6" data-col="1">90</td>
+                  <td data-row="6" data-col="2">7</td>
+                  <td data-row="6" data-col="3">Head measurements of football players</td>
+                  <td data-row="6" data-col="4">MANOVA contrasts</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/Headache.html">Headache</a></td>
-                  <td>98</td>
-                  <td>6</td>
-                  <td>Treatment of Headache Sufferers for Sensitivity to Noise</td>
-                  <td>MANOVA repeated</td>
+                  <td data-row="7" data-col="0"><a href="http://friendly.github.io/heplots/reference/Headache.html">Headache</a></td>
+                  <td data-row="7" data-col="1">98</td>
+                  <td data-row="7" data-col="2">6</td>
+                  <td data-row="7" data-col="3">Treatment of Headache Sufferers for Sensitivity to Noise</td>
+                  <td data-row="7" data-col="4">MANOVA repeated</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/Hernior.html">Hernior</a></td>
-                  <td>32</td>
-                  <td>9</td>
-                  <td>Recovery from Elective Herniorrhaphy</td>
-                  <td>MMRA candisc</td>
+                  <td data-row="8" data-col="0"><a href="http://friendly.github.io/heplots/reference/Hernior.html">Hernior</a></td>
+                  <td data-row="8" data-col="1">32</td>
+                  <td data-row="8" data-col="2">9</td>
+                  <td data-row="8" data-col="3">Recovery from Elective Herniorrhaphy</td>
+                  <td data-row="8" data-col="4">MMRA candisc</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/Iwasaki_Big_Five.html">Iwasaki_Big_Five</a></td>
-                  <td>203</td>
-                  <td>7</td>
-                  <td>Personality Traits of Cultural Groups</td>
-                  <td>MANOVA</td>
+                  <td data-row="9" data-col="0"><a href="http://friendly.github.io/heplots/reference/Iwasaki_Big_Five.html">Iwasaki_Big_Five</a></td>
+                  <td data-row="9" data-col="1">203</td>
+                  <td data-row="9" data-col="2">7</td>
+                  <td data-row="9" data-col="3">Personality Traits of Cultural Groups</td>
+                  <td data-row="9" data-col="4">MANOVA</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/mathscore.html">mathscore</a></td>
-                  <td>12</td>
-                  <td>3</td>
-                  <td>Math scores for basic math and word problems</td>
-                  <td>MANOVA</td>
+                  <td data-row="10" data-col="0"><a href="http://friendly.github.io/heplots/reference/mathscore.html">mathscore</a></td>
+                  <td data-row="10" data-col="1">12</td>
+                  <td data-row="10" data-col="2">3</td>
+                  <td data-row="10" data-col="3">Math scores for basic math and word problems</td>
+                  <td data-row="10" data-col="4">MANOVA</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/MockJury.html">MockJury</a></td>
-                  <td>114</td>
-                  <td>17</td>
-                  <td>Effects Of Physical Attractiveness Upon Mock Jury Decisions</td>
-                  <td>MANOVA candisc</td>
+                  <td data-row="11" data-col="0"><a href="http://friendly.github.io/heplots/reference/MockJury.html">MockJury</a></td>
+                  <td data-row="11" data-col="1">114</td>
+                  <td data-row="11" data-col="2">17</td>
+                  <td data-row="11" data-col="3">Effects Of Physical Attractiveness Upon Mock Jury Decisions</td>
+                  <td data-row="11" data-col="4">MANOVA candisc</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/NeuroCog.html">NeuroCog</a></td>
-                  <td>242</td>
-                  <td>10</td>
-                  <td>Neurocognitive Measures in Psychiatric Groups</td>
-                  <td>MANOVA candisc</td>
+                  <td data-row="12" data-col="0"><a href="http://friendly.github.io/heplots/reference/NeuroCog.html">NeuroCog</a></td>
+                  <td data-row="12" data-col="1">242</td>
+                  <td data-row="12" data-col="2">10</td>
+                  <td data-row="12" data-col="3">Neurocognitive Measures in Psychiatric Groups</td>
+                  <td data-row="12" data-col="4">MANOVA candisc</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/NLSY.html">NLSY</a></td>
-                  <td>243</td>
-                  <td>6</td>
-                  <td>National Longitudinal Survey of Youth Data</td>
-                  <td>MMRA</td>
+                  <td data-row="13" data-col="0"><a href="http://friendly.github.io/heplots/reference/NLSY.html">NLSY</a></td>
+                  <td data-row="13" data-col="1">243</td>
+                  <td data-row="13" data-col="2">6</td>
+                  <td data-row="13" data-col="3">National Longitudinal Survey of Youth Data</td>
+                  <td data-row="13" data-col="4">MMRA</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/oral.html">oral</a></td>
-                  <td>56</td>
-                  <td>5</td>
-                  <td>Effect of Delay in Oral Practice in Second Language Learning</td>
-                  <td>MANOVA</td>
+                  <td data-row="14" data-col="0"><a href="http://friendly.github.io/heplots/reference/oral.html">oral</a></td>
+                  <td data-row="14" data-col="1">56</td>
+                  <td data-row="14" data-col="2">5</td>
+                  <td data-row="14" data-col="3">Effect of Delay in Oral Practice in Second Language Learning</td>
+                  <td data-row="14" data-col="4">MANOVA</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/Oslo.html">Oslo</a></td>
-                  <td>332</td>
-                  <td>14</td>
-                  <td>Oslo Transect Subset Data</td>
-                  <td>MANOVA candisc</td>
+                  <td data-row="15" data-col="0"><a href="http://friendly.github.io/heplots/reference/Oslo.html">Oslo</a></td>
+                  <td data-row="15" data-col="1">332</td>
+                  <td data-row="15" data-col="2">14</td>
+                  <td data-row="15" data-col="3">Oslo Transect Subset Data</td>
+                  <td data-row="15" data-col="4">MANOVA candisc</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/Overdose.html">Overdose</a></td>
-                  <td>17</td>
-                  <td>7</td>
-                  <td>Overdose of Amitriptyline</td>
-                  <td>MMRA cancor</td>
+                  <td data-row="16" data-col="0"><a href="http://friendly.github.io/heplots/reference/Overdose.html">Overdose</a></td>
+                  <td data-row="16" data-col="1">17</td>
+                  <td data-row="16" data-col="2">7</td>
+                  <td data-row="16" data-col="3">Overdose of Amitriptyline</td>
+                  <td data-row="16" data-col="4">MMRA cancor</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/Parenting.html">Parenting</a></td>
-                  <td>60</td>
-                  <td>4</td>
-                  <td>Father Parenting Competence</td>
-                  <td>MANOVA contrasts</td>
+                  <td data-row="17" data-col="0"><a href="http://friendly.github.io/heplots/reference/Parenting.html">Parenting</a></td>
+                  <td data-row="17" data-col="1">60</td>
+                  <td data-row="17" data-col="2">4</td>
+                  <td data-row="17" data-col="3">Father Parenting Competence</td>
+                  <td data-row="17" data-col="4">MANOVA contrasts</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/peng.html">peng</a></td>
-                  <td>333</td>
-                  <td>8</td>
-                  <td>Size measurements for adult foraging penguins near Palmer Station</td>
-                  <td>MANOVA</td>
+                  <td data-row="18" data-col="0"><a href="http://friendly.github.io/heplots/reference/peng.html">peng</a></td>
+                  <td data-row="18" data-col="1">333</td>
+                  <td data-row="18" data-col="2">8</td>
+                  <td data-row="18" data-col="3">Size measurements for adult foraging penguins near Palmer Station</td>
+                  <td data-row="18" data-col="4">MANOVA</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/Plastic.html">Plastic</a></td>
-                  <td>20</td>
-                  <td>5</td>
-                  <td>Plastic Film Data</td>
-                  <td>MANOVA</td>
+                  <td data-row="19" data-col="0"><a href="http://friendly.github.io/heplots/reference/Plastic.html">Plastic</a></td>
+                  <td data-row="19" data-col="1">20</td>
+                  <td data-row="19" data-col="2">5</td>
+                  <td data-row="19" data-col="3">Plastic Film Data</td>
+                  <td data-row="19" data-col="4">MANOVA</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/Pottery2.html">Pottery2</a></td>
-                  <td>48</td>
-                  <td>12</td>
-                  <td>Chemical Analysis of Romano-British Pottery</td>
-                  <td>MANOVA candisc</td>
+                  <td data-row="20" data-col="0"><a href="http://friendly.github.io/heplots/reference/Pottery2.html">Pottery2</a></td>
+                  <td data-row="20" data-col="1">48</td>
+                  <td data-row="20" data-col="2">12</td>
+                  <td data-row="20" data-col="3">Chemical Analysis of Romano-British Pottery</td>
+                  <td data-row="20" data-col="4">MANOVA candisc</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/Probe.html">Probe</a></td>
-                  <td>11</td>
-                  <td>5</td>
-                  <td>Response Speed in a Probe Experiment</td>
-                  <td>MANOVA repeated</td>
+                  <td data-row="21" data-col="0"><a href="http://friendly.github.io/heplots/reference/Probe.html">Probe</a></td>
+                  <td data-row="21" data-col="1">11</td>
+                  <td data-row="21" data-col="2">5</td>
+                  <td data-row="21" data-col="3">Response Speed in a Probe Experiment</td>
+                  <td data-row="21" data-col="4">MANOVA repeated</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/RatWeight.html">RatWeight</a></td>
-                  <td>27</td>
-                  <td>6</td>
-                  <td>Weight Gain in Rats Exposed to Thiouracil and Thyroxin</td>
-                  <td>MANOVA repeated</td>
+                  <td data-row="22" data-col="0"><a href="http://friendly.github.io/heplots/reference/RatWeight.html">RatWeight</a></td>
+                  <td data-row="22" data-col="1">27</td>
+                  <td data-row="22" data-col="2">6</td>
+                  <td data-row="22" data-col="3">Weight Gain in Rats Exposed to Thiouracil and Thyroxin</td>
+                  <td data-row="22" data-col="4">MANOVA repeated</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/ReactTime.html">ReactTime</a></td>
-                  <td>10</td>
-                  <td>6</td>
-                  <td>Reaction Time Data</td>
-                  <td>repeated</td>
+                  <td data-row="23" data-col="0"><a href="http://friendly.github.io/heplots/reference/ReactTime.html">ReactTime</a></td>
+                  <td data-row="23" data-col="1">10</td>
+                  <td data-row="23" data-col="2">6</td>
+                  <td data-row="23" data-col="3">Reaction Time Data</td>
+                  <td data-row="23" data-col="4">repeated</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/Rohwer.html">Rohwer</a></td>
-                  <td>69</td>
-                  <td>10</td>
-                  <td>Rohwer Data Set</td>
-                  <td>MMRA MANCOVA</td>
+                  <td data-row="24" data-col="0"><a href="http://friendly.github.io/heplots/reference/Rohwer.html">Rohwer</a></td>
+                  <td data-row="24" data-col="1">69</td>
+                  <td data-row="24" data-col="2">10</td>
+                  <td data-row="24" data-col="3">Rohwer Data Set</td>
+                  <td data-row="24" data-col="4">MMRA MANCOVA</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/RootStock.html">RootStock</a></td>
-                  <td>48</td>
-                  <td>5</td>
-                  <td>Growth of Apple Trees from Different Root Stocks</td>
-                  <td>MANOVA contrasts</td>
+                  <td data-row="25" data-col="0"><a href="http://friendly.github.io/heplots/reference/RootStock.html">RootStock</a></td>
+                  <td data-row="25" data-col="1">48</td>
+                  <td data-row="25" data-col="2">5</td>
+                  <td data-row="25" data-col="3">Growth of Apple Trees from Different Root Stocks</td>
+                  <td data-row="25" data-col="4">MANOVA contrasts</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/Sake.html">Sake</a></td>
-                  <td>30</td>
-                  <td>10</td>
-                  <td>Taste Ratings of Japanese Rice Wine (Sake)</td>
-                  <td>MMRA</td>
+                  <td data-row="26" data-col="0"><a href="http://friendly.github.io/heplots/reference/Sake.html">Sake</a></td>
+                  <td data-row="26" data-col="1">30</td>
+                  <td data-row="26" data-col="2">10</td>
+                  <td data-row="26" data-col="3">Taste Ratings of Japanese Rice Wine (Sake)</td>
+                  <td data-row="26" data-col="4">MMRA</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/schooldata.html">schooldata</a></td>
-                  <td>70</td>
-                  <td>8</td>
-                  <td>School Data</td>
-                  <td>MMRA robust</td>
+                  <td data-row="27" data-col="0"><a href="http://friendly.github.io/heplots/reference/schooldata.html">schooldata</a></td>
+                  <td data-row="27" data-col="1">70</td>
+                  <td data-row="27" data-col="2">8</td>
+                  <td data-row="27" data-col="3">School Data</td>
+                  <td data-row="27" data-col="4">MMRA robust</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/Skulls.html">Skulls</a></td>
-                  <td>150</td>
-                  <td>5</td>
-                  <td>Egyptian Skulls</td>
-                  <td>MANOVA contrasts</td>
+                  <td data-row="28" data-col="0"><a href="http://friendly.github.io/heplots/reference/Skulls.html">Skulls</a></td>
+                  <td data-row="28" data-col="1">150</td>
+                  <td data-row="28" data-col="2">5</td>
+                  <td data-row="28" data-col="3">Egyptian Skulls</td>
+                  <td data-row="28" data-col="4">MANOVA contrasts</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/SocGrades.html">SocGrades</a></td>
-                  <td>40</td>
-                  <td>10</td>
-                  <td>Grades in a Sociology Course</td>
-                  <td>MANOVA candisc</td>
+                  <td data-row="29" data-col="0"><a href="http://friendly.github.io/heplots/reference/SocGrades.html">SocGrades</a></td>
+                  <td data-row="29" data-col="1">40</td>
+                  <td data-row="29" data-col="2">10</td>
+                  <td data-row="29" data-col="3">Grades in a Sociology Course</td>
+                  <td data-row="29" data-col="4">MANOVA candisc</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/SocialCog.html">SocialCog</a></td>
-                  <td>139</td>
-                  <td>5</td>
-                  <td>Social Cognitive Measures in Psychiatric Groups</td>
-                  <td>MANOVA candisc</td>
+                  <td data-row="30" data-col="0"><a href="http://friendly.github.io/heplots/reference/SocialCog.html">SocialCog</a></td>
+                  <td data-row="30" data-col="1">139</td>
+                  <td data-row="30" data-col="2">5</td>
+                  <td data-row="30" data-col="3">Social Cognitive Measures in Psychiatric Groups</td>
+                  <td data-row="30" data-col="4">MANOVA candisc</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/TIPI.html">TIPI</a></td>
-                  <td>1799</td>
-                  <td>16</td>
-                  <td>Data on the Ten Item Personality Inventory</td>
-                  <td>MANOVA candisc</td>
+                  <td data-row="31" data-col="0"><a href="http://friendly.github.io/heplots/reference/TIPI.html">TIPI</a></td>
+                  <td data-row="31" data-col="1">1799</td>
+                  <td data-row="31" data-col="2">16</td>
+                  <td data-row="31" data-col="3">Data on the Ten Item Personality Inventory</td>
+                  <td data-row="31" data-col="4">MANOVA candisc</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/VocabGrowth.html">VocabGrowth</a></td>
-                  <td>64</td>
-                  <td>4</td>
-                  <td>Vocabulary growth data</td>
-                  <td>repeated</td>
+                  <td data-row="32" data-col="0"><a href="http://friendly.github.io/heplots/reference/VocabGrowth.html">VocabGrowth</a></td>
+                  <td data-row="32" data-col="1">64</td>
+                  <td data-row="32" data-col="2">4</td>
+                  <td data-row="32" data-col="3">Vocabulary growth data</td>
+                  <td data-row="32" data-col="4">repeated</td>
                 </tr>
                 <tr>
-                  <td><a href="http://friendly.github.io/heplots/reference/WeightLoss.html">WeightLoss</a></td>
-                  <td>34</td>
-                  <td>7</td>
-                  <td>Weight Loss Data</td>
-                  <td>repeated</td>
+                  <td data-row="33" data-col="0"><a href="http://friendly.github.io/heplots/reference/WeightLoss.html">WeightLoss</a></td>
+                  <td data-row="33" data-col="1">34</td>
+                  <td data-row="33" data-col="2">7</td>
+                  <td data-row="33" data-col="3">Weight Loss Data</td>
+                  <td data-row="33" data-col="4">repeated</td>
                 </tr>
         </tbody>
       </table>
@@ -761,7 +753,7 @@ tinytable::tt(concepts) |&gt; format_tt(markdown = TRUE)</code></pre>
 
       function styleCell_3pnbrl1ohp3iu3bu52op(i, j, css_id) {
           var table = document.getElementById("tinytable_3pnbrl1ohp3iu3bu52op");
-          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
+          var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
               cell.classList.add(css_id);
@@ -769,48 +761,40 @@ tinytable::tt(concepts) |&gt; format_tt(markdown = TRUE)</code></pre>
               console.warn(`Cell at (${i}, ${j}) not found.`);
           }
       }
-      function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_3pnbrl1ohp3iu3bu52op');
-        var newRow = table.insertRow(i);
-        var newCell = newRow.insertCell(0);
-        newCell.setAttribute("colspan", colspan);
-        // newCell.innerText = content;
-        // this may be unsafe, but innerText does not interpret <br>
-        newCell.innerHTML = content;
-      }
       function spanCell_3pnbrl1ohp3iu3bu52op(i, j, rowspan, colspan) {
         var table = document.getElementById("tinytable_3pnbrl1ohp3iu3bu52op");
-        const targetRow = table.rows[i];
-        const targetCell = targetRow.cells[j];
+        const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
+        if (!targetCell) {
+          console.warn(`Cell at (${i}, ${j}) not found.`);
+        }
+
+        // Get all cells that need to be removed
+        const cellsToRemove = [];
         for (let r = 0; r < rowspan; r++) {
-          // Only start deleting cells to the right for the first row (r == 0)
-          if (r === 0) {
-            // Delete cells to the right of the target cell in the first row
-            for (let c = colspan - 1; c > 0; c--) {
-              if (table.rows[i + r].cells[j + c]) {
-                table.rows[i + r].deleteCell(j + c);
-              }
-            }
-          }
-          // For rows below the first, delete starting from the target column
-          if (r > 0) {
-            for (let c = colspan - 1; c >= 0; c--) {
-              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
-                table.rows[i + r].deleteCell(j);
-              }
+          for (let c = 0; c < colspan; c++) {
+            if (r === 0 && c === 0) continue; // Skip the target cell
+            const cell = table.querySelector(`[data-row="${i + r}"][data-col="${j + c}"]`);
+            if (cell) {
+              cellsToRemove.push(cell);
             }
           }
         }
-        // Set rowspan and colspan of the target cell
-        targetCell.rowSpan = rowspan;
-        targetCell.colSpan = colspan;
+
+        // Remove all cells
+        cellsToRemove.forEach(cell => cell.remove());
+
+        // Set rowspan and colspan of the target cell if it exists
+        if (targetCell) {
+          targetCell.rowSpan = rowspan;
+          targetCell.colSpan = colspan;
+        }
       }
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 9, j: 0 }, { i: 9, j: 1 },  ], css_id: 'tinytable_css_44zc2v0ryf98z1v60glv',}, 
-          { positions: [ { i: 0, j: 0 }, { i: 0, j: 1 },  ], css_id: 'tinytable_css_32vjvwvajgpqozrsu7vw',}, 
+          { positions: [ { i: '9', j: 0 }, { i: '9', j: 1 },  ], css_id: 'tinytable_css_44zc2v0ryf98z1v60glv',}, 
+          { positions: [ { i: '0', j: 0 }, { i: '0', j: 1 },  ], css_id: 'tinytable_css_32vjvwvajgpqozrsu7vw',}, 
           ];
 
           // Loop over the arrays to style the cells
@@ -832,47 +816,47 @@ tinytable::tt(concepts) |&gt; format_tt(markdown = TRUE)</code></pre>
         <thead>
         
               <tr>
-                <th scope="col">concept</th>
-                <th scope="col">datasets</th>
+                <th scope="col" data-row="0" data-col="0">concept</th>
+                <th scope="col" data-row="0" data-col="1">datasets</th>
               </tr>
         </thead>
         
         <tbody>
                 <tr>
-                  <td>MANCOVA</td>
-                  <td><a href="http://friendly.github.io/heplots/reference/Rohwer.html">Rohwer</a></td>
+                  <td data-row="1" data-col="0">MANCOVA</td>
+                  <td data-row="1" data-col="1"><a href="http://friendly.github.io/heplots/reference/Rohwer.html">Rohwer</a></td>
                 </tr>
                 <tr>
-                  <td>MANOVA</td>
-                  <td><a href="http://friendly.github.io/heplots/reference/AddHealth.html">AddHealth</a>, <a href="http://friendly.github.io/heplots/reference/Bees.html">Bees</a>, <a href="http://friendly.github.io/heplots/reference/Diabetes.html">Diabetes</a>, <a href="http://friendly.github.io/heplots/reference/FootHead.html">FootHead</a>, <a href="http://friendly.github.io/heplots/reference/Headache.html">Headache</a>, <a href="http://friendly.github.io/heplots/reference/Iwasaki_Big_Five.html">Iwasaki_Big_Five</a>, <a href="http://friendly.github.io/heplots/reference/MockJury.html">MockJury</a>, <a href="http://friendly.github.io/heplots/reference/NeuroCog.html">NeuroCog</a>, <a href="http://friendly.github.io/heplots/reference/Oslo.html">Oslo</a>, <a href="http://friendly.github.io/heplots/reference/Parenting.html">Parenting</a>, <a href="http://friendly.github.io/heplots/reference/Plastic.html">Plastic</a>, <a href="http://friendly.github.io/heplots/reference/Pottery2.html">Pottery2</a>, <a href="http://friendly.github.io/heplots/reference/Probe.html">Probe</a>, <a href="http://friendly.github.io/heplots/reference/RatWeight.html">RatWeight</a>, <a href="http://friendly.github.io/heplots/reference/RootStock.html">RootStock</a>, <a href="http://friendly.github.io/heplots/reference/Skulls.html">Skulls</a>, <a href="http://friendly.github.io/heplots/reference/SocGrades.html">SocGrades</a>, <a href="http://friendly.github.io/heplots/reference/SocialCog.html">SocialCog</a>, <a href="http://friendly.github.io/heplots/reference/TIPI.html">TIPI</a>, <a href="http://friendly.github.io/heplots/reference/dogfood.html">dogfood</a>, <a href="http://friendly.github.io/heplots/reference/mathscore.html">mathscore</a>, <a href="http://friendly.github.io/heplots/reference/oral.html">oral</a>, <a href="http://friendly.github.io/heplots/reference/peng.html">peng</a></td>
+                  <td data-row="2" data-col="0">MANOVA</td>
+                  <td data-row="2" data-col="1"><a href="http://friendly.github.io/heplots/reference/AddHealth.html">AddHealth</a>, <a href="http://friendly.github.io/heplots/reference/Bees.html">Bees</a>, <a href="http://friendly.github.io/heplots/reference/Diabetes.html">Diabetes</a>, <a href="http://friendly.github.io/heplots/reference/FootHead.html">FootHead</a>, <a href="http://friendly.github.io/heplots/reference/Headache.html">Headache</a>, <a href="http://friendly.github.io/heplots/reference/Iwasaki_Big_Five.html">Iwasaki_Big_Five</a>, <a href="http://friendly.github.io/heplots/reference/MockJury.html">MockJury</a>, <a href="http://friendly.github.io/heplots/reference/NeuroCog.html">NeuroCog</a>, <a href="http://friendly.github.io/heplots/reference/Oslo.html">Oslo</a>, <a href="http://friendly.github.io/heplots/reference/Parenting.html">Parenting</a>, <a href="http://friendly.github.io/heplots/reference/Plastic.html">Plastic</a>, <a href="http://friendly.github.io/heplots/reference/Pottery2.html">Pottery2</a>, <a href="http://friendly.github.io/heplots/reference/Probe.html">Probe</a>, <a href="http://friendly.github.io/heplots/reference/RatWeight.html">RatWeight</a>, <a href="http://friendly.github.io/heplots/reference/RootStock.html">RootStock</a>, <a href="http://friendly.github.io/heplots/reference/Skulls.html">Skulls</a>, <a href="http://friendly.github.io/heplots/reference/SocGrades.html">SocGrades</a>, <a href="http://friendly.github.io/heplots/reference/SocialCog.html">SocialCog</a>, <a href="http://friendly.github.io/heplots/reference/TIPI.html">TIPI</a>, <a href="http://friendly.github.io/heplots/reference/dogfood.html">dogfood</a>, <a href="http://friendly.github.io/heplots/reference/mathscore.html">mathscore</a>, <a href="http://friendly.github.io/heplots/reference/oral.html">oral</a>, <a href="http://friendly.github.io/heplots/reference/peng.html">peng</a></td>
                 </tr>
                 <tr>
-                  <td>MMRA</td>
-                  <td><a href="http://friendly.github.io/heplots/reference/Adopted.html">Adopted</a>, <a href="http://friendly.github.io/heplots/reference/Hernior.html">Hernior</a>, <a href="http://friendly.github.io/heplots/reference/NLSY.html">NLSY</a>, <a href="http://friendly.github.io/heplots/reference/Overdose.html">Overdose</a>, <a href="http://friendly.github.io/heplots/reference/Rohwer.html">Rohwer</a>, <a href="http://friendly.github.io/heplots/reference/Sake.html">Sake</a>, <a href="http://friendly.github.io/heplots/reference/schooldata.html">schooldata</a></td>
+                  <td data-row="3" data-col="0">MMRA</td>
+                  <td data-row="3" data-col="1"><a href="http://friendly.github.io/heplots/reference/Adopted.html">Adopted</a>, <a href="http://friendly.github.io/heplots/reference/Hernior.html">Hernior</a>, <a href="http://friendly.github.io/heplots/reference/NLSY.html">NLSY</a>, <a href="http://friendly.github.io/heplots/reference/Overdose.html">Overdose</a>, <a href="http://friendly.github.io/heplots/reference/Rohwer.html">Rohwer</a>, <a href="http://friendly.github.io/heplots/reference/Sake.html">Sake</a>, <a href="http://friendly.github.io/heplots/reference/schooldata.html">schooldata</a></td>
                 </tr>
                 <tr>
-                  <td>cancor</td>
-                  <td><a href="http://friendly.github.io/heplots/reference/Overdose.html">Overdose</a></td>
+                  <td data-row="4" data-col="0">cancor</td>
+                  <td data-row="4" data-col="1"><a href="http://friendly.github.io/heplots/reference/Overdose.html">Overdose</a></td>
                 </tr>
                 <tr>
-                  <td>candisc</td>
-                  <td><a href="http://friendly.github.io/heplots/reference/Hernior.html">Hernior</a>, <a href="http://friendly.github.io/heplots/reference/MockJury.html">MockJury</a>, <a href="http://friendly.github.io/heplots/reference/NeuroCog.html">NeuroCog</a>, <a href="http://friendly.github.io/heplots/reference/Oslo.html">Oslo</a>, <a href="http://friendly.github.io/heplots/reference/Pottery2.html">Pottery2</a>, <a href="http://friendly.github.io/heplots/reference/SocGrades.html">SocGrades</a>, <a href="http://friendly.github.io/heplots/reference/SocialCog.html">SocialCog</a>, <a href="http://friendly.github.io/heplots/reference/TIPI.html">TIPI</a>, <a href="http://friendly.github.io/heplots/reference/dogfood.html">dogfood</a></td>
+                  <td data-row="5" data-col="0">candisc</td>
+                  <td data-row="5" data-col="1"><a href="http://friendly.github.io/heplots/reference/Hernior.html">Hernior</a>, <a href="http://friendly.github.io/heplots/reference/MockJury.html">MockJury</a>, <a href="http://friendly.github.io/heplots/reference/NeuroCog.html">NeuroCog</a>, <a href="http://friendly.github.io/heplots/reference/Oslo.html">Oslo</a>, <a href="http://friendly.github.io/heplots/reference/Pottery2.html">Pottery2</a>, <a href="http://friendly.github.io/heplots/reference/SocGrades.html">SocGrades</a>, <a href="http://friendly.github.io/heplots/reference/SocialCog.html">SocialCog</a>, <a href="http://friendly.github.io/heplots/reference/TIPI.html">TIPI</a>, <a href="http://friendly.github.io/heplots/reference/dogfood.html">dogfood</a></td>
                 </tr>
                 <tr>
-                  <td>contrasts</td>
-                  <td><a href="http://friendly.github.io/heplots/reference/FootHead.html">FootHead</a>, <a href="http://friendly.github.io/heplots/reference/Parenting.html">Parenting</a>, <a href="http://friendly.github.io/heplots/reference/RootStock.html">RootStock</a>, <a href="http://friendly.github.io/heplots/reference/Skulls.html">Skulls</a>, <a href="http://friendly.github.io/heplots/reference/dogfood.html">dogfood</a></td>
+                  <td data-row="6" data-col="0">contrasts</td>
+                  <td data-row="6" data-col="1"><a href="http://friendly.github.io/heplots/reference/FootHead.html">FootHead</a>, <a href="http://friendly.github.io/heplots/reference/Parenting.html">Parenting</a>, <a href="http://friendly.github.io/heplots/reference/RootStock.html">RootStock</a>, <a href="http://friendly.github.io/heplots/reference/Skulls.html">Skulls</a>, <a href="http://friendly.github.io/heplots/reference/dogfood.html">dogfood</a></td>
                 </tr>
                 <tr>
-                  <td>ordered</td>
-                  <td><a href="http://friendly.github.io/heplots/reference/AddHealth.html">AddHealth</a></td>
+                  <td data-row="7" data-col="0">ordered</td>
+                  <td data-row="7" data-col="1"><a href="http://friendly.github.io/heplots/reference/AddHealth.html">AddHealth</a></td>
                 </tr>
                 <tr>
-                  <td>repeated</td>
-                  <td><a href="http://friendly.github.io/heplots/reference/Adopted.html">Adopted</a>, <a href="http://friendly.github.io/heplots/reference/Headache.html">Headache</a>, <a href="http://friendly.github.io/heplots/reference/Probe.html">Probe</a>, <a href="http://friendly.github.io/heplots/reference/RatWeight.html">RatWeight</a>, <a href="http://friendly.github.io/heplots/reference/ReactTime.html">ReactTime</a>, <a href="http://friendly.github.io/heplots/reference/VocabGrowth.html">VocabGrowth</a>, <a href="http://friendly.github.io/heplots/reference/WeightLoss.html">WeightLoss</a></td>
+                  <td data-row="8" data-col="0">repeated</td>
+                  <td data-row="8" data-col="1"><a href="http://friendly.github.io/heplots/reference/Adopted.html">Adopted</a>, <a href="http://friendly.github.io/heplots/reference/Headache.html">Headache</a>, <a href="http://friendly.github.io/heplots/reference/Probe.html">Probe</a>, <a href="http://friendly.github.io/heplots/reference/RatWeight.html">RatWeight</a>, <a href="http://friendly.github.io/heplots/reference/ReactTime.html">ReactTime</a>, <a href="http://friendly.github.io/heplots/reference/VocabGrowth.html">VocabGrowth</a>, <a href="http://friendly.github.io/heplots/reference/WeightLoss.html">WeightLoss</a></td>
                 </tr>
                 <tr>
-                  <td>robust</td>
-                  <td><a href="http://friendly.github.io/heplots/reference/schooldata.html">schooldata</a></td>
+                  <td data-row="9" data-col="0">robust</td>
+                  <td data-row="9" data-col="1"><a href="http://friendly.github.io/heplots/reference/schooldata.html">schooldata</a></td>
                 </tr>
         </tbody>
       </table>

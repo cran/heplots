@@ -2,6 +2,7 @@
 
 ## John Fox 2012-06-02
 ## revised: 2013-08-20 to avoid calling summary.mlm() directly in vcov.mlm()
+## TODO: what about using MASS::cob.rob, allowing MCD, MVE?
 
 
 
@@ -25,6 +26,8 @@
 #' 
 #' An internal \code{vcov.mlm} function is an extension of the standard
 #' \code{\link[stats]{vcov}} method providing for the use of observation weights.
+#' A \code{\link{plot.robmlm}} method provides simple index plots of case weights
+#' to visualize those that were down-weighted.
 
 #' @details
 #' 
@@ -62,7 +65,7 @@
 #' @param X for the default method, a model matrix, including the constant (if
 #'        present)
 #' @param Y for the default method, a response matrix
-#' @param w prior weights
+#' @param w prior observation weights
 #' @param P two-tail probability, to find cutoff quantile for chisq (tuning
 #'        constant); default is set for bisquare weight function
 #' @param tune tuning constant (if given directly)
@@ -94,6 +97,7 @@
 #' @author John Fox; packaged by Michael Friendly
 #' 
 #' @seealso
+#'  \code{\link{plot.robmlm}} for a plot method;
 #'     \code{\link[MASS]{rlm}}, \code{\link[MASS]{cov.trob}}
 #' @references 
 #' A. Marazzi (1993) \emph{Algorithms, Routines and S Functions for
@@ -101,8 +105,9 @@
 #' @keywords multivariate robust
 #' @examples
 #' 
-#' ##############
 #' # Skulls data
+#' # -----------
+#' data(Skulls)
 #' 
 #' # make shorter labels for epochs and nicer variable labels in heplots
 #' Skulls$epoch <- factor(Skulls$epoch, labels=sub("c","",levels(Skulls$epoch)))
@@ -117,9 +122,9 @@
 #' coefficients(sk.rmod)
 #' 
 #' # index plot of weights
-#' plot(sk.rmod$weights, type="h", xlab="Case Index", ylab="Robust mlm weight", col="gray")
+#' plot(sk.rmod, segments = TRUE, col = Skulls$epoch)
 #' points(sk.rmod$weights, pch=16, col=Skulls$epoch)
-#' axis(side=1, at=15+seq(0,120,30), labels=levels(Skulls$epoch), tick=FALSE, cex.axis=1)
+#' text(x = 15+seq(0,120,30), y = 1.05, labels=levels(Skulls$epoch), xpd=TRUE)
 #' 
 #' # heplots to see effect of robmlm vs. mlm
 #' heplot(sk.mod, hypotheses=list(Lin="epoch.L", Quad="epoch.Q"), 
@@ -216,7 +221,8 @@ robmlm.default <- function(X, Y, w, P=2*pnorm(4.685, lower.tail=FALSE),
   B.last <- B.new <- fit.last$coefficients
   iter <- 0
   if (verbose){
-    coefnames <- abbreviate(outer(rownames(B.new), colnames(B.new), function(x, y) paste(x, ":", y, sep="")), 10)
+    coefnames <- abbreviate(outer(rownames(B.new), colnames(B.new), 
+                                  function(x, y) paste(x, ":", y, sep="")), 10)
     b <- as.vector(B.new)
     names(b) <- coefnames
     cat("\n", iter, ":\n", sep="")

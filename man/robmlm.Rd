@@ -51,7 +51,7 @@ arguments can be passed to the to the \code{robmlm.default} method.}
 
 \item{Y}{for the default method, a response matrix}
 
-\item{w}{prior weights}
+\item{w}{prior observation weights}
 
 \item{P}{two-tail probability, to find cutoff quantile for chisq (tuning
 constant); default is set for bisquare weight function}
@@ -128,6 +128,8 @@ other \code{mlm} extensions, including \code{\link[car]{Anova}} and
 
 An internal \code{vcov.mlm} function is an extension of the standard
 \code{\link[stats]{vcov}} method providing for the use of observation weights.
+A \code{\link{plot.robmlm}} method provides simple index plots of case weights
+to visualize those that were down-weighted.
 }
 \details{
 Weighted least squares provides a method for correcting a variety of problems in linear models
@@ -147,8 +149,9 @@ until convergence.
 }
 \examples{
 
-##############
 # Skulls data
+# -----------
+data(Skulls)
 
 # make shorter labels for epochs and nicer variable labels in heplots
 Skulls$epoch <- factor(Skulls$epoch, labels=sub("c","",levels(Skulls$epoch)))
@@ -163,9 +166,9 @@ sk.rmod <- robmlm(cbind(mb, bh, bl, nh) ~ epoch, data=Skulls)
 coefficients(sk.rmod)
 
 # index plot of weights
-plot(sk.rmod$weights, type="h", xlab="Case Index", ylab="Robust mlm weight", col="gray")
+plot(sk.rmod, segments = TRUE, col = Skulls$epoch)
 points(sk.rmod$weights, pch=16, col=Skulls$epoch)
-axis(side=1, at=15+seq(0,120,30), labels=levels(Skulls$epoch), tick=FALSE, cex.axis=1)
+text(x = 15+seq(0,120,30), y = 1.05, labels=levels(Skulls$epoch), xpd=TRUE)
 
 # heplots to see effect of robmlm vs. mlm
 heplot(sk.mod, hypotheses=list(Lin="epoch.L", Quad="epoch.Q"), 
@@ -222,7 +225,8 @@ A. Marazzi (1993) \emph{Algorithms, Routines and S Functions for
 Robust Statistics}.  Wadsworth & Brooks/Cole.
 }
 \seealso{
-\code{\link[MASS]{rlm}}, \code{\link[MASS]{cov.trob}}
+\code{\link{plot.robmlm}} for a plot method;
+    \code{\link[MASS]{rlm}}, \code{\link[MASS]{cov.trob}}
 }
 \author{
 John Fox; packaged by Michael Friendly
