@@ -15,16 +15,23 @@ cross3d(centre = rep(0, 3), scale = rep(1, 3), ...)
 }
 \value{
 Used for its side-effect, but returns (invisibly) a 6 by 3 matrix
-       containing the end-points of three axes, in pairs.
+containing the end-points of three axes, in pairs.
 }
 \description{
 Draws a 3D cross or axis vectors in an rgl scene.
 }
 \seealso{
 \code{\link[rgl:points3d]{segments3d}}
+
+Other 3D plotting: 
+\code{\link{arrow3d}()},
+\code{\link{bbox3d}()},
+\code{\link{ellipse3d.axes}()},
+\code{\link{heplot3d}()}
 }
 \author{
 Michael Friendly
 }
+\concept{3D plotting}
 \keyword{aplot}
 \keyword{dynamic}

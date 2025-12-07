@@ -12,11 +12,20 @@ bbox3d(x, ...)
 \item{...}{ignored}
 }
 \value{
-A 2 x 3 matrix, giving the minimum and maximum values in the rows and x, y, z coordinates
-            in the columns.
+\if{html}{\out{<div class="sourceCode">}}\preformatted{A 2 x 3 matrix, giving the minimum and maximum values in the rows and x, y, z coordinates
+        in the columns.
+}\if{html}{\out{</div>}}
 }
 \description{
 Ellipsoids are created by \pkg{rgl} functions as meshes of points, segments, ... from coordinates
 in various forms. This function calculates the bounding box, defined as the range of the
 x, y, and z coordinates.
 }
+\seealso{
+Other 3D plotting: 
+\code{\link{arrow3d}()},
+\code{\link{cross3d}()},
+\code{\link{ellipse3d.axes}()},
+\code{\link{heplot3d}()}
+}
+\concept{3D plotting}

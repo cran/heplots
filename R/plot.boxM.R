@@ -5,7 +5,7 @@
 #' This function creates a simple dot chart showing the contributions (log
 #' determinants) of the various groups to Box's M test for equality of
 #' covariance matrices. An important virtue of these plots is that they can show
-#' \emph{how} the groups differ from each other, and from the pooled
+#' *how* the groups differ from each other, and from the pooled
 #' covariance matrix using a scalar like \eqn{ln | S |}. In this way, they
 #' can suggest more specific questions or hypotheses regarding the
 #' equality of covariance matrices, analogous to the use of contrasts
@@ -17,47 +17,51 @@
 #' eigenvalues of these covariance matrices.
 #' 
 #' Confidence intervals are only available for the default Box M test, using
-#' \code{which="logDet"}. The theory for this comes from Cai et-al. (2015).
+#' `which="logDet"`. The theory for this comes from Cai et-al. (2015).
 #' 
 #' @name plot.boxM
 #' @docType data
-#' @param x A \code{"boxM"} object resulting from \code{\link{boxM}}
+#' @param x A `"boxM"` object resulting from \code{\link{boxM}}
 #' @param gplabel character string used to label the group factor.
-#' @param which Measure to be plotted. The default, \code{"logDet"}, is the
-#' standard plot.  Other values are: \code{"product"}, \code{"sum"},
-#' \code{"precision"} and \code{"max"}
-#' @param log logical; if \code{TRUE}, the log of the measure is plotted. The
-#' default, \code{which=="product"}, produces a plot equivalent to the plot of
-#' \code{"logDet"}.
+#' @param which Measure to be plotted. The default, `"logDet"`, is the
+#' standard plot.  Other values are: `"product"`, `"sum"`,
+#' `"precision"` and `"max"`
+#' @param log logical; if `TRUE`, the log of the measure is plotted. The
+#' default, `which=="product"`, produces a plot equivalent to the plot of
+#' `"logDet"`.
 #' @param pch a vector of two point symbols to use for the individual groups
 #' and the pooled data, respectively
 #' @param cex character size of point symbols, a vector of length two for
 #' groups and pooled data, respectively
 #' @param col colors for point symbols, a vector of length two for the groups
 #' and the pooled data
-#' @param rev logical; if \code{TRUE}, the order of the groups is reversed on
+#' @param rev logical; if `TRUE`, the order of the groups is reversed on
 #' the vertical axis.
 #' @param xlim x limits for the plot
-#' @param conf coverage for approximate confidence intervals, \code{0 <= conf <
-#' 1} ; use \code{conf=0} to suppress these
+#' @param conf coverage for approximate confidence intervals, `0 <= conf <
+#' 1` ; use `conf=0` to suppress these
 #' @param method confidence interval method; see \code{\link{logdetCI}}
 #' @param bias.adj confidence interval bias adjustment; see
 #' \code{\link{logdetCI}}
 #' @param lwd line width for confidence interval
 #' @param ... Arguments passed down to \code{\link[graphics]{dotchart}}.
+#' 
 #' @author Michael Friendly
+#' 
 #' @seealso \code{\link{boxM}}, \code{\link{logdetCI}}
 #' 
 #' \code{\link[graphics]{dotchart}}
+#' @family diagnostic plots
+#' 
 #' @references 
 #' Cai, T. T., Liang, T., & Zhou, H. H. (2015). 
 #' Law of log determinant of sample covariance matrix and optimal estimation of differential entropy for high-dimensional Gaussian distributions. 
-#' \emph{Journal of Multivariate Analysis}, \bold{137}, 161–172. \doi{10.1016/j.jmva.2015.02.003}.
+#' *Journal of Multivariate Analysis*, **137**, 161–172. \doi{10.1016/j.jmva.2015.02.003}.
 #' 
 #' Friendly, M., & Sigal, M. (2018). Visualizing Tests for Equality of Covariance Matrices. 
-#' \emph{The American Statistician}, \bold{72}(4);
+#' *The American Statistician*, **72**(4);
 #' \doi{10.1080/00031305.2018.1497537}.
-#' Online: \url{https://www.datavis.ca/papers/EqCov-TAS.pdf}.
+#' Online: <https://www.datavis.ca/papers/EqCov-TAS.pdf>.
 #' 
 #' 
 #' @keywords hgraph
@@ -95,8 +99,14 @@ plot.boxM <-
     
     which <- match.arg(which)
     if (which=="logDet") {
-      measure <- x$logDet
+      # Filter out singular groups (those with -Inf or non-finite values)
+      # x$logDet includes group log dets and pooled as the last element
+      valid_idx <- is.finite(x$logDet)
+      measure <- x$logDet[valid_idx]
       xlab <- "log determinant"
+
+      # Track which groups are valid (excluding pooled)
+      valid_groups <- head(valid_idx, -1)
     }
     else {
       eigstats <- summary(x, quiet=TRUE)$eigstats
@@ -104,18 +114,23 @@ plot.boxM <-
       if(log) measure <- log(measure)
       xlab <- paste(if(log) "log" else "", which, "of eigenvalues" )
       conf <- 0
+      # For eigstats, filter is already handled by summary()
+      valid_groups <- rep(TRUE, length(x$logDet))
     }
-    
-    
+
+
     ng <- length(measure)-1
-    
+
     if (missing(xlim)) {
-      xlim <- range(measure)
+      xlim <- range(measure[is.finite(measure)])
     }
-    
+
     if (conf>0) {
-      cov <- c(x$cov, list(pooled=x$pooled))
-      n <- x$df + c(rep(1, ng), ng)
+      # Use only valid (non-singular) groups for confidence intervals
+      cov_valid <- x$cov[valid_groups]
+      cov <- c(cov_valid, list(pooled=x$pooled))
+      df_valid <- x$df[c(valid_groups, TRUE)]  # Include pooled
+      n <- df_valid + 1
       CI <- logdetCI( cov, n=n, conf=conf, method=method, bias.adj=bias.adj )
       xlim[1] <- min(xlim[1], CI$lower)
       xlim[2] <- max(xlim[2], CI$upper)

@@ -19,6 +19,7 @@ library(heplots)
 library(candisc)
 library(ggplot2)
 library(dplyr)
+library(tidyr)
 
 ## ----eval=FALSE---------------------------------------------------------------
 # data(dataset)
@@ -34,6 +35,34 @@ vcdExtra::datasets("heplots") |> head(4)
 # #' @keywords datasets
 # #' @concept MANOVA
 # #' @concept ordered
+
+## ----concept-tags-------------------------------------------------------------
+# concepts <- readLines(pipe("grep concept man/*.Rd")) %>%
+#   grep("concept{", ., fixed = TRUE, value = TRUE) %>%
+#   read.table(text = ., sep = "{", comment.char = "}",
+#     col.names = c("dataset", "tags")) %>%
+#   separate(dataset, c(NA, "dataset"), extra = "drop") %>%
+#   summarize(tags = paste(tags, collapse = " "), .by = dataset) %>%
+#   arrange(dataset)
+# 
+# head(concepts)
+
+## -----------------------------------------------------------------------------
+# dsets <- vcdExtra::datasets("heplots")[, c("Item", "dim", "Title")]
+# rowcols <- as.data.frame(stringr::str_split_fixed(dsets$dim,"x", 2))
+# colnames(rowcols) <- c("rows", "cols")
+# 
+# dsets <- cbind(dsets, rowcols) |>
+#   rename(dataset = Item) |>
+#   select(-dim) |>
+#   relocate(c(rows, cols), .after=dataset) |>
+#   left_join(concepts, by = "dataset")
+
+## -----------------------------------------------------------------------------
+# refurl <- "http://friendly.github.io/candisc/reference/"
+# 
+# dsets <- dsets |>
+#   mutate(dataset = glue::glue("[{dataset}]({refurl}{dataset}.html)"))
 
 ## ----datasets-----------------------------------------------------------------
 library(here)

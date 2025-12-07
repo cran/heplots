@@ -29,7 +29,7 @@ each parameter can be given in the scale parameter.  This defaults to
 \code{c(1, 1, 1)}, so no rescaling will be done.}
 
 \item{level}{The coverage level of a simultaneous region.  The
-default is 0.95, for a 95\% region.  This is used to control the size of the
+default is 0.95, for a 95\\% region.  This is used to control the size of the
 ellipsoid.}
 
 \item{t}{The size of the ellipsoid may also be controlled by specifying the
@@ -52,7 +52,7 @@ of axes end points.  Default: \code{c(2,4,6)}.}
 }
 \value{
 Returns a 6 x 3 matrix containing the end points of the three axis
-        lines in pairs by rows.
+lines in pairs by rows.
 }
 \description{
 A function to draw the major axes of a 3D ellipsoid from a correlation,
@@ -76,9 +76,22 @@ axes <- ellipse3d.axes(cov, centre=mu, level=0.68, color="gray", lwd=2)
 \seealso{
 \code{\link[rgl:points3d]{segments3d}},
 \code{\link[rgl:texts]{text3d}}, \code{\link[rgl]{ellipse3d}}
+
+Other covariance ellipses: 
+\code{\link{covEllipses}()},
+\code{\link{ellipse.axes}()},
+\code{\link{ellipse.box}()}
+
+Other 3D plotting: 
+\code{\link{arrow3d}()},
+\code{\link{bbox3d}()},
+\code{\link{cross3d}()},
+\code{\link{heplot3d}()}
 }
 \author{
 Michael Friendly
 }
+\concept{3D plotting}
+\concept{covariance ellipses}
 \keyword{aplot}
 \keyword{dynamic}
