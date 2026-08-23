@@ -1,8 +1,8 @@
 Package: heplots
 Type: Package
 Title: Visualizing Hypothesis Tests in Multivariate Linear Models
-Version: 1.8.1
-Date: 2025-12-02
+Version: 1.8.4
+Date: 2026-08-22
 Authors@R: c(
             person(given = "Michael", 
                    family = "Friendly", 
@@ -28,12 +28,12 @@ Description: Provides HE plot and other functions for visualizing hypothesis
 Language: en-US
 Depends: R (>= 4.1.0), broom
 Imports: car, MASS, graphics, grDevices, stats, magrittr, purrr, rgl,
-        tibble
+        tibble, boot
 Suggests: candisc, carData, effects, reshape, gplots, nlme, lattice,
         reshape2, corrgram, animation, mvinfluence, knitr, litedown,
         rmarkdown, markdown, dplyr, tidyr, ggplot2, bookdown,
         patchwork, tinytable, glue, here, Sleuth2, rrcov, archdata,
-        qqtest, vcdExtra, R.rsp, KernSmooth, aplpack, foreign,
+        qqtest, ggbiplot, vcdExtra, KernSmooth, aplpack, foreign,
         robustbase, effectsize
 LazyLoad: yes
 LazyData: yes
@@ -41,12 +41,11 @@ BugReports: https://github.com/friendly/heplots/issues
 License: GPL (>= 2)
 URL: https://friendly.github.io/heplots/,
         https://github.com/friendly/heplots
-RoxygenNote: 7.3.3
 Encoding: UTF-8
-VignetteBuilder: knitr, R.rsp
-# Roxygen: list(markdown = TRUE)
+VignetteBuilder: knitr
+Config/roxygen2/version: 8.1.0
 NeedsCompilation: no
-Packaged: 2025-12-06 21:36:50 UTC; friendly
+Packaged: 2026-08-23 15:53:46 UTC; friendly
 Author: Michael Friendly [aut, cre] (ORCID:
     <https://orcid.org/0000-0002-3237-0941>),
   John Fox [aut] (ORCID: <https://orcid.org/0000-0002-1196-8012>),
@@ -54,4 +53,4 @@ Author: Michael Friendly [aut, cre] (ORCID:
   Phil Chalmers [ctb] (ORCID: <https://orcid.org/0000-0001-5332-2810>),
   Duncan Murdoch [ctb]
 Repository: CRAN
-Date/Publication: 2025-12-07 06:10:12 UTC
+Date/Publication: 2026-08-23 16:20:02 UTC

@@ -11,7 +11,7 @@
 
 <meta name="author" content="Michael Friendly" />
 
-<meta name="date" content="2025-12-06" />
+<meta name="date" content="2026-08-23" />
 
 <title>Data sets in the heplots package</title>
 
@@ -339,7 +339,7 @@ display: none;
 
 <h1 class="title toc-ignore">Data sets in the heplots package</h1>
 <h4 class="author">Michael Friendly</h4>
-<h4 class="date">2025-12-06</h4>
+<h4 class="date">2026-08-23</h4>
 
 </div>
 
@@ -755,7 +755,7 @@ font-family: inherit;
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-.tinytable * {
+.tinytable *:not(mjx-container):not(mjx-container *) {
 font-family: inherit;
 }
 
@@ -824,6 +824,11 @@ position: relative;
 --line-width-bottom: 0.1em;
 --line-width-left: 0.1em;
 
+--line-type-top: solid;
+--line-type-right: solid;
+--line-type-bottom: solid;
+--line-type-left: solid;
+
 --trim-top-left: 0%;
 --trim-top-right: 0%;
 --trim-right-top: 0%;
@@ -843,9 +848,9 @@ right: var(--trim-right-top, 0);
 bottom: 0;
 pointer-events: none;
 z-index: 1;
-border-top: calc(var(--border-top) * var(--line-width-top)) solid var(--line-color-top);
-border-right: calc(var(--border-right) * var(--line-width-right)) solid var(--line-color-right);
-border-left: calc(var(--border-left) * var(--line-width-left)) solid var(--line-color-left);
+border-top: calc(var(--border-top) * var(--line-width-top)) var(--line-type-top, solid) var(--line-color-top);
+border-right: calc(var(--border-right) * var(--line-width-right)) var(--line-type-right, solid) var(--line-color-right);
+border-left: calc(var(--border-left) * var(--line-width-left)) var(--line-type-left, solid) var(--line-color-left);
 }
 
 .tinytable :is(td, th)[class*="tinytable_css_"]::after {
@@ -854,8 +859,8 @@ position: absolute;
 left: var(--trim-bottom-left, 0);
 right: var(--trim-bottom-right, 0);
 bottom: var(--trim-left-bottom, var(--trim-right-bottom, 0));
-height: calc(var(--border-bottom) * var(--line-width-bottom));
-background: var(--line-color-bottom);
+height: 0;
+border-bottom: calc(var(--border-bottom) * var(--line-width-bottom)) var(--line-type-bottom, solid) var(--line-color-bottom);
 pointer-events: none;
 z-index: 2;
 }
@@ -901,8 +906,8 @@ line-height: var(--tt-line-height-footnote-tight);
 </style>
     <style>
 
-#tinytable_kgvkrni9pwegrjp3r1sh td.tinytable_css_7ueq6zk2qqphxo0q2gzc, #tinytable_kgvkrni9pwegrjp3r1sh th.tinytable_css_7ueq6zk2qqphxo0q2gzc { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; }
-#tinytable_kgvkrni9pwegrjp3r1sh td.tinytable_css_dr96edz0u7yumdwm6ppz, #tinytable_kgvkrni9pwegrjp3r1sh th.tinytable_css_dr96edz0u7yumdwm6ppz { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; }
+#tinytable_kgvkrni9pwegrjp3r1sh td.tinytable_css_7ueq6zk2qqphxo0q2gzc, #tinytable_kgvkrni9pwegrjp3r1sh th.tinytable_css_7ueq6zk2qqphxo0q2gzc { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; }
+#tinytable_kgvkrni9pwegrjp3r1sh td.tinytable_css_dr96edz0u7yumdwm6ppz, #tinytable_kgvkrni9pwegrjp3r1sh th.tinytable_css_dr96edz0u7yumdwm6ppz { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; }
 </style>
     <div class="container">
       <table class="tinytable" id="tinytable_kgvkrni9pwegrjp3r1sh" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
@@ -1475,7 +1480,7 @@ font-family: inherit;
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-.tinytable * {
+.tinytable *:not(mjx-container):not(mjx-container *) {
 font-family: inherit;
 }
 
@@ -1544,6 +1549,11 @@ position: relative;
 --line-width-bottom: 0.1em;
 --line-width-left: 0.1em;
 
+--line-type-top: solid;
+--line-type-right: solid;
+--line-type-bottom: solid;
+--line-type-left: solid;
+
 --trim-top-left: 0%;
 --trim-top-right: 0%;
 --trim-right-top: 0%;
@@ -1563,9 +1573,9 @@ right: var(--trim-right-top, 0);
 bottom: 0;
 pointer-events: none;
 z-index: 1;
-border-top: calc(var(--border-top) * var(--line-width-top)) solid var(--line-color-top);
-border-right: calc(var(--border-right) * var(--line-width-right)) solid var(--line-color-right);
-border-left: calc(var(--border-left) * var(--line-width-left)) solid var(--line-color-left);
+border-top: calc(var(--border-top) * var(--line-width-top)) var(--line-type-top, solid) var(--line-color-top);
+border-right: calc(var(--border-right) * var(--line-width-right)) var(--line-type-right, solid) var(--line-color-right);
+border-left: calc(var(--border-left) * var(--line-width-left)) var(--line-type-left, solid) var(--line-color-left);
 }
 
 .tinytable :is(td, th)[class*="tinytable_css_"]::after {
@@ -1574,8 +1584,8 @@ position: absolute;
 left: var(--trim-bottom-left, 0);
 right: var(--trim-bottom-right, 0);
 bottom: var(--trim-left-bottom, var(--trim-right-bottom, 0));
-height: calc(var(--border-bottom) * var(--line-width-bottom));
-background: var(--line-color-bottom);
+height: 0;
+border-bottom: calc(var(--border-bottom) * var(--line-width-bottom)) var(--line-type-bottom, solid) var(--line-color-bottom);
 pointer-events: none;
 z-index: 2;
 }
@@ -1621,8 +1631,8 @@ line-height: var(--tt-line-height-footnote-tight);
 </style>
     <style>
 
-#tinytable_5bl1w0r5l1midj7kumnz td.tinytable_css_it3l1k6ol3pnbrl1ohp3, #tinytable_5bl1w0r5l1midj7kumnz th.tinytable_css_it3l1k6ol3pnbrl1ohp3 { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; }
-#tinytable_5bl1w0r5l1midj7kumnz td.tinytable_css_mpubga151wuog6esmjrf, #tinytable_5bl1w0r5l1midj7kumnz th.tinytable_css_mpubga151wuog6esmjrf { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; }
+#tinytable_5bl1w0r5l1midj7kumnz td.tinytable_css_it3l1k6ol3pnbrl1ohp3, #tinytable_5bl1w0r5l1midj7kumnz th.tinytable_css_it3l1k6ol3pnbrl1ohp3 { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; }
+#tinytable_5bl1w0r5l1midj7kumnz td.tinytable_css_mpubga151wuog6esmjrf, #tinytable_5bl1w0r5l1midj7kumnz th.tinytable_css_mpubga151wuog6esmjrf { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; }
 </style>
     <div class="container">
       <table class="tinytable" id="tinytable_5bl1w0r5l1midj7kumnz" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">

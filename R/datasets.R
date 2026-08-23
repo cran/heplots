@@ -685,7 +685,7 @@ NULL
 #' @source 
 #' Grice, J., & Iwasaki, M. (2007). A truly multivariate approach to
 #' MANOVA.  *Applied Multivariate Research*, **12**, 199-226.
-#' https://doi.org/10.22329/amr.v12i3.660.
+#' \doi{10.22329/amr.v12i3.660}.
 #' @keywords datasets
 #' @concept MANOVA
 #' @examples
@@ -927,9 +927,9 @@ NULL
 #' D.R., Young A.S., Zalcman S., Marder S.R. (2008) The MATRICS Consensus
 #' Cognitive Battery, Part 1: Test selection, reliability, and validity.
 #' *American Journal of Psychiatry*, **165** (2), 203-213.
-#' <https://pubmed.ncbi.nlm.nih.gov/18172019/>.
-#' 
-#' @source 
+#' \doi{10.1176/appi.ajp.2007.07010042}.
+#'
+#' @source
 #' Hartman, L. I. (2016). Schizophrenia and Schizoaffective Disorder:
 #' One Condition or Two? Unpublished PhD dissertation, York University.
 #' 
@@ -1012,8 +1012,10 @@ NULL
 #' description now only exists on the WayBack Machine,
 #' <http://web.archive.org/web/20050404145001/http://www.unc.edu/~curran/example.html>.
 #' 
-#' More details are available at
+#' More details are available at:
 #' <http://web.archive.org/web/20060830061414/http://www.unc.edu/~curran/srcd-docs/srcdmeth.pdf>.
+#' 
+#' See also: The Index to the NLSY97 Cohort, <https://www.nlsinfo.org/content/cohorts/nlsy97>
 #' @keywords datasets
 #' @concept MMRA
 #' @concept robust
@@ -1382,7 +1384,6 @@ NULL
 #' 
 #' @source Originally slightly modified from files by David Carlson, now at
 #' \code{\link[archdata]{RBPottery}}. %
-#' % <http://people.tamu.edu/~dcarlson/quant/data/RBPottery.html>
 #' @keywords datasets
 #' @concept MANOVA
 #' @concept candisc
@@ -1686,7 +1687,7 @@ NULL
 #' which differed in the syntactic and semantic relationship between the stimulus and response words in each pair.
 #' 
 #' @details
-#' Timm (1975) does not give a source, but the most relevant studies are Rowher & Ammons (1968) and Rohwer & Levin (1971).
+#' Timm (1975) does not give a source, but the most relevant studies are Rohwer & Levin (1968) and Rohwer & Ammons (1971).
 #' The paired-associate tasks are described as:
 #' \describe{
 #'    \item{`n`}{(named): Simple paired-associate task where participants learn pairs of nouns with no additional context}
@@ -2336,7 +2337,7 @@ NULL
 #' @source Jones, P.J., Mair, P., Simon, T. et al. (2020). Network Trees: A
 #' Method for Recursively Partitioning Covariance Structures.
 #' *Psychometrika*, **85**, 926?945.
-#' https://doi.org/10.1007/s11336-020-09731-4
+#' \doi{10.1007/s11336-020-09731-4}.
 #' @keywords datasets
 #' @concept MANOVA
 #' @concept candisc

@@ -1,3 +1,46 @@
+## Version 1.8.4
+
+CRAN resubmission of v1.8.3, addressing two `URL` findings from the win-builder
+CRAN-incoming-feasibility check.
+
+* Fixed the `NeuroCog` documentation to cite the Nuechterlein et al. (2008) reference by
+  DOI instead of a PubMed URL that CRAN flagged as needing an update. A win-builder dry
+  run then flagged the replacement itself: CRAN wants bare `doi.org` links written with
+  the `\doi{}` macro, not `\url{}`. Fixed that in `NeuroCog`, and found (and fixed the
+  same way) two more pre-existing bare `doi.org` references in `Iwasaki_Big_Five` and
+  `TIPI`'s documentation that hadn't yet been flagged.
+* Withdrew `vignettes/repeated-JSS.pdf` (a static reprint of the published *Journal of
+  Statistical Software* article, included via the `R.rsp::asis` engine) to `vignettes-old/`,
+  rather than continue explaining its embedded non-canonical URLs to CRAN on every
+  submission. Dropped the now-unused `R.rsp` from `Suggests`/`VignetteBuilder`.
+* Added a second, shorter worked example to the `Robust.Rmd` vignette using the
+  `robustbase::pulpfiber` data (Rousseeuw et al. 2004): a multivariate multiple regression
+  contrasted with the earlier Pottery MANOVA example, using the weight plot and an
+  MCD-based `distancePlot()` to distinguish vertical outliers, a bad leverage point, and
+  two good leverage points.
+* `distancePlot()` documentation now cross-links `robmlm()`, `car::influencePlot()`, and
+  `mvinfluence`'s `influencePlot.mlm()` method; fixed `verbose` argument not actually
+  gating the cutoff `cat()` line.
+
+## Version 1.8.3
+
+This is a modest cumulative release of several versions since the last CRAN release (v 1.8.1)
+
+* Added a link to the NLSY97 Cohort Index in `NLSY`'s documentation.
+* Added `pvPlot()` for partial variable plots: visualizes the partial correlation between two
+  variables after controlling for all others, as a scatterplot of the residuals from regressing
+  each on the rest, enhanced with a data ellipse, regression line, and point labels for unusual
+  cases. Similar in spirit to `car::avPlots()`, but works directly on a data frame rather than a
+  fitted model.
+* Added cute 404 page for `pkgdown` 
+* Added a general `.release_checks.R` script in the repo (but `.Rbuildignore`d)
+
+## Version 1.8.2
+
+* add `eigstatsCI()` to calculate bootstrapped confidence intervals for eigenvalue statistics, as used in `plot.boxM()`
+* added `plot_boxM_boot()` to plot these with bootstrapped CIs
+* added `traceCI()` for use in `plot.boxM()`
+
 ## Version 1.8.1
 
 This is a large cumulative release of several versions since the last CRAN release.
