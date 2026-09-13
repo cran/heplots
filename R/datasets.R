@@ -101,7 +101,7 @@ NULL
 #'   \item{`Age8IQ`}{IQ of child at age 8}
 #'   \item{`Age13IQ`}{IQ of child at age 13} 
 #' }
-#' @seealso \code{\link[Sleuth2]{ex1605}}
+#' @seealso [`Sleuth2::ex1605`]
 #' @references 
 #' Friendly, M.  (2010). HE Plots for Repeated Measures Designs.
 #' *Journal of Statistical Software*, 37(4), 1-40.
@@ -115,7 +115,7 @@ NULL
 #' Ramsey, F.L. and Schafer, D.W. (2002). *The Statistical Sleuth:
 #' A Course in Methods of Data Analysis (2nd ed)*, Duxbury.
 #' 
-#' This data set is identical to \code{\link[Sleuth2]{ex1605}} in the
+#' This data set is identical to [`Sleuth2::ex1605`] in the
 #' `Sleuth2` package.
 #' @keywords datasets
 #' @concept MMRA
@@ -1070,11 +1070,11 @@ NULL
 #' The Oslo data set contains chemical concentrations of 332 samples of
 #' different plant species collected along a 120 km transect running through
 #' the city of Oslo, Norway. It is a subset of the
-#' \code{\link[rrcov]{OsloTransect}} data provided by the `rrcov` package.
+#' [`rrcov::OsloTransect`] data provided by the `rrcov` package.
 #' 
-#' The \code{\link[rrcov]{OsloTransect}} contains 360 observations, with 9
+#' The [`rrcov::OsloTransect`] contains 360 observations, with 9
 #' observations per site. Only 7 chemical elements were retained from the 25
-#' contained in the \code{\link[rrcov]{OsloTransect}} data, and these were all
+#' contained in the [`rrcov::OsloTransect`] data, and these were all
 #' log-transformed, following Todorov and Filzmoser (2009).
 #' 
 #' Only complete cases on these variables were retained, and two lithological
@@ -1338,7 +1338,7 @@ NULL
 #' published by Tubb et al. (1980).  The numbers are the percentage of various
 #' metal oxides found in each sample for elements of concentrations greater
 #' than 0.01\%. This is the original data set from Tubb et al. (1980), in
-#' contrast to \code{\link[carData]{Pottery}}.
+#' contrast to [`carData::Pottery`].
 #' 
 #' The specimens are identified by their `rownames` in the data frame.
 #' `Kiln` indicates at which kiln site the pottery was found; `Site`
@@ -1369,8 +1369,8 @@ NULL
 #'   \item{`Mn`}{amount of manganese oxide, MnO} 
 #'   \item{`Ba`}{amount of BaO} 
 #' }
-#' @seealso \code{\link[carData]{Pottery}} for the related (subset) data set;
-#'     \code{\link[archdata]{RBPottery}} for a newer version with more variables.
+#' @seealso [`carData::Pottery`] for the related (subset) data set;
+#'     [`archdata::RBPottery`] for a newer version with more variables.
 #' 
 #' @references Baxter, M. J. 2003. *Statistics in Archaeology*. Arnold,
 #' London.
@@ -1383,7 +1383,7 @@ NULL
 #' *Archaeometry*, **22**, 153-171.
 #' 
 #' @source Originally slightly modified from files by David Carlson, now at
-#' \code{\link[archdata]{RBPottery}}. %
+#' [`archdata::RBPottery`]. %
 #' @keywords datasets
 #' @concept MANOVA
 #' @concept candisc
@@ -1923,7 +1923,7 @@ NULL
 #' management methods of taking actions to achieve goals with those of
 #' Non Follow Through (NFT). Observations `1:49` came from PFT sites
 #' and `50:70` from NFT sites.
-#' This and other descriptors are contained in the dataset \code{\link{schoolsites}}.
+#' This and other descriptors are contained in the dataset [`schoolsites`].
 #' 
 #' 
 #' @name schooldata
@@ -1950,7 +1950,7 @@ NULL
 #' Managerial Efficiency: An Application of Data Envelopment Analysis to
 #' Program Follow Through. *Management Science*, **27**, 668-697.
 #' @keywords datasets
-#' @seealso \code{\link{schoolsites}}
+#' @seealso [`schoolsites`]
 #' @concept MMRA
 #' @concept robust
 #' @examples
@@ -2209,7 +2209,7 @@ NULL
 #' using a well-validated, comprehensive neurocognitive battery specifically
 #' designed for individuals with psychosis (Heinrichs et al. (2008))
 #' 
-#' The data here are for a subset of the observations in \code{\link{NeuroCog}}
+#' The data here are for a subset of the observations in [`NeuroCog`]
 #' for which measures on various scales of social cognition were also
 #' available. Interest here is on whether the schizophrenia group can be
 #' distinguished from the schizoaffective group on these measures.
@@ -2224,7 +2224,7 @@ NULL
 #' the degree to which individuals attribute internal, personal or situational
 #' causal attributions to positive and negative social events.
 #' 
-#' See \code{\link{NeuroCog}} for a description of the sample. Only those with
+#' See [`NeuroCog`] for a description of the sample. Only those with
 #' complete data on all the social cognitive measures are included in this data
 #' set.
 #' 
@@ -2774,4 +2774,160 @@ NULL
 #'
 #'
 #' @keywords datasets
+NULL
+
+
+#' @name LearnDis
+#' @aliases LearnDis
+#' @docType data
+#' @title
+#' Reading and Arithmetic Achievement in Children with Learning Disabilities
+#'
+#' @description
+#' A small factorial dataset from Tabachnick & Fidell (2013) relating a treatment/control intervention and
+#' degree of disability to reading and arithmetic achievement test scores,
+#' with IQ also recorded. It is not clear whether this is fictitious data or
+#' derived from a real study.
+#' 
+#' It provides for simple examples of MANOVA, MANCOVA and stepdown analysis
+#'
+#' @usage data("LearnDis")
+#' @format
+#' A data frame with 18 observations on the following 5 variables, a
+#' 3 (`Disability`) x 2 (`Treatment`) between-subjects factorial with
+#' n = 3 per cell.
+#' \describe{
+#'   \item{`Disability`}{Degree of disability, an ordered factor with
+#'     levels `Mild` < `Moderate` < `Severe`}
+#'   \item{`Treatment`}{a factor with levels `Treatment` `Control`}
+#'   \item{`WRAT_R`}{Wide Range Achievement Test, Reading subtest score,
+#'     a numeric vector}
+#'   \item{`WRAT_A`}{Wide Range Achievement Test, Arithmetic subtest
+#'     score, a numeric vector}
+#'   \item{`IQ`}{IQ score, a numeric vector -- used in the source as a
+#'     MANCOVA covariate, not part of the stepdown analysis itself}
+#' }
+#'
+#' @source
+#' Tabachnick, B. G., & Fidell, L. S. (2013). *Using Multivariate
+#' Statistics* (6th ed.). Pearson. Table 7.1, p.256.
+#'
+#' @references
+#' The Roy-Bargmann stepdown analysis of this data (WRAT-R prioritized
+#' over WRAT-A) appears in the same source, §7.5.3.2, Tables 7.7-7.9,
+#' pp.273-274.
+#'
+#' Roy, S. N. (1958). Step-Down Procedure in Multivariate Analysis.
+#' *The Annals of Mathematical Statistics*, 29(4), 1177-1187.
+#' \doi{10.1214/aoms/1177706449}.
+#'
+#' @keywords datasets
+#' @concept MANOVA
+#' @concept MANCOVA
+#' @concept stepdown analysis
+#'
+#' @examples
+#' data(LearnDis)
+#' str(LearnDis)
+#'
+#' ld.mod <- lm(cbind(WRAT_R, WRAT_A) ~ Disability * Treatment, data = LearnDis)
+#' car::Anova(ld.mod)
+#'
+#' heplot(ld.mod, fill = TRUE, fill.alpha = 0.1)
+#'
+#' # Roy-Bargmann stepdown: does WRAT-A add anything to WRAT-R for the
+#' # Treatment effect? 
+#' # Needs Type III SS, since the WRAT_R covariate breaks the balanced
+#' # factorial's orthogonality:
+#' options(contrasts = c("contr.sum", "contr.poly"))
+#' step2.mod <- lm(WRAT_A ~ WRAT_R + Disability * Treatment, data = LearnDis)
+#' car::Anova(step2.mod, type = "III")
+#'
+NULL
+
+
+#' @name ReadingDisability
+#' @aliases ReadingDisability
+#' @docType data
+#' @title
+#' Cognitive and Achievement Test Scores by Reading Level
+#'
+#' @description
+#' Six cognitive/achievement test scores for children classified into four
+#' reading-achievement groups (`Severe`, `Mild`, `Average`, `Superior`),
+#' reconstructed from the group means, standard deviations, and pooled
+#' within-cells correlations reported as a worked "real data example" in
+#' Bray & Maxwell (1985), Table 2.3.
+#'
+#' Individual rows are **simulated**, not the original observations: only
+#' group-level summary statistics were published, with no raw data and no
+#' per-group correlations (a single correlation matrix, pooled across all
+#' four groups, was reported). Each group was drawn from a multivariate
+#' normal with that group's reported means and a covariance matrix built
+#' from that group's reported SDs combined with the pooled correlations,
+#' then forced to match those exact moments via
+#' `MASS::mvrnorm(..., empirical = TRUE)`. Summarizing this data frame by
+#' `Group` exactly reproduces Bray & Maxwell's Table 2.3 (see
+#' `data-raw/ReadingDisability.R`).
+#'
+#' B&M (p.38) describe the six measures as follows: "The PPVT is a general
+#' verbal measure of IQ, whereas the VF and SIM tests are verbal criteria.
+#' The EF taps higher-order nonverbal abilities, whereas the VMI and RD
+#' are general nonverbal measures."
+#'
+#' @usage data("ReadingDisability")
+#' @format
+#' A data frame with 571 observations on the following 7 variables, a
+#' 4-level between-subjects factor (`Group`) with unequal n.
+#' \describe{
+#'   \item{`Group`}{Reading achievement level, an ordered factor with
+#'     levels (worst to best) `Severe` (n = 93) < `Mild` (n = 113) <
+#'     `Average` (n = 274) < `Superior` (n = 91)}
+#'   \item{`PPVT`}{Peabody Picture Vocabulary Test score -- a general
+#'     verbal measure of IQ, numeric}
+#'   \item{`RD`}{Recognition-Discrimination Test score -- a general
+#'     nonverbal measure, numeric}
+#'   \item{`EF`}{Embedded Figures Test score -- taps higher-order
+#'     nonverbal abilities, numeric}
+#'   \item{`VF`}{Verbal Fluency Test score -- a verbal criterion measure,
+#'     numeric}
+#'   \item{`VMI`}{Beery Visual-Motor Integration Test score -- a general
+#'     nonverbal measure, numeric}
+#'   \item{`SIM`}{Similarities subtest of the Wechsler Preschool and
+#'     Primary Scale of Intelligence (WPPSI) score -- a verbal criterion
+#'     measure, numeric}
+#' }
+#'
+#' @source
+#' Bray, J. H., & Maxwell, S. E. (1985). *Multivariate Analysis of
+#' Variance*. Sage. Table 2.3, p.38, "Means, Standard Deviations, and
+#' Within-Cells Correlations for Real Data Example."
+#'
+#' B&M attribute this table to Fletcher, J. M., & Satz, P. (1980), but
+#' **that reference does not appear in B&M's own References section** --
+#' a gap in the source book, not (so far as we can tell) a typo on our
+#' part. A copy of Fletcher, J. M., & Satz, P. (1980), *Developmental
+#' changes in the neuropsychological correlates of reading achievement:
+#' A six-year longitudinal follow-up*, Journal of Clinical Neuropsychology,
+#' 2(1), 23-37, is available, but its own reported variables differ from
+#' the six tabulated here -- so it is not confirmed to be the exact source
+#' of Table 2.3, only the most likely candidate (same authors, matching
+#' year, matching four-group reading-disability design). Treat the B&M
+#' attribution as unresolved pending a source that actually contains these
+#' six measures.
+#'
+#' @keywords datasets
+#' @concept MANOVA
+#' @concept HE plots
+#'
+#' @examples
+#' data(ReadingDisability)
+#' str(ReadingDisability)
+#'
+#' rd.mod <- lm(cbind(PPVT, RD, EF, VF, VMI, SIM) ~ Group,
+#'              data = ReadingDisability)
+#' car::Anova(rd.mod)
+#'
+#' heplot(rd.mod, fill = TRUE, fill.alpha = 0.1)
+#'
 NULL

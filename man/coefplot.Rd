@@ -14,6 +14,7 @@ coefplot(object, ...)
   df = NULL,
   level = 0.95,
   intercept = FALSE,
+  std = FALSE,
   Scheffe = FALSE,
   bars = TRUE,
   fill = FALSE,
@@ -44,7 +45,7 @@ coefplot(object, ...)
 \arguments{
 \item{object}{A multivariate linear model, such as fit by \code{lm(cbind(y1, y2, ...) ~ terms, ...)}}
 
-\item{\dots}{Other parameters passed to \code{\link[graphics]{plot}}}
+\item{\dots}{Other parameters passed to \code{\link[graphics:plot]{graphics::plot()}}}
 
 \item{variables}{Response variables to plot, given as their indices or names}
 
@@ -55,6 +56,13 @@ coefplot(object, ...)
 \item{level}{Confidence level for the confidence ellipses}
 
 \item{intercept}{logical. Include the intercept?}
+
+\item{std}{logical. If \code{TRUE}, plot standardized coefficients instead --
+see \code{\link[=stdmodel]{stdmodel()}} for the standardization convention (response(s)
+and numeric predictors are standardized; factor predictors are
+left on their raw 0/1 scale). Not generally useful together with
+\code{intercept = TRUE}, since the intercept becomes ~0 once
+standardized.}
 
 \item{Scheffe}{If \code{TRUE}, confidence intervals for all parameters have
 Scheffe coverage, otherwise, individual coverage.}
@@ -69,7 +77,7 @@ ellipses will be filled.}
 \item{labels}{Labels for the confidence ellipses}
 
 \item{label.pos}{Positions of the labels for each ellipse.  See
-\code{\link{label.ellipse}}}
+\code{\link[=label.ellipse]{label.ellipse()}}}
 
 \item{xlab, ylab}{x, y axis labels}
 
@@ -106,9 +114,21 @@ for each parameter?}
 Returns invisibly a list of the coordinates of the ellipses drawn
 }
 \description{
-Displays confidence ellipses for all parameters in an multivariate linear
-model, for a given pair of variables.  As such, it is a generalization of
-\code{\link[car]{confidenceEllipse}}.
+Displays bivariate confidence ellipses for all parameters in an multivariate linear
+model, for a given pair of variables.  In contrast to univariate coefficient plots for an
+ordinary linear model (e.g., \code{\link[parameters:model_parameters]{parameters::model_parameters()}}, plotted via its \code{plot()}
+method), which show confidence intervals for parameters one at a time, these plots show
+how each predictor moves a pair of responses jointly, in a way that can readily be compared.
+}
+\details{
+This function is also a generalization of \code{\link[car:confidenceEllipse]{car::confidenceEllipse()}} to a multivariate setting.
+Note that \code{confidenceEllipse()} also has an \code{mlm} method (via \code{\link[car:confidenceEllipse]{car::confidenceEllipse()}}),
+but it answers a different question: it fixes a \emph{pair of coefficients} (for one or more
+responses) as the plot axes, and shows their joint confidence region. \code{coefplot()} instead
+fixes a \emph{pair of responses} as the axes and overlays one ellipse per predictor -- use it when
+the question is "how does each predictor move these two responses together?", and
+\code{confidenceEllipse()} when the question is about the relationship between two specific
+coefficients.
 }
 \examples{
 
@@ -124,13 +144,19 @@ mod1 <- lm(cbind(SAT,PPVT,Raven)~n+s+ns+na+ss, data=Rohwer)
 coefplot(mod1, lwd=2, fill=TRUE, parm=(1:5),
 	main="Bivariate 68\% coefficient plot for SAT and PPVT", level=0.68)
 
+# standardized coefficients, with a factor predictor (SES) in the model
+# but excluded from the plotted parm range
+mod2 <- lm(cbind(SAT,PPVT,Raven) ~ SES+n+s+ns+na+ss, data=Rohwer)
+coefplot(mod2, parm=2:6, std=TRUE, fill=TRUE, level=0.68)
 
 }
 \seealso{
-\code{\link[car]{confidenceEllipse}}
+\code{\link[car:confidenceEllipse]{car::confidenceEllipse()}}, \code{\link[parameters:model_parameters]{parameters::model_parameters()}}
 
 Other multivariate linear models:
-\code{\link[=glance.mlm]{glance.mlm()}}
+\code{\link[=glance.mlm]{glance.mlm()}},
+\code{\link[=stdcoef]{stdcoef()}},
+\code{\link[=stdmodel]{stdmodel()}}
 }
 \author{
 Michael Friendly

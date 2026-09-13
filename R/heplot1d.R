@@ -8,12 +8,12 @@
 
 #' One-Dimensional HE Plots
 #' 
-#' This function plots a 1-dimensional representation of the hypothesis (H) and
-#' error (E) sums-of-squares-and-products matrices for terms and linear
+#' This function plots a 1-dimensional representation of the hypothesis (\eqn{\mathbf{H}}{H}) and
+#' error (\eqn{\mathbf{E}}{E}) sums-of-squares-and-products matrices for terms and linear
 #' hypotheses in a multivariate linear model.
 #' 
-#' In particular, for a given response, the 1-D representations of H and E
-#' matrices correspond to line segments.  The E ``ellipse'' is shown as a
+#' In particular, for a given response, the 1-D representations of \eqn{\mathbf{H}}{H} and \eqn{\mathbf{E}}{E}
+#' matrices correspond to line segments.  The \eqn{\mathbf{E}}{E} ``ellipse'' is shown as a
 #' filled rectangle whose width equals the mean squared error for that
 #' response.  The H ``ellipse'' for each model term is shown as a line segment
 #' whose length represents either the size of the effect or the evidence for
@@ -30,7 +30,7 @@
 #'           all terms; if `FALSE`, no terms are plotted.
 #' @param hypotheses optional list of linear hypotheses for which to plot
 #'           hypothesis matrices; hypotheses are specified as for the
-#'           \code{\link[car]{linearHypothesis}} function in the `car` package; the
+#'           [car::linearHypothesis()] function in the `car` package; the
 #'           list elements can be named, in which case the names are used.
 #' @param term.labels logical value or character vector of names for the terms
 #'           to be plotted. If `TRUE` (the default) the names of the terms are used;
@@ -57,7 +57,7 @@
 #'             is the default (and `"2"` is a synonym).
 #' @param idata an optional data frame giving a factor or factors defining the
 #'             intra-subject model for multivariate repeated-measures data.  See Details of
-#'             \code{\link[car]{Anova}} for an explanation of the intra-subject design and
+#'             [car::Anova()] for an explanation of the intra-subject design and
 #'             for further explanation of the other arguments relating to intra-subject
 #'             factors.
 #' @param idesign a one-sided model formula using the ``data'' in idata and
@@ -73,7 +73,7 @@
 #'             have as many rows as there are responses; the columns of the within-subject
 #'             model matrix for *different* terms must be mutually orthogonal.
 #' @param iterm For repeated measures designs, you must specify one
-#'             intra-subject term (a character string) to select the SSPE (E) matrix used
+#'             intra-subject term (a character string) to select the SSPE (\eqn{\mathbf{E}}{E}) matrix used
 #'             in the HE plot.  Hypothesis terms plotted include the `iterm` effect as
 #'             well as all interactions of `iterm` with `terms`.
 #' @param manova optional `Anova.mlm` object for the model; if absent a
@@ -132,10 +132,10 @@
 #' 
 #' @author Michael Friendly
 #' @seealso 
-#'    \code{\link[car]{Anova}}, \code{\link[car]{linearHypothesis}} for
+#'    [car::Anova()], [car::linearHypothesis()] for
 #'       hypothesis tests in `mlm`s
 #' 
-#'    \code{\link{heplot}}, \code{\link{heplot3d}}, \code{\link{pairs.mlm}} for
+#'    [heplot()], [heplot3d()], [pairs.mlm()] for
 #'       other HE plot methods
 #' @family HE plot functions
 #' @keywords hplot aplot multivariate

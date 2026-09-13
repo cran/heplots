@@ -1,3 +1,82 @@
+## Version 1.8.5
+
+* Added the `LearnDis` dataset (Tabachnick & Fidell, 2013, Table 7.1): a small
+  3 (Disability: Mild/Moderate/Severe) x 2 (Treatment/Control) factorial giving
+  reading (`WRAT_R`) and arithmetic (`WRAT_A`) achievement scores and `IQ`, for
+  worked MANOVA/MANCOVA examples and, in particular, a citable, hand-checkable
+  example for the Roy-Bargmann stepdown analysis under development. Its
+  `Disability` factor is ordered (`Mild < Moderate < Severe`).
+  
+* Added the `ReadingDisability` dataset: 571 children classified into four
+  reading-achievement groups (`Severe`/`Mild`/`Average`/`Superior`, an ordered
+  factor) on six cognitive/achievement measures (`PPVT`, `RD`, `EF`, `VF`,
+  `VMI`, `SIM`). Reconstructed by simulation from the group means, SDs, and
+  pooled within-cells correlations in Bray & Maxwell (1985, *Multivariate
+  Analysis of Variance*, Table 2.3). 
+
+* Added `traceCI()`: analytic (Bai & Silverstein, 2004) confidence intervals
+  for the trace (sum of eigenvalues) of one or more covariance matrices,
+  complementing `logdetCI()` and `eigstatCI()`.
+
+* Added `stdmodel()` and `stdcoef()` for standardized ("beta") coefficients on
+  `lm`/`mlm` objects: responses and numeric predictors are standardized, factor
+  predictors are left raw. `coefplot.mlm()` gains a `std = TRUE` argument using
+  this to plot standardized-coefficient confidence ellipses.
+
+* Added a live `heplot3d()` example to the `HE_manova` vignette's MockJury
+  section (ratings on `phyattr`, `independent`, and `sophisticated`), shown as
+  a rotatable, zoomable 3D widget.
+
+### Maintenance
+
+* Clarified the `coefplot.mlm()` documentation to explain how it differs from
+  `car::confidenceEllipse()`'s `mlm` method: `coefplot()` fixes a pair of
+  *responses* as plot axes and overlays one ellipse per predictor, while
+  `confidenceEllipse()` fixes a pair of *coefficients* and shows their joint
+  confidence region.
+
+* Added an explicit `rgl::rglwidget()` call to `heplot3d()`'s example, so its
+  pkgdown reference page shows an interactive 3D plot instead of nothing.
+  `rgl`'s automatic pkgdown widget support only fires for a visibly-returned
+  object of class `rglId`/`rglOpen3d`; `heplot3d()` returns a different class
+  invisibly, so nothing triggered it without this explicit call.
+
+* Calling `rgl::rglwidget()` directly in a `bookdown`-based, `as_is` vignette
+  (like `HE_manova`'s new example above) renders fine in a standalone vignette
+  build but shows as a blank box on the pkgdown site: `pkgdown` replaces the
+  `<head>` of the article page when assembling it, silently dropping the
+  `<script>` tags the widget needs. The fix -- pre-rendering the widget to a
+  self-contained file and embedding it with an `<iframe>` instead -- is
+  documented in `heplot3d()`'s `@details` for reuse in other vignettes.
+
+* Fixed math rendering on the pkgdown site for all four `as_is` vignettes
+  (`HE_manova`, `HE_mmra`, `Robust`, `datasets`): `_pkgdown.yml` never
+  configured a math renderer, so `$...$` expressions showed as literal text
+  instead of typeset equations. Configured KaTeX (matching the working setup
+  already used in the `matlib` package) after finding that MathJax's CDN
+  bundle doesn't support `\boldsymbol`, needed for bold Greek letters like
+  `\boldsymbol{\beta}` (`\mathbf{}` only covers Roman symbols, not Greek).
+
+* Bare/dollar-math `H`/`E` references to the hypothesis and error matrices (in
+  `heplot()`, `heplot1d()`, `heplot3d()`, `pairs.mlm()`, `etasq()`, and the
+  package overview) are now `\eqn{\mathbf{H}}{H}`/`\eqn{\mathbf{E}}{E}` -- the
+  earlier `$\mathbf{H}$` form isn't valid Rd and rendered as mangled literal
+  text in plain `?fun` help.
+
+* Modernized roxygen documentation across `R/`: legacy Rd macros (`\code{}`,
+  `\link{}`/`\link[pkg]{}`, `\pkg{}`, `\emph{}`) converted to markdown syntax
+  in 44 files, fixing two pre-existing broken links (missing-backslash typos)
+  and two stale `rgl` link targets found along the way.
+
+* Reorganized vignette assets: images and figures moved from `vignettes/fig/`
+  to `vignettes/images/`, and four orphaned, unreferenced 2017-era images
+  removed.
+
+* Dropped the hard `Depends: broom` for `glance.mlm()`; now `Imports: generics`
+  (the lightweight package defining the `glance` generic, which `broom` itself
+  depends on) instead, with `broom` moved to `Suggests`. `glance()` still works
+  the same as before with just `library(heplots)`.
+
 ## Version 1.8.4
 
 CRAN resubmission of v1.8.3, addressing two `URL` findings from the win-builder
@@ -9,15 +88,18 @@ CRAN-incoming-feasibility check.
   the `\doi{}` macro, not `\url{}`. Fixed that in `NeuroCog`, and found (and fixed the
   same way) two more pre-existing bare `doi.org` references in `Iwasaki_Big_Five` and
   `TIPI`'s documentation that hadn't yet been flagged.
+  
 * Withdrew `vignettes/repeated-JSS.pdf` (a static reprint of the published *Journal of
   Statistical Software* article, included via the `R.rsp::asis` engine) to `vignettes-old/`,
   rather than continue explaining its embedded non-canonical URLs to CRAN on every
   submission. Dropped the now-unused `R.rsp` from `Suggests`/`VignetteBuilder`.
+  
 * Added a second, shorter worked example to the `Robust.Rmd` vignette using the
   `robustbase::pulpfiber` data (Rousseeuw et al. 2004): a multivariate multiple regression
   contrasted with the earlier Pottery MANOVA example, using the weight plot and an
   MCD-based `distancePlot()` to distinguish vertical outliers, a bad leverage point, and
   two good leverage points.
+  
 * `distancePlot()` documentation now cross-links `robmlm()`, `car::influencePlot()`, and
   `mvinfluence`'s `influencePlot.mlm()` method; fixed `verbose` argument not actually
   gating the cutoff `cat()` line.

@@ -18,7 +18,7 @@ etasq(x, ...)
 \arguments{
 \item{x}{A \code{lm}, \code{mlm} or \code{Anova.mlm} object}
 
-\item{\dots}{Other arguments passed down to \code{\link[car]{Anova}}.}
+\item{\dots}{Other arguments passed down to \code{\link[car:Anova]{car::Anova()}}.}
 
 \item{anova}{A logical, indicating whether the result should also contain
 the test statistics produced by \code{Anova()}.}
@@ -55,7 +55,7 @@ nonerror variation. These are commonly used as measures of effect size or
 measures of (non-linear) strength of association in ANOVA models.
 
 All multivariate tests are based on the \eqn{s=min(p, df_h)} latent roots of
-\eqn{H E^{-1}}. The analogous multivariate partial \eqn{\eta^2} measures are
+\eqn{\mathbf{H} \mathbf{E}^{-1}}{H E^-1}. The analogous multivariate partial \eqn{\eta^2} measures are
 calculated as:
 
 \describe{
@@ -90,9 +90,9 @@ Measures Applications. \emph{Journal of the American Statistical
 Association}, \strong{87}, 1209-1226.
 }
 \seealso{
-\code{\link[car]{Anova}}
+\code{\link[car:Anova]{car::Anova()}}
 
-\code{\link[effectsize]{eta_squared}} for a function that calculates this effect size measure for each response variable separately.
+\code{\link[effectsize:eta_squared]{effectsize::eta_squared()}} for a function that calculates this effect size measure for each response variable separately.
 }
 \author{
 Michael Friendly

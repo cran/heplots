@@ -36,7 +36,7 @@ knitr::opts_chunk$set(
   fig.width=5,
   # results='hide',
   # fig.keep='none',
-  fig.path='fig/manova-',
+  fig.path='images/manova-',
   echo=TRUE,
   collapse = TRUE,
   comment = "#>"
@@ -105,13 +105,11 @@ $$
 $$
 or,
 $$
-\begin{eqnarray*}
-\begin{bmatrix} y_{\text{anx}} \\y_{\text{dep}} \end{bmatrix} & = &
+\begin{bmatrix} y_{\text{anx}} \\y_{\text{dep}} \end{bmatrix} =
 \begin{bmatrix} \beta_{0,\text{anx}} \\ \beta_{0,\text{dep}} \end{bmatrix} +
 \begin{bmatrix} \beta_{1,\text{anx}} \\ \beta_{1,\text{dep}} \end{bmatrix} \text{grade} +
 \begin{bmatrix} \beta_{2,\text{anx}} \\ \beta_{2,\text{dep}} \end{bmatrix} \text{grade}^2 + \cdots
 \begin{bmatrix} \beta_{5,\text{anx}} \\ \beta_{5,\text{dep}} \end{bmatrix} \text{grade}^5
-\end{eqnarray*}
 $$
 
 Using `lm()` we get the coefficients for each of the polynomial terms in `grade`:
@@ -500,7 +498,7 @@ heplot3d(plastic.mod, col=colors)
 ```{r, plastic1-HE3D}
 #| echo=FALSE,
 #| fig.cap="3D HE plot for the plastic MLM"
-knitr::include_graphics("fig/plastic-HE3D.png")
+knitr::include_graphics("images/plastic-HE3D.png")
 ```
 
 
@@ -597,6 +595,22 @@ measuring different aspects of the photos.
 #| fig.cap="HE plots for all pairs of ratings according to the classification of photos on `Attr`"
 pairs(jury.mod1)
 ```
+
+These relations among three of the variables, `phyattr`, `independent` and
+`sophisticated`, can also be viewed directly in 3D with `heplot3d()`,
+shown below as a rotatable, zoomable widget.
+**Challenge Q**: Rotate this so the $\mathbf{H}$ ellipsoid appears as a 1D line (there are several ways)
+
+```{r, jury-mod1-HE3D-code, eval=FALSE}
+heplot3d(jury.mod1, variables = c("phyattr", "independent", "sophisticated"), wire = FALSE)
+rgl::rglwidget()
+```
+```{r, jury-mod1-HE3D, echo=FALSE}
+htmltools::tags$iframe(
+  src = "images/jury-mod1-HE3D.html",
+  width = "100%", height = "500", style = "border: none;")
+```
+*3D HE plot for `phyattr`, `independent` and `sophisticated` according to the classification of photos on `Attr`*
 
 With 3 groups and 4 variables, the $\mathbf{H}$ ellipsoid has only $s=\min(df_h, p)=2$
 dimensions.  `candisc()` carries out a canonical discriminant analysis
@@ -735,7 +749,7 @@ would indicate interbreeding with immigrant populations.
 #| echo=FALSE,
 #| out.width="60%",
 #| fig.cap='Diagram of the skull measurements. Maximal breadth and basibregmatic height are the basic measures of "size" of a skull.  Basialveolar length and nasal height are important anthropometric measures of "shape".'
-knitr::include_graphics("fig/skulls.jpg")
+knitr::include_graphics("images/skulls.jpg")
 ```
 
 

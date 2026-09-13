@@ -7,7 +7,7 @@ knitr::opts_chunk$set(
   fig.align = "center",
   # results='hide',
   # fig.keep='none',
-  fig.path='fig/mmra-',
+  fig.path='images/mmra-',
   echo=TRUE,
   collapse = TRUE,
   comment = "#>"
@@ -140,7 +140,7 @@ pairs(Rohwer.mod, col=colors,
 # 	hypotheses=list("Regr" = c("n", "s", "ns", "na", "ss")))
 
 ## ----rohwer-HE3D--------------------------------------------------------------
-knitr::include_graphics("fig/mmra-rohwer-HE3D.png")
+knitr::include_graphics("images/mmra-rohwer-HE3D.png")
 
 ## ----rohwer-mod2--------------------------------------------------------------
 Rohwer.mod2 <- lm(cbind(SAT, PPVT, Raven) ~ SES * (n + s + ns + na + ss),
@@ -236,7 +236,7 @@ pairs(grades.mod3)
 # heplot3d(grades.mod3, wire=FALSE)
 
 ## ----grades-HE3D--------------------------------------------------------------
-knitr::include_graphics("fig/grades-HE3D.png")
+knitr::include_graphics("images/grades-HE3D.png")
 
 ## ----grades4------------------------------------------------------------------
 # calculate canonical results for all terms

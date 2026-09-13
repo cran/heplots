@@ -9,14 +9,14 @@
 #' 
 #' 
 #' @name heplots-internal
-#' @aliases lambda.crit HLT.crit Roy.crit he.rep termInfo last
+#' @aliases lambda.crit HLT.crit Roy.crit he.rep termInfo last zscore
 #' @param alpha significance level for critical values of multivariate
 #' statistics
 #' @param p Number of variables
 #' @param dfh degrees of freedom for hypothesis
 #' @param dfe degrees of freedom for error
 #' @param test.statistic Test statistic used for the multivariate test
-#' @param x An argument to \code{\link{heplot}} or \code{\link{heplot3d}} that
+#' @param x An argument to [heplot()] or [heplot3d()] that
 #' is to be repeated for Error and all hypothesis terms
 #' @param n Number of hypothesis terms
 #' @author Michael Friendly \email{friendly@yorku.ca}
@@ -64,6 +64,13 @@ he.rep <- function (x, n) {
 	}
 
 last <- function(x) {x[length(x)]}
+
+# z-score a numeric vector; used by stdmodel() (R/standardize.R) to standardize
+# response/predictor columns. Deliberately not scale() -- scale() returns a 1-column
+# matrix with attributes, which breaks coefficient/response naming when the result is
+# assigned back into a data frame column and refit via update().
+#' @rdname heplots-internal
+zscore <- function(x) (x - mean(x)) / sd(x)
 
 # copied from stats::: to avoid using :::
 #' @rdname heplots-internal

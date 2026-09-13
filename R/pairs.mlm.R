@@ -13,8 +13,8 @@
 #' Pairwise HE Plots
 #' 
 #' The function (in the form of an `mlm` method for the generic
-#' \code{\link[graphics]{pairs}} function) constructs a ``matrix'' of pairwise
-#' HE plots (see \link{heplot}) for a multivariate linear model.
+#' [graphics::pairs()] function) constructs a ``matrix'' of pairwise
+#' HE plots (see [heplot()]) for a multivariate linear model.
 #' 
 #' 
 #' @param x an object of class `mlm`.
@@ -28,7 +28,7 @@
 #'        is the default (and `"2"` is a synonym).
 #' @param idata an optional data frame giving a factor or factors defining the
 #'        intra-subject model for multivariate repeated-measures data.  See Details of
-#' \code{\link[car]{Anova}} for an explanation of the intra-subject design and
+#' [car::Anova()] for an explanation of the intra-subject design and
 #'        for further explanation of the other arguments relating to intra-subject factors.
 #' @param idesign a one-sided model formula using the ``data'' in idata and
 #'        specifying the intra-subject design for repeated measure models.
@@ -43,7 +43,7 @@
 #'         have as many rows as there are responses; the columns of the within-subject
 #'         model matrix for *different* terms must be mutually orthogonal.
 #' @param iterm For repeated measures designs, you must specify one
-#'        intra-subject term (a character string) to select the SSPE (E) matrix used
+#'        intra-subject term (a character string) to select the SSPE (\eqn{\mathbf{E}}{E}) matrix used
 #'        in the HE plot.  Hypothesis terms plotted include the `iterm` effect as
 #'        well as all interactions of `iterm` with `terms`.
 #' @param manova optional `Anova.mlm` object for the model; if absent a
@@ -56,7 +56,7 @@
 #'        filled or not.  The first value is used for the error ellipse, the rest ---
 #'        possibly recycled --- for the hypothesis ellipses; a single fill value can
 #'        be given.  Defaults to FALSE for backward compatibility. See Details of
-#' \code{\link{heplot}}
+#' [heplot()]
 #' @param fill.alpha Alpha transparency for filled ellipses, a numeric scalar
 #'        or vector of values within `[0,1]`, where 0 means fully transparent and
 #'        1 means fully opaque. Defaults to 0.3.
@@ -64,7 +64,7 @@
 #'        each panel of the display.
 #' @author Michael Friendly
 #' 
-#' @seealso \code{\link{heplot}}, \code{\link{heplot3d}}
+#' @seealso [heplot()], [heplot3d()]
 #' @family HE plot functions
 #' 
 #' @references 

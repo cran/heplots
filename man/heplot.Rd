@@ -65,7 +65,7 @@ all terms; if \code{FALSE}, no terms are plotted.}
 
 \item{hypotheses}{optional list of linear hypotheses for which to plot
 hypothesis matrices; hypotheses are specified as for the
-\code{\link[car]{linearHypothesis}} function in the \code{car} package; the
+\code{\link[car:linearHypothesis]{car::linearHypothesis()}} function in the \code{car} package; the
 list elements can be named, in which case the names are used.}
 
 \item{term.labels}{logical value or character vector of names for the terms
@@ -87,7 +87,7 @@ below, to the left of, above and to the right of the max/min coordinates of
 the ellipse; the value 0 specifies the centroid of the \code{ellipse}
 object.  The default, \code{label.pos=NULL} uses the correlation of the
 \code{ellipse} to determine "top" (r>=0) or "bottom" (r<0).  Even more
-flexible options are described in \code{\link{label.ellipse}}}
+flexible options are described in \code{\link[=label.ellipse]{label.ellipse()}}}
 
 \item{label.cex}{Character size used for labels for the hypothesis, error ellipses.}
 
@@ -115,7 +115,7 @@ is the default (and `"2"` is a synonym).}
 
 \item{idata}{an optional data frame giving a factor or factors defining the
 intra-subject model for multivariate repeated-measures data.  See Friendly
-(2010) and Details of \code{\link[car]{Anova}} for an explanation of the
+(2010) and Details of \code{\link[car:Anova]{car::Anova()}} for an explanation of the
 intra-subject design and for further explanation of the other arguments
 relating to intra-subject factors.}
 
@@ -135,12 +135,12 @@ have as many rows as there are responses; the columns of the within-subject
 model matrix for \emph{different} terms must be mutually orthogonal.}
 
 \item{iterm}{For repeated measures designs, you must specify one
-intra-subject term (a character string) to select the SSPE (E) matrix used
+intra-subject term (a character string) to select the SSPE (\eqn{\mathbf{E}}{E}) matrix used
 in the HE plot.  Hypothesis terms plotted include the \code{iterm} effect as
 well as all interactions of \code{iterm} with \code{terms}.}
 
 \item{markH0}{A logical value (or else a list of arguments to
-\code{\link{mark.H0}}) used to draw cross-hairs and a point indicating the
+\code{\link[=mark.H0]{mark.H0()}}) used to draw cross-hairs and a point indicating the
 value of a point null hypothesis.  The default is TRUE if \code{iterm} is
 non-NULL.}
 
@@ -248,8 +248,8 @@ measures designs treated from a multivariate perspective.
 }
 \details{
 The \code{heplot} function plots a representation of the covariance ellipses
-for hypothesized model terms and linear hypotheses (H) and the corresponding
-error (E) matrices for two response variables in a multivariate linear model
+for hypothesized model terms and linear hypotheses (\eqn{\mathbf{H}}{H}) and the corresponding
+error (\eqn{\mathbf{E}}{E}) matrices for two response variables in a multivariate linear model
 (mlm).
 
 The plot helps to visualize the nature and dimensionality response variation
@@ -261,14 +261,14 @@ test has a particularly simple visual interpretation, exploited in the
 \code{alpha}.
 
 For a 1 df hypothesis term (a quantitative regressor, a single contrast or
-parameter test), the H matrix has rank 1 (one non-zero latent root of \eqn{H
-E^{-1}}) and the H "ellipse" collapses to a degenerate line.
+parameter test), the \eqn{\mathbf{H}}{H} matrix has rank 1 (one non-zero latent root of
+\eqn{\mathbf{H} \mathbf{E}^{-1}}{H E^-1}) and the \eqn{\mathbf{H}}{H} "ellipse" collapses to a degenerate line.
 
 Typically, you fit a mlm with \code{mymlm <- lm(cbind(y1, y2, y3, ...) ~ modelterms)}, and plot some or all of the \code{modelterms} with
 \code{heplot(mymlm, ...)}.  Arbitrary linear hypotheses related to the terms
 in the model (e.g., contrasts of an effect) can be included in the plot
 using the \code{hypotheses} argument.  See
-\code{\link[car]{linearHypothesis}} for details.
+\code{\link[car:linearHypothesis]{car::linearHypothesis()}} for details.
 
 For repeated measure designs, where the response variables correspond to one
 or more variates observed under a within-subject design, between-subject
@@ -280,11 +280,11 @@ intra-subject design for that term.  See Friendly (2010) or the
 \code{vignette("repeated")} in this package for an extended discussion and
 examples.
 
-The related \code{\link[candisc]{candisc}} package provides functions for
+The related \code{\link[candisc:candisc]{candisc::candisc()}} package provides functions for
 visualizing a multivariate linear model in a low-dimensional view via a
 generalized canonical discriminant analyses.
-\code{\link[candisc]{heplot.candisc}} and
-\code{\link[candisc]{heplot3d.candisc}} provide a low-rank 2D (or 3D) view
+\code{\link[candisc:heplot.candisc]{candisc::heplot.candisc()}} and
+\code{\link[candisc:heplot3d.candisc]{candisc::heplot3d.candisc()}} provide a low-rank 2D (or 3D) view
 of the effects for a given term in the space of maximum discrimination.
 
 When an element of \code{fill} is \code{TRUE}, the ellipse outline is drawn
@@ -378,19 +378,19 @@ Linear Models. \emph{Revista Colombiana de Estadistica}, \strong{37}, 261-283.
 DOI: 10.15446/rce.v37n2spe.47934.
 }
 \seealso{
-\code{\link[car]{Anova}}, \code{\link[car]{linearHypothesis}} for
+\code{\link[car:Anova]{car::Anova()}}, \code{\link[car:linearHypothesis]{car::linearHypothesis()}} for
 details on testing MLMs.
 
-\code{\link{heplot1d}}, \code{\link{heplot3d}}, \code{\link{pairs.mlm}},
-\code{\link{mark.H0}} for other HE plot functions.
-\code{\link{coefplot.mlm}} for plotting confidence ellipses for parameters
+\code{\link[=heplot1d]{heplot1d()}}, \code{\link[=heplot3d]{heplot3d()}}, \code{\link[=pairs.mlm]{pairs.mlm()}},
+\code{\link[=mark.H0]{mark.H0()}} for other HE plot functions.
+\code{\link[=coefplot.mlm]{coefplot.mlm()}} for plotting confidence ellipses for parameters
 in MLMs.
 
-\code{\link{trans.colors}} for calculation of transparent colors.
-\code{\link{label.ellipse}} for labeling positions in plotting H and E
+\code{\link[=trans.colors]{trans.colors()}} for calculation of transparent colors.
+\code{\link[=label.ellipse]{label.ellipse()}} for labeling positions in plotting \eqn{\mathbf{H}}{H} and \eqn{\mathbf{E}}{E}
 ellipses.
 
-\code{\link[candisc]{candisc}}, \code{\link[candisc]{heplot.candisc}} for
+\code{\link[candisc:candisc]{candisc::candisc()}}, \code{\link[candisc:heplot.candisc]{candisc::heplot.candisc()}} for
 reduced-rank views of \code{mlm}s in canonical space.
 
 Other HE plot functions:

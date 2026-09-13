@@ -6,7 +6,7 @@ knitr::opts_chunk$set(
   fig.width=5,
   # results='hide',
   # fig.keep='none',
-  fig.path='fig/datasets-',
+  fig.path='images/datasets-',
   echo=TRUE,
   collapse = TRUE,
   comment = "#>"

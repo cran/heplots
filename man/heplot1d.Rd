@@ -54,7 +54,7 @@ all terms; if \code{FALSE}, no terms are plotted.}
 
 \item{hypotheses}{optional list of linear hypotheses for which to plot
 hypothesis matrices; hypotheses are specified as for the
-\code{\link[car]{linearHypothesis}} function in the \code{car} package; the
+\code{\link[car:linearHypothesis]{car::linearHypothesis()}} function in the \code{car} package; the
 list elements can be named, in which case the names are used.}
 
 \item{term.labels}{logical value or character vector of names for the terms
@@ -90,7 +90,7 @@ is the default (and `"2"` is a synonym).}
 
 \item{idata}{an optional data frame giving a factor or factors defining the
 intra-subject model for multivariate repeated-measures data.  See Details of
-\code{\link[car]{Anova}} for an explanation of the intra-subject design and
+\code{\link[car:Anova]{car::Anova()}} for an explanation of the intra-subject design and
 for further explanation of the other arguments relating to intra-subject
 factors.}
 
@@ -110,7 +110,7 @@ have as many rows as there are responses; the columns of the within-subject
 model matrix for \emph{different} terms must be mutually orthogonal.}
 
 \item{iterm}{For repeated measures designs, you must specify one
-intra-subject term (a character string) to select the SSPE (E) matrix used
+intra-subject term (a character string) to select the SSPE (\eqn{\mathbf{E}}{E}) matrix used
 in the HE plot.  Hypothesis terms plotted include the \code{iterm} effect as
 well as all interactions of \code{iterm} with \code{terms}.}
 
@@ -182,13 +182,13 @@ The components are:
 \item{xlim}{x-axis limits}
 }
 \description{
-This function plots a 1-dimensional representation of the hypothesis (H) and
-error (E) sums-of-squares-and-products matrices for terms and linear
+This function plots a 1-dimensional representation of the hypothesis (\eqn{\mathbf{H}}{H}) and
+error (\eqn{\mathbf{E}}{E}) sums-of-squares-and-products matrices for terms and linear
 hypotheses in a multivariate linear model.
 }
 \details{
-In particular, for a given response, the 1-D representations of H and E
-matrices correspond to line segments.  The E \verb{ellipse'' is shown as a filled rectangle whose width equals the mean squared error for that response.  The H }ellipse'' for each model term is shown as a line segment
+In particular, for a given response, the 1-D representations of \eqn{\mathbf{H}}{H} and \eqn{\mathbf{E}}{E}
+matrices correspond to line segments.  The \eqn{\mathbf{E}}{E} \verb{ellipse'' is shown as a filled rectangle whose width equals the mean squared error for that response.  The H }ellipse'' for each model term is shown as a line segment
 whose length represents either the size of the effect or the evidence for
 that effect.
 
@@ -211,10 +211,10 @@ heplot1d(bees.mod, variables=2)
 
 }
 \seealso{
-\code{\link[car]{Anova}}, \code{\link[car]{linearHypothesis}} for
+\code{\link[car:Anova]{car::Anova()}}, \code{\link[car:linearHypothesis]{car::linearHypothesis()}} for
 hypothesis tests in \code{mlm}s
 
-\code{\link{heplot}}, \code{\link{heplot3d}}, \code{\link{pairs.mlm}} for
+\code{\link[=heplot]{heplot()}}, \code{\link[=heplot3d]{heplot3d()}}, \code{\link[=pairs.mlm]{pairs.mlm()}} for
 other HE plot methods
 
 Other HE plot functions:

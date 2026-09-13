@@ -6,7 +6,7 @@ knitr::opts_chunk$set(
   fig.width=5,
   # results='hide',
   # fig.keep='none',
-  fig.path='fig/manova-',
+  fig.path='images/manova-',
   echo=TRUE,
   collapse = TRUE,
   comment = "#>"
@@ -191,7 +191,7 @@ heplot(plastic.mod,
 # heplot3d(plastic.mod, col=colors)
 
 ## ----plastic1-HE3D------------------------------------------------------------
-knitr::include_graphics("fig/plastic-HE3D.png")
+knitr::include_graphics("images/plastic-HE3D.png")
 
 ## ----MJdata-------------------------------------------------------------------
 data(MockJury, package = "heplots")
@@ -212,6 +212,15 @@ heplot(jury.mod1, main="HE plot for manipulation check",
 
 ## ----jury-mod1-pairs----------------------------------------------------------
 pairs(jury.mod1)
+
+## ----jury-mod1-HE3D-code, eval=FALSE------------------------------------------
+# heplot3d(jury.mod1, variables = c("phyattr", "independent", "sophisticated"), wire = FALSE)
+# rgl::rglwidget()
+
+## ----jury-mod1-HE3D, echo=FALSE-----------------------------------------------
+htmltools::tags$iframe(
+  src = "images/jury-mod1-HE3D.html",
+  width = "100%", height = "500", style = "border: none;")
 
 ## ----jury-can1a---------------------------------------------------------------
 jury.can <- candisc(jury.mod1)
@@ -246,7 +255,7 @@ jury.eff <- allEffects(jury.mod3)
 plot(jury.eff, ask=FALSE)
 
 ## ----skulls-------------------------------------------------------------------
-knitr::include_graphics("fig/skulls.jpg")
+knitr::include_graphics("images/skulls.jpg")
 
 ## ----skulls1------------------------------------------------------------------
 data(Skulls)

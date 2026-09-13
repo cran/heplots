@@ -12,20 +12,38 @@
 
 #' Coefficient plots for Multivariate Linear Models
 #' 
-#' Displays confidence ellipses for all parameters in an multivariate linear
-#' model, for a given pair of variables.  As such, it is a generalization of
-#' \code{\link[car]{confidenceEllipse}}.
+#' Displays bivariate confidence ellipses for all parameters in an multivariate linear
+#' model, for a given pair of variables.  In contrast to univariate coefficient plots for an
+#' ordinary linear model (e.g., [parameters::model_parameters()], plotted via its `plot()`
+#' method), which show confidence intervals for parameters one at a time, these plots show
+#' how each predictor moves a pair of responses jointly, in a way that can readily be compared.
+#' 
+#' @details
+#' This function is also a generalization of [car::confidenceEllipse()] to a multivariate setting.
+#' Note that `confidenceEllipse()` also has an `mlm` method (via [car::confidenceEllipse()]),
+#' but it answers a different question: it fixes a *pair of coefficients* (for one or more
+#' responses) as the plot axes, and shows their joint confidence region. `coefplot()` instead
+#' fixes a *pair of responses* as the axes and overlays one ellipse per predictor -- use it when
+#' the question is "how does each predictor move these two responses together?", and
+#' `confidenceEllipse()` when the question is about the relationship between two specific
+#' coefficients.
 #' 
 #' 
 #' @aliases coefplot coefplot.mlm
 #' @param object A multivariate linear model, such as fit by `lm(cbind(y1,
 #'             y2, ...) ~ terms, ...)`
-#' @param \dots Other parameters passed to \code{\link[graphics]{plot}}
+#' @param \dots Other parameters passed to [graphics::plot()]
 #' @param variables Response variables to plot, given as their indices or names
 #' @param parm Parameters to plot, given as their indices or names
 #' @param df Degrees of freedom for hypothesis tests
 #' @param level Confidence level for the confidence ellipses
 #' @param intercept logical. Include the intercept?
+#' @param std logical. If `TRUE`, plot standardized coefficients instead --
+#'        see [stdmodel()] for the standardization convention (response(s)
+#'        and numeric predictors are standardized; factor predictors are
+#'        left on their raw 0/1 scale). Not generally useful together with
+#'        `intercept = TRUE`, since the intercept becomes ~0 once
+#'        standardized.
 #' @param Scheffe If `TRUE`, confidence intervals for all parameters have
 #'        Scheffe coverage, otherwise, individual coverage.
 #' @param bars Draw univariate confidence intervals for each of the variables?
@@ -34,7 +52,7 @@
 #' @param fill.alpha Opacity of the confidence ellipses
 #' @param labels Labels for the confidence ellipses
 #' @param label.pos Positions of the labels for each ellipse.  See
-#'        \code{\link{label.ellipse}}
+#'        [label.ellipse()]
 #' @param xlab,ylab x, y axis labels
 #' @param xlim,ylim Axis limits
 #' @param axes Draw axes?
@@ -55,7 +73,7 @@
 #' @return Returns invisibly a list of the coordinates of the ellipses drawn
 #' @author Michael Friendly
 #' 
-#' @seealso \code{\link[car]{confidenceEllipse}}
+#' @seealso [car::confidenceEllipse()], [parameters::model_parameters()]
 #' @family multivariate linear models
 #' @keywords hplot
 #' @examples
@@ -71,8 +89,13 @@
 #' mod1 <- lm(cbind(SAT,PPVT,Raven)~n+s+ns+na+ss, data=Rohwer)
 #' coefplot(mod1, lwd=2, fill=TRUE, parm=(1:5),
 #' 	main="Bivariate 68% coefficient plot for SAT and PPVT", level=0.68)
-#' 
-#' 
+#'
+#' # standardized coefficients, with a factor predictor (SES) in the model
+#' # but excluded from the plotted parm range
+#' mod2 <- lm(cbind(SAT,PPVT,Raven) ~ SES+n+s+ns+na+ss, data=Rohwer)
+#' coefplot(mod2, parm=2:6, std=TRUE, fill=TRUE, level=0.68)
+#'
+
 #' @export coefplot
 coefplot <- function(object, ...) {
 	UseMethod("coefplot")
@@ -83,11 +106,12 @@ coefplot <- function(object, ...) {
 #' 
 coefplot.mlm <- function(object, 
                          variables=1:2, 
-                         parm=NULL, 
-                         df = NULL, 
-                         level = 0.95, 
-                         intercept=FALSE, 
-                         Scheffe=FALSE, 
+                         parm=NULL,
+                         df = NULL,
+                         level = 0.95,
+                         intercept=FALSE,
+                         std = FALSE,
+                         Scheffe=FALSE,
                          bars=TRUE, 
                          fill=FALSE, fill.alpha=0.2,   # requires  trans.colors
                          labels = !add, 
@@ -117,6 +141,8 @@ coefplot.mlm <- function(object,
          t( c(center) + t( circle %*% chol(shape)))
   }
 
+
+  if (std) object <- stdmodel(object)
 
 	# determine parameters to plot; allow parameters to be passed by names or numbers
   cf <- coef(object)
@@ -159,8 +185,9 @@ coefplot.mlm <- function(object,
 	#subset for the variables to plot
 	cf  <- cf[,variables]
 	var.names  <- var.names[variables]
-	if (missing(xlab)) xlab <- paste(var.names[1], "coefficient")
-	if (missing(ylab)) ylab <- paste(var.names[2], "coefficient") 
+	coef.label <- if (std) "coefficient (std)" else "coefficient"
+	if (missing(xlab)) xlab <- paste(var.names[1], coef.label)
+	if (missing(ylab)) ylab <- paste(var.names[2], coef.label) 
 	
 	if (is.logical(labels)) {
 		parm.labels <- if (labels) parm.names else rep("", length.out=np)

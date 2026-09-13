@@ -39,6 +39,9 @@ S3method(print,summary.robmlm)
 S3method(robmlm,default)
 S3method(robmlm,formula)
 S3method(stats::vcov,mlm)
+S3method(stdcoef,lm)
+S3method(stdcoef,mlm)
+S3method(stdmodel,lm)
 S3method(summary,boxM)
 S3method(summary,robmlm)
 export(Ellipsoid)
@@ -62,6 +65,7 @@ export(ellipse.axes)
 export(ellipse.box)
 export(ellipse3d.axes)
 export(etasq)
+export(glance)
 export(glance.mlm)
 export(gsorth)
 export(heplot)
@@ -78,8 +82,11 @@ export(pvPlot)
 export(rel_diff)
 export(robmlm)
 export(statList)
+export(stdcoef)
+export(stdmodel)
 export(termMeans)
 export(text_usr)
+export(traceCI)
 export(trans.colors)
 export(uniStats)
 importFrom(MASS,
@@ -90,7 +97,6 @@ importFrom(boot,
   boot,
   boot.ci
 )
-importFrom(broom,glance)
 importFrom(car,
   Anova,
   dataEllipse,
@@ -98,6 +104,7 @@ importFrom(car,
   showLabels,
   wcrossprod
 )
+importFrom(generics,glance)
 importFrom(grDevices,
   col2rgb,
   gray,
@@ -132,6 +139,7 @@ importFrom(stats,
   SSD,
   aggregate,
   alias,
+  coef,
   coefficients,
   complete.cases,
   cor,

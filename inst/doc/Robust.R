@@ -7,7 +7,7 @@ knitr::opts_chunk$set(
   fig.align = "center",
   # results='hide',
   # fig.keep='none',
-  fig.path='fig/robust-',
+  fig.path='images/robust-',
   echo=TRUE,
   collapse = TRUE,
   comment = "#>"
@@ -127,4 +127,10 @@ op <- par(mfrow = c(1, 2))
 distancePlot(pulp.rlm, method = "classical", main = "Classical distances")
 distancePlot(pulp.rlm, method = "mcd", main = "MCD distances")
 par(op)
+
+## ----pulpfiber-influenceplot-stres, fig.cap="Default (`type = 'stres'`) multivariate influence plot for the OLS pulp fiber model."----
+influencePlot(pulp.mod, id.n = 5)
+
+## ----pulpfiber-influenceplot-lr, fig.cap="`type = 'LR'` multivariate influence plot for the same model."----
+influencePlot(pulp.mod, id.n = 5, type = "LR")
 
