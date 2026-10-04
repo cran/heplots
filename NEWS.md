@@ -1,3 +1,53 @@
+## Version 1.8.6
+
+### Enhancements
+
+* Added a two-page cheatsheet, `heplots-cheatsheet.pdf`, linked from the README and the
+  pkgdown navbar, to provide a visual overview of the package.
+
+* Added a `robmlm.mlm()` method so `robmlm()` can be called directly on an existing
+  classical `mlm` fit (e.g., `robmlm(mod)`) instead of restating the formula and data.
+  The result records its call as `robmlm(formula = , data = , ...)`, just as if it had been
+  fit from the formula, so `update()` works on it. Arguments that would change the model
+  frame (`subset`, `weights`, `data`, ...) now signal an error rather than being silently
+  ignored; set them in the `lm()` call, or use `update()` on the result. Other arguments
+  must be named (e.g., `robmlm(mod, P = 0.01)`), since an unnamed one would be taken as `P`.
+
+* Doc fix: Clarified the **significance interpretation** of HE plots in `heplot()`, `heplot3d()`, the
+  README and the `HE_manova` vignette: **H** protrudes outside **E** somewhere in the
+  *full* response space iff the term is significant by Roy's test, but in a 2D (or 3D) view
+  the rule works one way only. **H** outside **E** means significant; **H** inside **E**
+  does not mean "not significant". The `alpha` argument of `heplot1d()` is now correctly
+  described as referring to the univariate F test for the response shown.
+
+### Bug fixes
+
+* Fixed `termMeans()`: when the data were not sorted in factor-level order, the row
+  labels were attached to the wrong means (e.g., `peng` species, or the `Plastic`
+  `rate:additive` cells in the `HE_manova` vignette). This also affected the mean labels
+  in `heplot1d()`. Rows are now in **factor-level order** (first factor varying fastest), and
+  empty cells are dropped instead of causing an error.
+
+* Fixed `eigstatCI()`: the "pooled" statistic was computed from the total covariance
+  matrix `cov(Y)`, ignoring groups, so it included the between-group variation. It now
+  uses the pooled within-group covariance matrix, as in `boxM()$pooled`, and bootstraps it
+  by resampling within groups. This changes the "pooled" point and CI in
+  `plot_boxM_boot()`. This achieves a long-standing goal to make the plot methods related
+  to `boxM()` more general, using bootstrap methods instead of asymptotic theory.
+
+* Fixed `label.ellipse()`: the diagonal positions `label.pos = "SE"` and `"NW"` were
+  swapped. The documentation for a fractional `label.pos` now says correctly that it is
+  measured counterclockwise from East (0 = right, 0.25 = top).
+
+* Fixed `covEllipses()`: `label.pos = NULL`, documented as giving automatic label
+  positions, failed with "cannot replicate NULL". It now works. The documentation also
+  wrongly said `NULL` was the default; the default is `0` (the ellipse center), and is
+  unchanged.
+
+* Fixed `pvPlot()` for tibbles (e.g., `peng`): it failed with "invalid type (list)",
+  because selecting one column of a tibble does not give a vector. `X` is now converted
+  with `as.data.frame()`.
+
 ## Version 1.8.5
 
 * Added the `LearnDis` dataset (Tabachnick & Fidell, 2013, Table 7.1): a small

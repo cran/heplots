@@ -1,8 +1,8 @@
 Package: heplots
 Type: Package
 Title: Visualizing Hypothesis Tests in Multivariate Linear Models
-Version: 1.8.5
-Date: 2026-09-12
+Version: 1.8.6
+Date: 2026-10-04
 Authors@R: c(
             person(given = "Michael", 
                    family = "Friendly", 
@@ -16,7 +16,8 @@ Authors@R: c(
                    comment = c(ORCID = "0000-0003-0076-5532")),
             person(given = "Phil", family="Chalmers", role="ctb", 
                    comment = c(ORCID="0000-0001-5332-2810")),
-            person(given = "Duncan", family = "Murdoch", role="ctb"))
+            person(given = "Duncan", family = "Murdoch", role="ctb"),
+            person(given = "Gavin", family = "Klorfine", role = "ctb"))
 Maintainer: Michael Friendly <friendly@yorku.ca>
 Description: Provides HE plot and other functions for visualizing hypothesis
     tests in multivariate linear models. HE plots represent sums-of-squares-and-products 
@@ -28,11 +29,11 @@ Description: Provides HE plot and other functions for visualizing hypothesis
 Language: en-US
 Depends: R (>= 4.1.0)
 Imports: car, generics, MASS, graphics, grDevices, stats, magrittr,
-        purrr, rgl, tibble, boot
+        purrr, rgl, tibble, boot, glue
 Suggests: broom, candisc, carData, lmtest, effects, reshape, gplots,
         nlme, lattice, reshape2, corrgram, animation, mvinfluence,
         knitr, litedown, rmarkdown, markdown, dplyr, tidyr, ggplot2,
-        bookdown, patchwork, tinytable, glue, here, htmltools, Sleuth2,
+        bookdown, patchwork, tinytable, here, htmltools, Sleuth2,
         rrcov, archdata, qqtest, ggbiplot, vcdExtra, KernSmooth,
         aplpack, foreign, robustbase, effectsize, parameters
 LazyLoad: yes
@@ -45,12 +46,13 @@ Encoding: UTF-8
 VignetteBuilder: knitr
 Config/roxygen2/version: 8.1.0
 NeedsCompilation: no
-Packaged: 2026-09-13 14:34:19 UTC; friendly
+Packaged: 2026-10-04 14:26:10 UTC; friendly
 Author: Michael Friendly [aut, cre] (ORCID:
     <https://orcid.org/0000-0002-3237-0941>),
   John Fox [aut] (ORCID: <https://orcid.org/0000-0002-1196-8012>),
   Georges Monette [aut] (ORCID: <https://orcid.org/0000-0003-0076-5532>),
   Phil Chalmers [ctb] (ORCID: <https://orcid.org/0000-0001-5332-2810>),
-  Duncan Murdoch [ctb]
+  Duncan Murdoch [ctb],
+  Gavin Klorfine [ctb]
 Repository: CRAN
-Date/Publication: 2026-09-13 15:10:02 UTC
+Date/Publication: 2026-10-04 15:00:02 UTC

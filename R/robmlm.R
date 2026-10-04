@@ -3,6 +3,12 @@
 ## John Fox 2012-06-02
 ## revised: 2013-08-20 to avoid calling summary.mlm() directly in vcov.mlm()
 ## TODO: what about using MASS::cob.rob, allowing MCD, MVE?
+## DONE: added a `robmlm.mlm()` method to directly use an "mlm" object
+## DONE: ✔️ `robmlm.mlm()` now stores the call as `robmlm(formula = , data = , ...)`, so `update()`
+##       works on the result; it was `robmlm.mlm(X = mod)`, which `update()` can't find. 2026-10-03
+## DONE: ✔️ `robmlm.mlm()` now stops if given `subset`, `weights`, etc., which were silently ignored
+## DONE: ✔️ `robmlm.mlm()` now stops on unnamed extra arguments, which bound by position to
+##       `robmlm.default()`'s `P` (e.g., `robmlm(mod, mysubset)`). 2026-10-03
 
 
 
@@ -46,7 +52,7 @@
 #' iteratively, computing weights and then re-estimating the model with those weights
 #' until convergence.
 #' 
-#' @aliases print.robmlm print.summary.robmlm robmlm robmlm.default robmlm.formula summary.robmlm
+#' @aliases print.robmlm print.summary.robmlm robmlm robmlm.default robmlm.formula robmlm.mlm summary.robmlm
 #' @param formula a formula of the form `cbind(y1, y2, ...) ~ x1 + x2 + ...`.
 #' @param data a data frame from which variables specified in `formula`
 #'        are preferentially to be taken.
@@ -62,7 +68,15 @@
 #' @param \dots other arguments, passed down. In particular relevant control
 #'         arguments can be passed to the to the `robmlm.default` method.
 #' @param X for the default method, a model matrix, including the constant (if
-#'        present)
+#'        present); for the `mlm` method, a fitted classical `mlm` object
+#'        (e.g., from `lm(cbind(y1, y2, ...) ~ ...)`), which is refit robustly
+#'        using the same response, predictors, contrasts, and any `subset`,
+#'        `weights` or `na.action` given in the original `lm()` call. These
+#'        can't be changed in the call to `robmlm()` (an error is
+#'        signaled); only the control arguments of the default method
+#'        (`tune`, `max.iter`, ...) can be given. The result records
+#'        the call as if it had been fit with the formula method, so
+#'        [stats::update()] works on it.
 #' @param Y for the default method, a response matrix
 #' @param w prior observation weights
 #' @param P two-tail probability, to find cutoff quantile for chisq (tuning
@@ -119,7 +133,13 @@
 #' # fit manova model, classically and robustly
 #' sk.mod <- lm(cbind(mb, bh, bl, nh) ~ epoch, data=Skulls)
 #' sk.rmod <- robmlm(cbind(mb, bh, bl, nh) ~ epoch, data=Skulls)
-#' 
+#'
+#' # equivalently, refit an existing classical mlm object directly
+#' sk.rmod2 <- robmlm(sk.mod)
+#' all.equal(coef(sk.rmod), coef(sk.rmod2))
+#' # the result can be updated like one fit from a formula
+#' update(sk.rmod2, subset = epoch != "200BC")
+#'
 #' # standard mlm methods apply here
 #' coefficients(sk.rmod)
 #' 
@@ -281,6 +301,58 @@ robmlm.formula <- function(formula, data, subset, weights, na.action, model = TR
   mod$call <- call
   mod$terms <- terms
   if (model)  mod$model <- mf
+  class(mod) <- c("robmlm", "mlm", "lm")
+  mod
+}
+
+# DONE: robmlm.mlm() lets robmlm() take an already-fitted classical mlm
+#       directly, e.g. robmlm(mod) instead of re-stating the formula/data.
+#       NB: can't refit via robmlm(formula(X), data = model.frame(X), ...) --
+#       model.frame() stores a cbind(y1, y2, ...) response as one matrix-
+#       valued column literally named "cbind(y1, y2, ...)", so re-parsing the
+#       formula against that data tries to re-evaluate cbind(y1, y2, ...) and
+#       fails to find y1 etc. as standalone columns. Pull Y/X off the fitted
+#       object directly instead (mirrors the tail of robmlm.formula()).
+#' @rdname robmlm
+#' @exportS3Method robmlm mlm
+robmlm.mlm <- function(X, ...) {
+  # the model frame is taken from the fitted object, so arguments that would
+  # change it can't be honored here
+  dots <- match.call(expand.dots = FALSE)$...
+  # an unnamed argument would bind by position to robmlm.default()'s P, etc.
+  n.unnamed <- if (is.null(names(dots))) length(dots) else sum(names(dots) == "")
+  if (n.unnamed > 0) {
+    stop(glue::glue(
+      "robmlm() for an 'mlm' object needs named arguments, ",
+      "e.g., robmlm(mod, P = 0.01); got {n.unnamed} unnamed."
+    ))
+  }
+  mf.args <- c("formula", "data", "subset", "weights", "na.action", "contrasts")
+  bad <- intersect(names(dots), mf.args)
+  if (length(bad) > 0) {
+    stop(glue::glue(
+      "robmlm() for an 'mlm' object refits the model as it was specified, so ",
+      "can't use: {paste(bad, collapse = ', ')}. ",
+      "Set these in the lm() call, or use update() on the result."
+    ))
+  }
+  mf   <- model.frame(X)
+  Y    <- model.response(mf)
+  Xmat <- model.matrix(X)
+  w    <- model.weights(mf)
+  mod <- robmlm.default(Xmat, Y, w, ...)
+  mod$na.action <- X$na.action
+  mod$contrasts <- X$contrasts
+  mod$xlevels   <- X$xlevels
+  # store the call as if fit by robmlm.formula(), so update() and code that
+  # looks for call$formula / call$data work
+  fn <- if (inherits(X, "robmlm")) robmlm.formula else stats::lm
+  call <- tryCatch(match.call(fn, X$call), error = function(e) X$call)
+  call <- call[c(1, which(names(call) %in% mf.args))]
+  call[[1]] <- as.name("robmlm")
+  mod$call      <- as.call(c(as.list(call), dots))
+  mod$terms     <- terms(X)
+  mod$model     <- mf
   class(mod) <- c("robmlm", "mlm", "lm")
   mod
 }
